@@ -1,7 +1,107 @@
-configInline:
-  address-pools:
-    - name: first-pool
-      protocol: layer2
-      addresses:
-        - 10.0.55.1-10.0.55.100
-
+prometheusRule:
+  enabled: true
+  
+controller: 
+  metrics:
+    enabled: false
+    service:
+      port: 7472
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "7472"
+        prometheus.io/path: "/metrics" 
+    serviceMonitor:
+      enabled: false
+      ## @param controller.metrics.serviceMonitor.namespace Namespace which Prometheus is running in
+      ## e.g:
+      ## namespace: monitoring
+      ##
+      namespace: ""
+      ## @param controller.metrics.serviceMonitor.jobLabel Specify the jobLabel to use for the prometheus-operator
+      ##
+      jobLabel: "app.kubernetes.io/name"
+      ## @param controller.metrics.serviceMonitor.interval Scrape interval. If not set, the Prometheus default scrape interval is used
+      ##
+      interval: ""
+      ## @param controller.metrics.serviceMonitor.scrapeTimeout Timeout after which the scrape is ended
+      ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+      ##
+      scrapeTimeout: ""
+      ## @param controller.metrics.serviceMonitor.metricRelabelings Specify additional relabeling of metrics
+      ##
+      metricRelabelings: []
+      ## @param controller.metrics.serviceMonitor.relabelings Specify general relabeling
+      ##
+      relabelings: []
+      ## @param controller.metrics.serviceMonitor.selector ServiceMonitor selector labels
+      ## ref: https://github.com/bitnami/charts/tree/main/bitnami/prometheus-operator#prometheus-configuration
+      ##
+      ## selector:
+      ##   prometheus: my-prometheus
+      ##
+      selector: {}
+      ## @param controller.metrics.serviceMonitor.labels Extra labels for the ServiceMonitor
+      ##
+      labels: {}
+      ## @param controller.metrics.serviceMonitor.honorLabels honorLabels chooses the metric's labels on collisions with target labels
+      ##
+      honorLabels: false
+      
+speaker: 
+ ## @section Speaker Prometheus metrics export
+  metrics:
+    ## @param speaker.metrics.enabled Enable the export of Prometheus metrics
+    ##
+    enabled: true
+    ## Prometheus Exporter service parameters
+    ##
+    service:
+      ## @param speaker.metrics.service.port Prometheus metrics service port
+      ##
+      port: 7472
+      ## @param speaker.metrics.service.annotations [object] Annotations for the Prometheus Exporter service service
+      ##
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "7472"
+        prometheus.io/path: "/metrics"
+    ## Prometheus Operator service monitors
+    ##
+    serviceMonitor:
+      ## @param speaker.metrics.serviceMonitor.enabled Enable support for Prometheus Operator
+      ##
+      enabled: false
+      ## @param speaker.metrics.serviceMonitor.namespace Namespace which Prometheus is running in
+      ## e.g:
+      ## namespace: monitoring
+      ##
+      namespace: ""
+      ## @param speaker.metrics.serviceMonitor.jobLabel Job label for scrape target
+      ##
+      jobLabel: "app.kubernetes.io/name"
+      ## @param speaker.metrics.serviceMonitor.interval Scrape interval. If not set, the Prometheus default scrape interval is used
+      ##
+      interval: ""
+      ## @param speaker.metrics.serviceMonitor.scrapeTimeout Timeout after which the scrape is ended
+      ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+      ##
+      scrapeTimeout: ""
+      ## @param speaker.metrics.serviceMonitor.metricRelabelings Specify additional relabeling of metrics
+      ##
+      metricRelabelings: []
+      ## @param speaker.metrics.serviceMonitor.relabelings Specify general relabeling
+      ##
+      relabelings: []
+      ## @param speaker.metrics.serviceMonitor.selector ServiceMonitor selector labels
+      ## ref: https://github.com/bitnami/charts/tree/main/bitnami/prometheus-operator#prometheus-configuration
+      ##
+      ## selector:
+      ##   prometheus: my-prometheus
+      ##
+      selector: {}
+      ## @param speaker.metrics.serviceMonitor.labels Extra labels for the ServiceMonitor
+      ##
+      labels: {}
+      ## @param speaker.metrics.serviceMonitor.honorLabels honorLabels chooses the metric's labels on collisions with target labels
+      ##
+      honorLabels: false
