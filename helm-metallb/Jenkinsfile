@@ -1,0 +1,89 @@
+pipeline {
+    agent { label 'k8s'}
+    environment {
+        VALUES_URL = "metallb-values.yaml"
+        API_SERVER = "https://${params.K8S_API_HOST}:${params.K8S_API_PORT}"
+        CLUSTER_NAME = "${params.K8S_CLUSTER}"
+        CONTEXT_NAME = "${params.K8S_CONTEXT}"
+        METALLB_VERSION = "${params.HELM_CHART_VERSION}"
+        METALLB_CONFIG = "${params.METALLB_CONFIG}"
+        CHART_DIR = "${params.HELM_CHART_DIR}"
+        HELM_VERSION="v3.13.2"
+        HELM_URL="https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz"
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                url: 'https://github.com/nazmang/k8s.git'
+            }
+        }
+        stage('Install Helm') {
+            steps {
+                sh """
+                if ! command -v helm &> /dev/null; then
+                    echo "Helm not found, installing..."
+                    mkdir -p $HOME/.local/bin
+                    curl -fsSL $HELM_URL | tar -xz --strip-components=1 -C $HOME/.local/bin linux-amd64/helm
+                    chmod +x $HOME/.local/bin/helm
+                    echo "Helm installed in $HOME/.local/bin"
+                else
+                    echo "Helm already installed."
+                fi
+                
+                export PATH="$HOME/.local/bin:$PATH"
+                helm version
+                """
+            }
+        }
+        stage('Prepare Kubernetes') {
+            steps {
+                withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
+                    sh """
+                        kubectl config set-cluster ${CLUSTER_NAME} --server=${API_SERVER} --insecure-skip-tls-verify=true
+                        kubectl config set-credentials jenkins --token=${K8S_TOKEN}
+                        kubectl config set-context ${CONTEXT_NAME} --cluster=${CLUSTER_NAME} --user=jenkins
+                        kubectl config use-context ${CONTEXT_NAME}
+
+                        echo "Checking kube-proxy strictARP setting..."
+                        if ! kubectl get configmap kube-proxy -n kube-system -o yaml | grep -q "strictARP: true"; then
+                            echo "Applying kube-proxy strictARP change..."
+                            kubectl get configmap kube-proxy -n kube-system -o yaml | \
+                            sed 's/strictARP: false/strictARP: true/' | \
+                            kubectl apply -f - -n kube-system
+                        else
+                            echo "No changes needed in kube-proxy."
+                        fi
+                        
+                    """
+                }
+            }
+        }
+        stage('Deploy MetalLB') {
+            steps {
+                withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
+                    dir("${env.CHART_DIR}") {
+                        sh """
+                        helm repo add metallb https://metallb.github.io/metallb
+                        helm repo update
+                        helm upgrade --install metallb metallb/metallb \
+                            --namespace metallb-system --create-namespace \
+                            --version ${METALLB_VERSION} \
+                            -f ${VALUES_URL}
+                        """
+                    }
+                }
+            }
+        }
+        stage('Apply MetalLB Config') {
+            steps {
+                dir("${env.CHART_DIR}") {
+                    sh """
+                    export PATH="$HOME/.local/bin:$PATH"
+                    kubectl apply -f ${METALLB_CONFIG} -n metallb-system
+                    """
+                }
+            }
+        }
+    }
+}

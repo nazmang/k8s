@@ -1,0 +1,16 @@
+resources:
+  - https://downloads.portainer.io/ce-lts/portainer-agent-k8s-lb.yaml
+
+patches:
+  - target:
+      kind: Service
+      name: portainer
+    patch: |-
+      - op: add
+        path: /metadata/annotations
+        value:
+          metallb.universe.tf/allow-shared-ip: "portainer"
+      - op: replace
+        path: /spec/loadBalancerIP
+        value: 10.0.55.100
+
