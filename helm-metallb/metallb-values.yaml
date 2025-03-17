@@ -1,0 +1,7 @@
+configInline:
+  address-pools:
+    - name: first-pool
+      protocol: layer2
+      addresses:
+        - 10.0.55.1-10.0.55.100
+
