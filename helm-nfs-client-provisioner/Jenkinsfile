@@ -51,7 +51,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy Chart') {
+        stage('Deploy nfs-client-provisioner') {
             when {
                 changeset "**/${env.CHART_DIR}/**"
             }
