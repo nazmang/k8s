@@ -1,0 +1,12 @@
+grafana:
+  enabled: false
+  
+alertmanager:
+  enabled: false   
+  
+prometheus:
+  prometheusSpec:
+    scrapeInterval: 1m
+    evaluationInterval: 1m    
+  service:
+    type: LoadBalancer
