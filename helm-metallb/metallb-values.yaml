@@ -1,7 +1,7 @@
 prometheusRule:
   enabled: true
-  
-controller: 
+
+controller:
   metrics:
     enabled: false
     service:
@@ -9,7 +9,7 @@ controller:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "7472"
-        prometheus.io/path: "/metrics" 
+        prometheus.io/path: "/metrics"
     serviceMonitor:
       enabled: false
       ## @param controller.metrics.serviceMonitor.namespace Namespace which Prometheus is running in
@@ -46,9 +46,9 @@ controller:
       ## @param controller.metrics.serviceMonitor.honorLabels honorLabels chooses the metric's labels on collisions with target labels
       ##
       honorLabels: false
-      
-speaker: 
- ## @section Speaker Prometheus metrics export
+
+speaker:
+  ## @section Speaker Prometheus metrics export
   metrics:
     ## @param speaker.metrics.enabled Enable the export of Prometheus metrics
     ##

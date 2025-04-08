@@ -12,13 +12,10 @@ pipeline {
         HELM_URL="https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz"
     }
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main',
-                url: 'https://github.com/nazmang/k8s.git'
-            }
-        }
         stage('Install Helm') {
+            when {
+                    changeset "**/${env.CHART_DIR}/**"
+            }
             steps {
                 sh """
                 if ! command -v helm &> /dev/null; then
@@ -37,7 +34,10 @@ pipeline {
             }
         }
         stage('Prepare Kubernetes') {
-            steps {
+            when {
+                    changeset "**/${env.CHART_DIR}/**"
+            }
+            steps {                
                 withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
                     sh """
                         kubectl config set-cluster ${CLUSTER_NAME} --server=${API_SERVER} --insecure-skip-tls-verify=true
@@ -60,7 +60,10 @@ pipeline {
             }
         }
         stage('Deploy MetalLB') {
-            steps {
+            when {
+                    changeset "**/${env.CHART_DIR}/**"
+            }
+            steps {                
                 withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
                     dir("${env.CHART_DIR}") {
                         sh """
@@ -76,7 +79,10 @@ pipeline {
             }
         }
         stage('Apply MetalLB Config') {
-            steps {
+            when {
+                    changeset "**/${env.CHART_DIR}/**"
+            }
+            steps {                
                 dir("${env.CHART_DIR}") {
                     sh """
                     export PATH="$HOME/.local/bin:$PATH"
