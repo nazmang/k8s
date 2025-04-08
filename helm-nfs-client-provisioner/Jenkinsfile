@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage('Install Helm') {
             when {
-                    changeset "**/${env.CHART_DIR}/**"
+                changeset "**/${env.CHART_DIR}/**"
             }
             steps {
                 sh """
@@ -37,7 +37,7 @@ pipeline {
         }
         stage('Prepare Kubernetes') {
             when {
-                    changeset "**/${env.CHART_DIR}/**"
+                changeset "**/${env.CHART_DIR}/**"
             }
             steps {                
                 withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
@@ -52,7 +52,7 @@ pipeline {
         }
         stage('Deploy Chart') {
             when {
-                    changeset "**/${env.CHART_DIR}/**"
+                changeset "**/${env.CHART_DIR}/**"
             }
             steps {                
                 withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
