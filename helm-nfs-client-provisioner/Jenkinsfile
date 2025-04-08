@@ -10,6 +10,7 @@ pipeline {
         HELM_REPO_NAME = "${params.HELM_REPO_NAME}"
         HELM_REPO_URL = "${params.HELM_REPO_URL}"
         HELM_RELEASE_NAME = "${params.HELM_RELEASE_NAME}"
+        HELM_CHART_NAME ="${params.HELM_CHART_NAME}"
         NAMESPACE = "${params.K8S_NAMESPACE}"
         VALUES_URL = "${params.VALUES_URL}"
     }
