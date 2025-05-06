@@ -1,0 +1,27 @@
+resources:
+  - 00-namespace.yaml
+  - fluent-bit/02-daemonset.yaml
+  - fluentd/02-deployment.yaml
+  - fluentd/03-pvc.yaml
+  - fluentd/04-service.yaml
+
+configMapGenerator:
+  - name: fluent-bit-config
+    namespace: logging
+    files:
+      - config/fluent-bit.conf
+      - config/parsers.conf
+      - config/input-kubernetes.conf
+      - config/output.conf
+    options:
+      annotations:
+        checksum/config: sha256-of-config-content
+      disableNameSuffixHash: true
+  - name: fluentd-config
+    namespace: logging
+    files:
+      - config/fluent.conf
+    options:
+      annotations:
+        checksum/config: sha256-of-config-content
+      disableNameSuffixHash: true
