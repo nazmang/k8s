@@ -1,0 +1,37 @@
+<source>
+    @type forward
+    port 24224
+</source>
+
+#<match **>
+#  @type stdout
+#</match>
+
+
+<match kube.**>
+    @type copy
+    <store>
+        @type file
+        path /fluentd/log
+        append true
+    </store>
+    
+    <store>
+        @type opensearch
+        host opensearch.comintern.local
+        scheme https
+        port 9200
+        user "${OPENSEARCH_USER}"
+        password "${OPENSEARCH_PASS}"
+        logstash_format true
+        #index_name kubernetes.${tag}.%Y%m%d
+        logstash_prefix kubernetes
+        logstash_prefix_key kubernetes
+        logstash_dateformat %Y.%m.%d
+        type_name _doc
+        include_tag_key true
+        ssl_verify false
+        request_timeout 30s
+        reconnect_on_error true
+    </store>
+</match>

@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: opensearch
+  namespace: logging
+spec:
+  type: ExternalName
+  externalName: opensearch.comintern.local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fluentd
+  namespace: logging
+spec:
+  selector:
+    app: fluentd
+  ports:
+    - name: forward
+      port: 24224
+      targetPort: 24224
