@@ -1,0 +1,41 @@
+pipeline {
+    agent { label 'k8s'}
+    environment {
+        API_SERVER = "https://${params.K8S_API_HOST}:${params.K8S_API_PORT}"
+        CLUSTER_NAME = "${params.K8S_CLUSTER}"
+        CONTEXT_NAME = "${params.K8S_CONTEXT}"
+        DEPLOYMENT_DIR = "${params.DEPLOYMENT_DIR}"
+        DEPLOYMENT_URL = "https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-${params.INGRESS_VER}/deploy/static/provider/cloud/deploy.yaml"
+        DEPLOYMENT_NAME = "ingress-nginx"
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                url: 'https://github.com/nazmang/k8s.git'
+            }
+        }
+        stage('Prepare Kubernetes') {
+            steps {
+                withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
+                    sh """
+                        kubectl config set-cluster ${CLUSTER_NAME} --server=${API_SERVER} --insecure-skip-tls-verify=true
+                        kubectl config set-credentials jenkins --token=${K8S_TOKEN}
+                        kubectl config set-context ${CONTEXT_NAME} --cluster=${CLUSTER_NAME} --user=jenkins
+                        kubectl config use-context ${CONTEXT_NAME}
+                    """
+                }
+            }
+        }
+        stage('Apply Portainer Config') {
+            steps {
+                dir("${env.DEPLOYMENT_DIR}") {
+                    sh """
+                    export PATH="$HOME/.local/bin:$PATH"
+                    kubectl apply -f ${DEPLOYMENT_URL} -n ${DEPLOYMENT_NAME}
+                    """
+                }
+            }
+        }
+    }
+}
