@@ -5,8 +5,7 @@ pipeline {
         CLUSTER_NAME = "${params.K8S_CLUSTER}"
         CONTEXT_NAME = "${params.K8S_CONTEXT}"
         DEPLOYMENT_DIR = "${params.DEPLOYMENT_DIR}"
-        DEPLOYMENT_URL = "https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-${params.INGRESS_VER}/deploy/static/provider/cloud/deploy.yaml"
-        DEPLOYMENT_NAME = "ingress-nginx"
+        DEPLOYMENT_NAME = "portainer"
     }
     stages {
         stage('Checkout') {
@@ -32,7 +31,7 @@ pipeline {
                 dir("${env.DEPLOYMENT_DIR}") {
                     sh """
                     export PATH="$HOME/.local/bin:$PATH"
-                    kubectl apply -f ${DEPLOYMENT_URL} -n ${DEPLOYMENT_NAME}
+                    kubectl apply -k . -n ${DEPLOYMENT_NAME}
                     """
                 }
             }
