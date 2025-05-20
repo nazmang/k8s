@@ -1,0 +1,25 @@
+namespace: "cert-manager"
+
+prometheus:
+  enabled: false
+
+webhook:
+  enabled: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+cainjector:
+  enabled: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+startupapicheck:
+  enabled: true
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
