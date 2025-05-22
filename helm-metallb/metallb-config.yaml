@@ -31,3 +31,12 @@ spec:
   myASN: 64512
   peerASN: 65530
   peerAddress: 192.168.150.10
+---
+apiVersion: metallb.io/v1beta1
+kind: BGPAdvertisement
+metadata:
+  name: example
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - first-pool
