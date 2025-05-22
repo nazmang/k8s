@@ -30,4 +30,4 @@ metadata:
 spec:
   myASN: 64512
   peerASN: 65530
-  peerAddress: 10.0.0.1
+  peerAddress: 192.168.150.10
