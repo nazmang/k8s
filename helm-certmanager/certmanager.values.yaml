@@ -1,7 +1,7 @@
 namespace: "cert-manager"
 
 crds:
-  enabled: false
+  enabled: true
   keep: true
 
 prometheus:
