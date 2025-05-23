@@ -1,14 +1,13 @@
 namespace: "cert-manager"
 
 crds:
-  enabled: false
+  enabled: true
   keep: true
 
 prometheus:
   enabled: false
 
 webhook:
-  enabled: true
   resources:
     requests:
       cpu: 100m
