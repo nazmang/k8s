@@ -8,7 +8,6 @@ prometheus:
   enabled: false
 
 webhook:
-  enabled: true
   resources:
     requests:
       cpu: 100m
