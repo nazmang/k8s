@@ -64,7 +64,8 @@ pipeline {
                             helm repo add ${env.HELM_REPO_NAME} ${env.HELM_REPO_URL} 
                             helm repo update
                             helm upgrade --install ${env.HELM_RELEASE_NAME} ${env.HELM_CHART_NAME} \
-                            --namespace ${env.NAMESPACE} --version ${env.HELM_CHART_VERSION} --create-namespace -f ${VALUES_URL}
+                            --namespace ${env.NAMESPACE} --version ${env.HELM_CHART_VERSION} \ 
+                            --create-namespace -f ${VALUES_URL}
                         """
                     }
                 }
