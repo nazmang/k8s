@@ -169,7 +169,7 @@ externalRedis:
   ## Redis&reg; host
   ## @param externalRedis.host External Redis host
   ##
-  host: ""
+  host: "redis.redis.svc.cluster.local"
   ## Redis&reg; port
   ## @param externalRedis.port External Redis port
   ##
@@ -182,7 +182,7 @@ externalRedis:
   ## Name of existing secret object containing the password
   ## @param externalRedis.existingSecret Existing secret for the external redis
   ##
-  existingSecret: ""
+  existingSecret: "redis-auth"
   ## Password key to be retrieved from Redis&reg; secret
   ## @param externalRedis.existingSecretPasswordKey Password key for the existing secret containing the external redis password
   ##
