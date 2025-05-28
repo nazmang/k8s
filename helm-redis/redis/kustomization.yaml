@@ -3,6 +3,9 @@ kind: Kustomization
 
 namespace: argocd
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 secretGenerator:
   - name: redis-auth
     files:

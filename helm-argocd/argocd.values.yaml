@@ -169,7 +169,7 @@ externalRedis:
   ## Redis&reg; host
   ## @param externalRedis.host External Redis host
   ##
-  host: "redis.redis.svc.cluster.local"
+  host: "redis-master"
   ## Redis&reg; port
   ## @param externalRedis.port External Redis port
   ##
@@ -178,15 +178,17 @@ externalRedis:
   ## Ignored if existingSecret is set
   ## @param externalRedis.password External Redis password
   ##
-  password: ""
+  password: "superSecretP@ss123"
   ## Name of existing secret object containing the password
   ## @param externalRedis.existingSecret Existing secret for the external redis
   ##
-  existingSecret: "redis-auth"
+  # existingSecret: "redis-auth"
+  existingSecret: ""
   ## Password key to be retrieved from Redis&reg; secret
   ## @param externalRedis.existingSecretPasswordKey Password key for the existing secret containing the external redis password
   ##
-  existingSecretPasswordKey: "redis-password"
+  # existingSecretPasswordKey: "redis-password"
+  existingSecretPasswordKey: ""
   ## Specify a label to use with the label selector
   ## @param externalRedis.selector External Redis selector labels
   ##
@@ -196,3 +198,8 @@ externalRedis:
   # app.kubernetes.io/component: master
   # app.kubernetes.io/instance: redis
   # app.kubernetes.io/name: redis
+
+redisWait:
+  ## @param redisWait.enabled Enables waiting for redis
+  ##
+  enabled: false

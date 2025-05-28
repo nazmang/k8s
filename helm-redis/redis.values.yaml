@@ -7,7 +7,7 @@ auth:
   existingSecretPasswordKey: redis-password
 
 tls:
-  enabled: true
+  enabled: false
   existingSecret: redis-tls
   authClients: true
   certCAFilename: ca.crt
