@@ -14,7 +14,7 @@ pipeline {
         HELM_CHART_VERSION="${params.HELM_CHART_VERSION}"
         NAMESPACE = "${params.K8S_NAMESPACE}"
         VALUES_URL = "${params.VALUES_URL}"
-        DEPLOYMENT_CONFIG="cermananger-config.yaml"
+        DEPLOYMENT_CONFIG="redis/"
     }
     stages {
         stage('Install Helm') {
@@ -78,7 +78,7 @@ pipeline {
                 dir("${env.CHART_DIR}") {
                     sh """
                     export PATH="$HOME/.local/bin:$PATH"
-                    kubectl apply -f ${DEPLOYMENT_CONFIG} -n ${env.NAMESPACE}
+                    kubectl apply -k ${DEPLOYMENT_CONFIG} -n ${env.NAMESPACE}
                     """
                 }
             }

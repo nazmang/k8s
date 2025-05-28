@@ -12,5 +12,5 @@ spec:
     - redis
     - redis.redis.svc.cluster.local
   issuerRef:
-    name: letsencrypt-cluster-issuer
+    name: selfsigned-issuer
     kind: ClusterIssuer
