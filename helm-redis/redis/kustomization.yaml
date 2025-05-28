@@ -8,8 +8,8 @@ generatorOptions:
 
 secretGenerator:
   - name: redis-auth
-    files:
-      - redis-password=redis-password.txt
+    envs:
+      - .env
     type: Opaque
 
 resources:
