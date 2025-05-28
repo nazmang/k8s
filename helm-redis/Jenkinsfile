@@ -14,7 +14,7 @@ pipeline {
         HELM_CHART_VERSION="${params.HELM_CHART_VERSION}"
         NAMESPACE = "${params.K8S_NAMESPACE}"
         VALUES_URL = "${params.VALUES_URL}"
-        DEPLOYMENT_CONFIG="redis/"
+        DEPLOYMENT_CONFIG="redis"
     }
     stages {
         stage('Install Helm') {
