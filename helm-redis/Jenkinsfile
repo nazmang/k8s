@@ -14,6 +14,7 @@ pipeline {
         HELM_CHART_VERSION="${params.HELM_CHART_VERSION}"
         NAMESPACE = "${params.K8S_NAMESPACE}"
         VALUES_URL = "${params.VALUES_URL}"
+        REDIS_PASSWORD = "${params.REDIS_PASSWORD}"
         DEPLOYMENT_CONFIG="redis"
     }
     stages {
@@ -78,6 +79,7 @@ pipeline {
                 dir("${env.CHART_DIR}") {
                     sh """
                     export PATH="$HOME/.local/bin:$PATH"
+                    echo redis-password=${env.REDIS_PASSWORD} > ${DEPLOYMENT_CONFIG}/.env
                     kubectl apply -k ${DEPLOYMENT_CONFIG} -n ${env.NAMESPACE}
                     """
                 }
