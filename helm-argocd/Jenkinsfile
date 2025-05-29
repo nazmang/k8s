@@ -15,7 +15,7 @@ pipeline {
         NAMESPACE = "${params.K8S_NAMESPACE}"
         VALUES_URL = "${params.VALUES_URL}"
         // REDIS_PASSWORD = "${params.REDIS_PASSWORD}"
-        DEPLOYMENT_CONFIG="redis"
+        DEPLOYMENT_CONFIG="main.yaml"
     }
     stages {
         stage('Install Helm') {
@@ -70,6 +70,20 @@ pipeline {
                     }
                 }
             }
-        }        
+        }   
+        stage('Apply config') {
+            when {
+                    changeset "**/${env.CHART_DIR}/**"
+            }
+            steps {                
+                dir("${env.CHART_DIR}") {
+                    sh """
+                    export PATH="$HOME/.local/bin:$PATH"
+                    echo redis-password=${env.REDIS_PASSWORD} > ${DEPLOYMENT_CONFIG}/.env
+                    kubectl apply -f ${DEPLOYMENT_CONFIG} -n ${env.NAMESPACE}
+                    """
+                }
+            }
+        }     
     }
 }
