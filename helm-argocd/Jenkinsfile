@@ -16,6 +16,7 @@ pipeline {
         VALUES_URL = "${params.VALUES_URL}"
         // REDIS_PASSWORD = "${params.REDIS_PASSWORD}"
         DEPLOYMENT_CONFIG="main.yaml"
+        DEPLOYMENT_BRANCH="main"
     }
     stages {
         stage('Install Helm') {
@@ -56,9 +57,12 @@ pipeline {
         }
         stage('Deploy Chart') {
             when {
-                changeset "**/${env.CHART_DIR}/**"
+                allOf {
+                    branch env.DEPLOYMENT_BRANCH
+                    changeset "**/${env.CHART_DIR}/**/*values*.yaml"
+                }
             }
-            steps {                
+            steps {
                 withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
                     dir("${env.CHART_DIR}") {
                         sh """
@@ -70,20 +74,22 @@ pipeline {
                     }
                 }
             }
-        }   
+        }
         stage('Apply config') {
             when {
-                    changeset "**/${env.CHART_DIR}/**"
+                allOf {
+                    branch env.DEPLOYMENT_BRANCH
+                    changeset "**/${env.CHART_DIR}/${env.DEPLOYMENT_CONFIG}"
+                }
             }
-            steps {                
+            steps {
                 dir("${env.CHART_DIR}") {
                     sh """
-                    export PATH="$HOME/.local/bin:$PATH"
-                    echo redis-password=${env.REDIS_PASSWORD} > ${DEPLOYMENT_CONFIG}/.env
-                    kubectl apply -f ${DEPLOYMENT_CONFIG} -n ${env.NAMESPACE}
+                        export PATH="$HOME/.local/bin:$PATH"
+                        kubectl apply -f ${env.DEPLOYMENT_CONFIG} -n ${env.NAMESPACE}
                     """
                 }
             }
-        }     
+        }
     }
 }
