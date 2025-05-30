@@ -7,8 +7,8 @@ metadata:
 spec:
   description: Project for local k8s cluster
   sourceRepos:
-    - https://github.com/nazmang/*
-    - https://kubernetes-sigs.github.io/*
+    - https://github.com/nazmang/k8s.git
+    - https://kubernetes-sigs.github.io/external-dns/
   destinations:
     - namespace: "*"
       server: https://kubernetes.default.svc
