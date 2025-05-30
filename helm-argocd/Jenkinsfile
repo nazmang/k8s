@@ -99,7 +99,7 @@ pipeline {
         stage('Apply apps') {
             when {
                 allOf {
-                    branch env.DEPLOYMENT_BRANCH
+                    // branch env.DEPLOYMENT_BRANCH
                     changeset "${env.APPS_DIR}/**/*.yaml"
                 }
             }
