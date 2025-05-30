@@ -1,0 +1,15 @@
+# provider: cloudflare
+
+# cloudflare:
+#   email: your@example.com
+#   apiToken: your-api-token
+
+# logLevel: info
+
+# policy: sync
+
+# domainFilters:
+#   - example.com
+
+# sources:
+#   - ingress
