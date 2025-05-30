@@ -60,7 +60,7 @@ pipeline {
             when {
                 allOf {
                     branch env.DEPLOYMENT_BRANCH
-                    changeset "**/${env.CHART_DIR}/*values*.yaml"
+                    changeset "${env.CHART_DIR}/*values*.yaml"
                 }
             }
             steps {
@@ -82,7 +82,7 @@ pipeline {
             when {
                 allOf {
                     branch env.DEPLOYMENT_BRANCH
-                    changeset "**/${env.CHART_DIR}/${env.DEPLOYMENT_CONFIG}"
+                    changeset "${env.CHART_DIR}/${env.DEPLOYMENT_CONFIG}"
                 }
             }
             steps {
@@ -100,7 +100,7 @@ pipeline {
             when {
                 allOf {
                     branch env.DEPLOYMENT_BRANCH
-                    changeset "**/${env.APPS_DIR}/*.yaml"
+                    changeset "${env.APPS_DIR}/**/*.yaml"
                 }
             }
             steps {
