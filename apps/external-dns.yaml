@@ -5,13 +5,16 @@ metadata:
   namespace: argocd
 spec:
   project: local
-  source:
-    repoURL: https://kubernetes-sigs.github.io/external-dns/
-    chart: external-dns
-    targetRevision: 1.14.4
-    helm:
-      valueFiles:
-        - helm-external-dns/values.yaml@values # Custom values.yaml
+  sources:
+    - repoURL: https://kubernetes-sigs.github.io/external-dns/
+      chart: external-dns
+      targetRevision: 1.14.4
+      helm:
+        valueFiles:
+          - helm-external-dns/values.yaml@values
+    - repoURL: https://github.com/nazmang/k8s.git
+      targetRevision: main
+      ref: values
   destination:
     server: https://kubernetes.default.svc
     namespace: external-dns
@@ -21,7 +24,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-  sources:
-    - repoURL: https://github.com/nazmang/k8s.git # Repo with values.yaml
-      targetRevision: main
-      ref: values
