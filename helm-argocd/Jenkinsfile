@@ -1,6 +1,6 @@
 pipeline {
     agent { label 'k8s'}
-    environment {        
+    environment {
         API_SERVER = "https://${params.K8S_API_HOST}:${params.K8S_API_PORT}"
         CLUSTER_NAME = "${params.K8S_CLUSTER}"
         CONTEXT_NAME = "${params.K8S_CONTEXT}"
@@ -35,7 +35,7 @@ pipeline {
                 else
                     echo "Helm already installed."
                 fi
-                
+
                 export PATH="$HOME/.local/bin:$PATH"
                 helm version
                 """
@@ -45,13 +45,13 @@ pipeline {
             when {
                 changeset "**/${env.CHART_DIR}/**"
             }
-            steps {                
+            steps {
                 withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
                     sh """
                         kubectl config set-cluster ${CLUSTER_NAME} --server=${API_SERVER} --insecure-skip-tls-verify=true
                         kubectl config set-credentials jenkins --token=${K8S_TOKEN}
                         kubectl config set-context ${CONTEXT_NAME} --cluster=${CLUSTER_NAME} --user=jenkins
-                        kubectl config use-context ${CONTEXT_NAME}                       
+                        kubectl config use-context ${CONTEXT_NAME}
                     """
                 }
             }
@@ -59,7 +59,7 @@ pipeline {
         stage('Deploy Chart') {
             when {
                 allOf {
-                    branch env.DEPLOYMENT_BRANCH
+                    // branch env.DEPLOYMENT_BRANCH
                     changeset "${env.CHART_DIR}/*values*.yaml"
                 }
             }
@@ -67,7 +67,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
                     dir("${env.CHART_DIR}") {
                         sh """
-                            helm repo add ${env.HELM_REPO_NAME} ${env.HELM_REPO_URL} 
+                            helm repo add ${env.HELM_REPO_NAME} ${env.HELM_REPO_URL}
                             helm repo update
                             helm upgrade --install ${env.HELM_RELEASE_NAME} ${env.HELM_CHART_NAME} \
                             --namespace ${env.NAMESPACE} --version ${env.HELM_CHART_VERSION} --create-namespace -f ${VALUES_URL} \
@@ -81,7 +81,7 @@ pipeline {
         stage('Apply config') {
             when {
                 allOf {
-                    branch env.DEPLOYMENT_BRANCH
+                    // branch env.DEPLOYMENT_BRANCH
                     changeset "${env.CHART_DIR}/${env.DEPLOYMENT_CONFIG}"
                 }
             }
