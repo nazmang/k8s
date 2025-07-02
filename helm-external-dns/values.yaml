@@ -33,7 +33,7 @@ provider:
   webhook:
     image:
       repository: ghcr.io/mirceanton/external-dns-provider-mikrotik
-      tag: 1.4.8
+      tag: 1.4.11
       pullPolicy: IfNotPresent
     env:
       - name: LOG_FORMAT
