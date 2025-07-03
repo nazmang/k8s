@@ -1,0 +1,57 @@
+pipeline {
+    agent { label 'k8s'}
+    environment {        
+        API_SERVER = "https://${params.K8S_API_HOST}:${params.K8S_API_PORT}"
+        CLUSTER_NAME = "${params.K8S_CLUSTER}"
+        CONTEXT_NAME = "${params.K8S_CONTEXT}"
+        NAMESPACE = "${params.K8S_NAMESPACE}"
+        VALUES_URL = "${params.VALUES_URL}"
+        MAINFEST_DIR = "${params.HELM_MAINFEST_DIR}"
+        DEPLOYMENT_CONFIG="mikrotik"
+        MIKROTIK_BASEURL="${params.MIKROTIK_BASEURL}"
+        MIKROTIK_USERNAME="${params.MIKROTIK_USERNAME}"
+        MIKROTIK_PASSWORD="${params.MIKROTIK_PASSWORD}"
+        MIKROTIK_SKIP_TLS_VERIFY="true"
+    }
+    stages {
+        
+        stage('Prepare Kubernetes') {
+            when {
+                changeset "**/${env.MAINFEST_DIR}/**"
+            }
+            steps {                
+                withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
+                    sh """
+                        kubectl config set-cluster ${CLUSTER_NAME} --server=${API_SERVER} --insecure-skip-tls-verify=true
+                        kubectl config set-credentials jenkins --token=${K8S_TOKEN}
+                        kubectl config set-context ${CONTEXT_NAME} --cluster=${CLUSTER_NAME} --user=jenkins
+                        kubectl config use-context ${CONTEXT_NAME}                       
+                    """
+                }
+            }
+        }        
+        stage('Apply config') {
+            when {
+                    changeset "**/${env.MAINFEST_DIR}/**"
+            }
+            steps {                
+                dir("${env.MAINFEST_DIR}") {
+                    script {
+                        def envContent = """
+                        MIKROTIK_BASEURL=${env.MIKROTIK_BASEURL}
+                        MIKROTIK_USERNAME=${env.MIKROTIK_USERNAME}
+                        MIKROTIK_PASSWORD=${env.MIKROTIK_PASSWORD}
+                        MIKROTIK_SKIP_TLS_VERIFY=${env.MIKROTIK_SKIP_TLS_VERIFY}
+                        """
+                        echo "Generated .env content:\n${envContent}"
+                        writeFile file: "${DEPLOYMENT_CONFIG}/.env", text: envContent
+                    }
+                    sh """
+                    export PATH="$HOME/.local/bin:$PATH"
+                    kubectl apply -k ${DEPLOYMENT_CONFIG} -n ${env.NAMESPACE}
+                    """
+                }
+            }
+        }
+    }
+}
