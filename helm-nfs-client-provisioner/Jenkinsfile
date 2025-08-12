@@ -12,8 +12,7 @@ pipeline {
         HELM_RELEASE_NAME = "${params.HELM_RELEASE_NAME}"
         HELM_CHART_NAME ="${params.HELM_CHART_NAME}"
         NAMESPACE = "${params.K8S_NAMESPACE}"
-        VALUES_URL = "${params.VALUES_URL}"
-        KUBECONFIG = "${WORKSPACE}/.kube/config"
+        VALUES_URL = "${params.VALUES_URL}"        
     }
     stages {
         stage('Install Helm') {
@@ -41,7 +40,7 @@ pipeline {
             steps {                
                 withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
                     sh """
-                        mkdir -p $(dirname ${KUBECONFIG})                        
+                        mkdir -p ${WORKSPACE}/.kube/config                      
                         kubectl config set-cluster ${CLUSTER_NAME} --server=${API_SERVER} --insecure-skip-tls-verify=true
                         kubectl config set-credentials jenkins --token=${K8S_TOKEN}
                         kubectl config set-context ${CONTEXT_NAME} --cluster=${CLUSTER_NAME} --user=jenkins
