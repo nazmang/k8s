@@ -51,10 +51,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy Chart') {
-            when {
-                changeset "**/${env.CHART_DIR}/**"
-            }
+        stage('Deploy Chart') {            
             steps {                
                 withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
                     dir("${env.CHART_DIR}") {
