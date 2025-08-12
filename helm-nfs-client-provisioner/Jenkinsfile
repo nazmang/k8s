@@ -41,7 +41,7 @@ pipeline {
             steps {                
                 withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
                     sh """
-                        mkdir -p $(dirname $KUBECONFIG)                        
+                        mkdir -p $(dirname ${KUBECONFIG})                        
                         kubectl config set-cluster ${CLUSTER_NAME} --server=${API_SERVER} --insecure-skip-tls-verify=true
                         kubectl config set-credentials jenkins --token=${K8S_TOKEN}
                         kubectl config set-context ${CONTEXT_NAME} --cluster=${CLUSTER_NAME} --user=jenkins
