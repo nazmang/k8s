@@ -1,11 +1,16 @@
-namespace: "cert-manager"
+namespace: 'cert-manager'
+
+extraArgs:
+  - --enable-certificate-owner-ref=true
+  - --cluster-resource-namespace=$(POD_NAMESPACE)
+  - --controllers=*,certificaterequests-approver
 
 crds:
   enabled: true
   keep: true
 
 prometheus:
-  enabled: false
+  enabled: true
 
 webhook:
   resources:
