@@ -1,0 +1,92 @@
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned-issuer
+spec:
+  selfSigned: {}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cert-comintern
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: comintern-cert
+  namespace: cert-comintern
+spec:
+  secretName: comintern-cert-tls
+  duration: 8760h # 1 year
+  renewBefore: 360h # 15 days
+  subject:
+    organizations:
+      - Comintern
+  commonName: comintern.local
+  dnsNames:
+    - comintern.local
+    - '*.comintern.local'
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cert-nfs-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: nas.comintern.local
+    path: /mnt/trash_pool/misc/certs
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cert-nfs-pvc
+  namespace: cert-comintern
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: cert-nfs-pv
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: sync-cert-to-nfs
+  namespace: cert-comintern
+spec:
+  schedule: '*/30 * * * *' # each 30 min
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          volumes:
+            - name: cert-secret
+              secret:
+                secretName: comintern-cert-tls
+            - name: cert-nfs
+              persistentVolumeClaim:
+                claimName: cert-nfs-pvc
+          containers:
+            - name: sync
+              image: busybox
+              command: ['/bin/sh', '-c']
+              args:
+                - cp /cert/tls.crt /nfs/comintern.local/comintern.crt &&
+                  cp /cert/tls.key /nfs/comintern.local/comintern.key
+              volumeMounts:
+                - mountPath: /cert
+                  name: cert-secret
+                  readOnly: true
+                - mountPath: /nfs
+                  name: cert-nfs
