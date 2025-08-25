@@ -1,5 +1,8 @@
 pipeline {
     agent { label 'k8s'}
+    parameters {
+        booleanParam(name: 'FORCE_DEPLOY', defaultValue: false, description: 'Force deployment ignoring changeset')       
+    }
     environment {
         VALUES_URL = "metallb-values.yaml"
         API_SERVER = "https://${params.K8S_API_HOST}:${params.K8S_API_PORT}"
@@ -14,7 +17,10 @@ pipeline {
     stages {
         stage('Install Helm') {
             when {
+                anyOf {
                     changeset "**/${env.CHART_DIR}/**"
+                    expression { return params.FORCE_DEPLOY }
+                }
             }
             steps {
                 sh """
@@ -35,7 +41,10 @@ pipeline {
         }
         stage('Prepare Kubernetes') {
             when {
+                anyOf {
                     changeset "**/${env.CHART_DIR}/**"
+                    expression { return params.FORCE_DEPLOY }
+                }
             }
             steps {                
                 withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
@@ -61,7 +70,10 @@ pipeline {
         }
         stage('Deploy MetalLB') {
             when {
+                anyOf {
                     changeset "**/${env.CHART_DIR}/**"
+                    expression { return params.FORCE_DEPLOY }
+                }
             }
             steps {                
                 withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
@@ -80,7 +92,10 @@ pipeline {
         }
         stage('Apply MetalLB Config') {
             when {
+                anyOf {
                     changeset "**/${env.CHART_DIR}/**"
+                    expression { return params.FORCE_DEPLOY }
+                }
             }
             steps {                
                 dir("${env.CHART_DIR}") {
