@@ -1,5 +1,8 @@
 pipeline {
     agent { label 'k8s'}
+    parameters {
+        booleanParam(name: 'FORCE_DEPLOY', defaultValue: false, description: 'Force deployment ignoring changeset')
+    }
     environment {
         API_SERVER = "https://${params.K8S_API_HOST}:${params.K8S_API_PORT}"
         CLUSTER_NAME = "${params.K8S_CLUSTER}"
@@ -22,7 +25,10 @@ pipeline {
     stages {
         stage('Install Helm') {
             when {
-                changeset "**/${env.CHART_DIR}/**"
+                anyOf {
+                    changeset "**/${env.CHART_DIR}/**"
+                    expression { return params.FORCE_DEPLOY }
+                }
             }
             steps {
                 sh """
@@ -43,7 +49,10 @@ pipeline {
         }
         stage('Prepare Kubernetes') {
             when {
-                changeset "**/${env.CHART_DIR}/**"
+                anyOf {
+                    changeset "**/${env.CHART_DIR}/**"
+                    expression { return params.FORCE_DEPLOY }
+                }
             }
             steps {
                 withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
@@ -58,9 +67,9 @@ pipeline {
         }
         stage('Deploy Chart') {
             when {
-                allOf {
-                    // branch env.DEPLOYMENT_BRANCH
-                    changeset "${env.CHART_DIR}/*values*.yaml"
+                anyOf {
+                    changeset "**/${env.CHART_DIR}/**"
+                    expression { return params.FORCE_DEPLOY }
                 }
             }
             steps {
@@ -80,9 +89,9 @@ pipeline {
         }
         stage('Apply config') {
             when {
-                allOf {
-                    // branch env.DEPLOYMENT_BRANCH
-                    changeset "${env.CHART_DIR}/${env.DEPLOYMENT_CONFIG}"
+                anyOf {
+                    changeset "**/${env.CHART_DIR}/**"
+                    expression { return params.FORCE_DEPLOY }
                 }
             }
             steps {
@@ -98,9 +107,9 @@ pipeline {
         }
         stage('Apply apps') {
             when {
-                allOf {
-                    // branch env.DEPLOYMENT_BRANCH
-                    changeset "${env.APPS_DIR}/**/*.yaml"
+                anyOf {
+                    changeset "**/${env.CHART_DIR}/**"
+                    expression { return params.FORCE_DEPLOY }
                 }
             }
             steps {
