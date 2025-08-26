@@ -9,7 +9,7 @@ pipeline {
         CONTEXT_NAME = "${params.K8S_CONTEXT}"
         NAMESPACE = "${params.K8S_NAMESPACE}"
         VALUES_URL = "${params.VALUES_URL}"
-        MAINFEST_DIR = "${params.HELM_MAINFEST_DIR}"
+        CHART_DIR = "${params.HELM_CHART_DIR}"
         DEPLOYMENT_CONFIG="./mikrotik"
         MIKROTIK_BASEURL="${params.MIKROTIK_BASEURL}"
         MIKROTIK_USERNAME="${params.MIKROTIK_USERNAME}"
@@ -44,7 +44,7 @@ pipeline {
                 }
             }
             steps {                
-                dir("${env.MAINFEST_DIR}") {
+                dir("${env.CHART_DIR}") {
                     script {
                         def envContent = """
                         MIKROTIK_BASEURL=${env.MIKROTIK_BASEURL}
@@ -52,8 +52,8 @@ pipeline {
                         MIKROTIK_PASSWORD=${env.MIKROTIK_PASSWORD}
                         MIKROTIK_SKIP_TLS_VERIFY=${env.MIKROTIK_SKIP_TLS_VERIFY}
                         """
-                        echo "Generated .env content:\n${envContent}"
-                        writeFile file: "${DEPLOYMENT_CONFIG}/.env", text: envContent
+                        // echo "Generated .env content:\n${envContent}"
+                        // writeFile file: "${DEPLOYMENT_CONFIG}/.env", text: envContent
                     }
                     sh """
                     export PATH="$HOME/.local/bin:$PATH"
