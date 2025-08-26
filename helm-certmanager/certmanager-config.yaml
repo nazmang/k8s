@@ -82,7 +82,8 @@ spec:
               image: busybox
               command: ['/bin/sh', '-c']
               args:
-                - cp /cert/tls.crt /nfs/comintern.local/comintern.crt &&
+                - mkdir -p /nfs/comintern.local/ &&
+                  cp /cert/tls.crt /nfs/comintern.local/comintern.crt &&
                   cp /cert/tls.key /nfs/comintern.local/comintern.key
               volumeMounts:
                 - mountPath: /cert
@@ -90,3 +91,44 @@ spec:
                   readOnly: true
                 - mountPath: /nfs
                   name: cert-nfs
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cert-srvx-cc
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-dns
+spec:
+  acme:
+    email: nazmang@gmail.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-dns-key
+    solvers:
+      - dns01:
+          digitalocean:
+            tokenSecretRef:
+              name: digitalocean-dns
+              key: access-token
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: srvx-cc-wildcard
+  namespace: cert-srvx-cc
+spec:
+  secretName: srvx-cc-tls
+  issuerRef:
+    name: letsencrypt-dns
+    kind: ClusterIssuer
+  commonName: '*.srvx.cc'
+  dnsNames:
+    - '*.srvx.cc'
+    - 'srvx.cc'
+  privateKey:
+    algorithm: RSA
+    size: 2048
+  fullChain: true
