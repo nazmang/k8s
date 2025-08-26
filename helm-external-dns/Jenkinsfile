@@ -10,7 +10,7 @@ pipeline {
         NAMESPACE = "${params.K8S_NAMESPACE}"
         VALUES_URL = "${params.VALUES_URL}"
         MAINFEST_DIR = "${params.HELM_MAINFEST_DIR}"
-        DEPLOYMENT_CONFIG="mikrotik"
+        DEPLOYMENT_CONFIG="./mikrotik"
         MIKROTIK_BASEURL="${params.MIKROTIK_BASEURL}"
         MIKROTIK_USERNAME="${params.MIKROTIK_USERNAME}"
         MIKROTIK_PASSWORD="${params.MIKROTIK_PASSWORD}"
