@@ -1,5 +1,8 @@
 pipeline {
     agent { label 'k8s'}
+    parameters {
+        booleanParam(name: 'FORCE_DEPLOY', defaultValue: false, description: 'Force deployment ignoring changeset')
+    }
     environment {        
         API_SERVER = "https://${params.K8S_API_HOST}:${params.K8S_API_PORT}"
         CLUSTER_NAME = "${params.K8S_CLUSTER}"
@@ -17,7 +20,10 @@ pipeline {
         
         stage('Prepare Kubernetes') {
             when {
-                changeset "**/${env.MAINFEST_DIR}/**"
+                anyOf {
+                    changeset "**/${env.CHART_DIR}/**"
+                    expression { return params.FORCE_DEPLOY }
+                }
             }
             steps {                
                 withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
@@ -32,7 +38,10 @@ pipeline {
         }        
         stage('Apply config') {
             when {
-                    changeset "**/${env.MAINFEST_DIR}/**"
+                anyOf {
+                    changeset "**/${env.CHART_DIR}/**"
+                    expression { return params.FORCE_DEPLOY }
+                }
             }
             steps {                
                 dir("${env.MAINFEST_DIR}") {
