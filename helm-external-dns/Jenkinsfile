@@ -44,7 +44,7 @@ pipeline {
                 }
             }
             steps {                
-                dir("${env.CHART_DIR}") {
+                dir("${env.CHART_DIR}/${env.DEPLOYMENT_CONFIG}") {
                     script {
                         def envContent = """
                         MIKROTIK_BASEURL=${env.MIKROTIK_BASEURL}
