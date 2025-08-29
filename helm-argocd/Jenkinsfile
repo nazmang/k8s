@@ -4,6 +4,7 @@ pipeline {
         booleanParam(name: 'FORCE_DEPLOY', defaultValue: false, description: 'Force deployment ignoring changeset')
     }
     environment {
+        SOPS_AGE_KEY = credentials('sops-age-key')
         API_SERVER = "https://${params.K8S_API_HOST}:${params.K8S_API_PORT}"
         CLUSTER_NAME = "${params.K8S_CLUSTER}"
         CONTEXT_NAME = "${params.K8S_CONTEXT}"
@@ -61,6 +62,23 @@ pipeline {
                         kubectl config set-credentials jenkins --token=${K8S_TOKEN}
                         kubectl config set-context ${CONTEXT_NAME} --cluster=${CLUSTER_NAME} --user=jenkins
                         kubectl config use-context ${CONTEXT_NAME}
+                    """
+                }
+            }
+        }
+        stage('Decrypt values') {
+            when {
+                anyOf {
+                    changeset "**/${env.CHART_DIR}/**"
+                    expression { return params.FORCE_DEPLOY }
+                }
+            }
+            steps {
+                dir("${env.CHART_DIR}") {
+                    sh """
+                    export SOPS_AGE_KEY
+                    echo "[INFO] Decrypting values file..."
+                    sops --decrypt --in-place ${VALUES_URL}
                     """
                 }
             }
