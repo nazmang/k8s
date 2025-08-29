@@ -1,206 +1,220 @@
 global:
-  defaultStorageClass: "nfs-client"
-
+    defaultStorageClass: nfs-client
 notifications:
-  enabled: true
-
-server:
-  ingress:
     enabled: true
-    hostname: argocd.comintern.local
-    ## e.g:
-    ## annotations:
-    ##   kubernetes.io/ingress.class: nginx
-    ##   cert-manager.io/cluster-issuer: cluster-issuer-name
-    ##
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      cert-manager.io/cluster-issuer: selfsigned-issuer
-      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-      nginx.ingress.kubernetes.io/ssl-redirect: "true"
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    ## Enable TLS configuration for the hostname defined at ingress.hostname parameter
-    ## TLS certificates will be retrieved from a TLS secret with name: {{- printf "%s-tls" .Values.ingress.hostname }}
-    ## You can use the ingress.secrets parameter to create this TLS secret or rely on cert-manager to create it
-    ##
-    tls: false
-    ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
-    ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
-    ##
-    ingressClassName: "nginx"
-
+server:
+    ingress:
+        enabled: true
+        hostname: argocd.comintern.local
+        ## e.g:
+        ## annotations:
+        ##   kubernetes.io/ingress.class: nginx
+        ##   cert-manager.io/cluster-issuer: cluster-issuer-name
+        ##
+        annotations:
+            kubernetes.io/ingress.class: nginx
+            cert-manager.io/cluster-issuer: selfsigned-issuer
+            nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+            nginx.ingress.kubernetes.io/ssl-redirect: "true"
+            nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        ## Enable TLS configuration for the hostname defined at ingress.hostname parameter
+        ## TLS certificates will be retrieved from a TLS secret with name: {{- printf "%s-tls" .Values.ingress.hostname }}
+        ## You can use the ingress.secrets parameter to create this TLS secret or rely on cert-manager to create it
+        ##
+        tls: false
+        ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
+        ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
+        ##
+        ingressClassName: nginx
 dex:
-  enabled: false
-
+    enabled: false
 config:
-  ## @param config.knownHosts [string] Known hosts to be added to the known hosts list by default. Check the values to see the default value
-  ##
-  knownHosts: |
-    bitbucket.org ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAubiN81eDcafrgMeLzaFPsw2kNvEcqTKl/VqLat/MaB33pZy0y3rJZtnqwR2qOOvbwKZYKiEO1O6VqNEBxKvJJelCq0dTXWT5pbO2gDXC6h6QDXCaHo6pOHGPUy+YBaGQRGuSusMEASYiWunYN0vCAI8QaXnWMXNMdFP3jHAJH0eDsoiGnLPBlBp4TNm6rYI74nMzgz3B9IikW4WVK+dc8KZJZWYjAuORU3jc1c/NPskD2ASinf8v3xnfXeukU0sJ5N6m5E8VLjObPEO+mN2t/FZTMZLiFqPWc/ALSqnMnnhwrNi2rbfg/rd/IpL8Le3pSBne8+seeFVBoGqzHM9yXw==
-    github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
-    gitlab.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFSMqzJeV9rUzU4kWitGjeR4PWSa29SPqJ1fVkhtj3Hw9xjLVXVYrU9QlYWrOLXBpQ6KWjbjTDTdDkoohFzgbEY=
-    gitlab.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf
-    gitlab.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsj2bNKTBSpIYDEGk9KxsGh3mySTRgMtXL583qmBpzeQ+jqCMRgBqB98u3z++J1sKlXHWfM9dyhSevkMwSbhoR8XIq/U0tCNyokEi/ueaBMCvbcTHhO7FcwzY92WK4Yt0aGROY5qX2UKSeOvuP4D6TPqKF1onrSzH9bx9XUf2lEdWT/ia1NEKjunUqu1xOB/StKDHMoX4/OKyIzuS0q/T1zOATthvasJFoPrAjkohTyaDUz2LN5JoH839hViyEG82yB+MjcFV5MU3N1l1QL3cVUCh93xSaua1N85qivl+siMkPGbO5xR/En4iEY6K2XPASUEMaieWVNTRCtJ4S8H+9
-    ssh.dev.azure.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
-    vs-ssh.visualstudio.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
-  ## @param config.tlsCerts TLS certificates used to verify the authenticity of the repository servers
-  ## Certificates will be generated by default if the values are not set.
-  ## E.g:
-  ## tlsCerts:
-  ##   argocd-1.example.com: |
-  ##     -----BEGIN CERTIFICATE-----
-  ##     (...)
-  ##     -----END CERTIFICATE-----
-  ##   argocd-2.example.com: |
-  ##     -----BEGIN CERTIFICATE-----
-  ##     (...)
-  ##     -----END CERTIFICATE-----
-  ##
-  tlsCerts: {}
-  ## @param config.gpgKeys GnuPG public keys to add to the keyring
-  ## Keys will be generated by default if the values are not set.
-  ## Note: Public keys should be exported with `gpg --export --armor <KEY>`
-  ##
-  gpgKeys: {}
-  # 4AEE18F83AFDEB23: |
-  #   -----BEGIN PGP PUBLIC KEY BLOCK-----
-  #   ...
-  #   -----END PGP PUBLIC KEY BLOCK-----
-  secret:
-    ## @param config.secret.create Whether to create or not the secret
+    ## @param config.knownHosts [string] Known hosts to be added to the known hosts list by default. Check the values to see the default value
     ##
-    create: true
-    ## Annotations to be added to argocd-secret
-    ## @param config.secret.annotations General secret extra annotations
-    ##
-    annotations: {}
-    ## Webhook Configs
-    ## @param config.secret.githubSecret GitHub secret to configure webhooks
-    ## @param config.secret.gitlabSecret GitLab secret to configure webhooks
-    ## @param config.secret.bitbucketServerSecret BitBucket secret to configure webhooks
-    ## @param config.secret.bitbucketUUID BitBucket UUID to configure webhooks
-    ## @param config.secret.gogsSecret Gogs secret to configure webhooks
-    ##
-    githubSecret: ""
-    gitlabSecret: ""
-    bitbucketServerSecret: ""
-    bitbucketUUID: ""
-    gogsSecret: ""
-    ## Extra keys to add to the general config secret. Useful for injecting SSO secrets into environment variables.
-    ## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sso
-    ## @param config.secret.extra Extra keys to add to the configuration secret.
-    ## All values must be non-empty.
+    knownHosts: |
+        bitbucket.org ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAubiN81eDcafrgMeLzaFPsw2kNvEcqTKl/VqLat/MaB33pZy0y3rJZtnqwR2qOOvbwKZYKiEO1O6VqNEBxKvJJelCq0dTXWT5pbO2gDXC6h6QDXCaHo6pOHGPUy+YBaGQRGuSusMEASYiWunYN0vCAI8QaXnWMXNMdFP3jHAJH0eDsoiGnLPBlBp4TNm6rYI74nMzgz3B9IikW4WVK+dc8KZJZWYjAuORU3jc1c/NPskD2ASinf8v3xnfXeukU0sJ5N6m5E8VLjObPEO+mN2t/FZTMZLiFqPWc/ALSqnMnnhwrNi2rbfg/rd/IpL8Le3pSBne8+seeFVBoGqzHM9yXw==
+        github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
+        gitlab.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFSMqzJeV9rUzU4kWitGjeR4PWSa29SPqJ1fVkhtj3Hw9xjLVXVYrU9QlYWrOLXBpQ6KWjbjTDTdDkoohFzgbEY=
+        gitlab.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf
+        gitlab.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsj2bNKTBSpIYDEGk9KxsGh3mySTRgMtXL583qmBpzeQ+jqCMRgBqB98u3z++J1sKlXHWfM9dyhSevkMwSbhoR8XIq/U0tCNyokEi/ueaBMCvbcTHhO7FcwzY92WK4Yt0aGROY5qX2UKSeOvuP4D6TPqKF1onrSzH9bx9XUf2lEdWT/ia1NEKjunUqu1xOB/StKDHMoX4/OKyIzuS0q/T1zOATthvasJFoPrAjkohTyaDUz2LN5JoH839hViyEG82yB+MjcFV5MU3N1l1QL3cVUCh93xSaua1N85qivl+siMkPGbO5xR/En4iEY6K2XPASUEMaieWVNTRCtJ4S8H+9
+        ssh.dev.azure.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
+        vs-ssh.visualstudio.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
+    ## @param config.tlsCerts TLS certificates used to verify the authenticity of the repository servers
+    ## Certificates will be generated by default if the values are not set.
     ## E.g:
-    ##  LDAP_PASSWORD: "mypassword"
-    ##
-    extra: {}
-    ## Argo CD TLS Data.
-    ## @param config.secret.argocdServerTlsConfig.key TLS key for the Argo CD config secret
-    ## @param config.secret.argocdServerTlsConfig.crt TLS certificate for the Argo CD config secret
-    ## E.g:
-    ##   key:
-    ##   crt: |
+    ## tlsCerts:
+    ##   argocd-1.example.com: |
     ##     -----BEGIN CERTIFICATE-----
-    ##     <cert data>
+    ##     (...)
     ##     -----END CERTIFICATE-----
+    ##   argocd-2.example.com: |
     ##     -----BEGIN CERTIFICATE-----
-    ##     <ca cert data>
+    ##     (...)
     ##     -----END CERTIFICATE-----
     ##
-    argocdServerTlsConfig:
-      key: ""
-      crt: ""
-    ## Argo admin password
-    ## @param config.secret.argocdServerAdminPassword Argo CD server admin password. Autogenerated by default.
+    tlsCerts: {}
+    ## @param config.gpgKeys GnuPG public keys to add to the keyring
+    ## Keys will be generated by default if the values are not set.
+    ## Note: Public keys should be exported with `gpg --export --armor <KEY>`
     ##
-    argocdServerAdminPassword: ""
-    ## Password modification time defaults to current time if not set
-    ## @param config.secret.argocdServerAdminPasswordMtime Argo CD server password modification time
-    ## E.g:
-    ## argocdServerAdminPasswordMtime: "2006-01-02T15:04:05Z"
-    ##
-    argocdServerAdminPasswordMtime: ""
-    ## Create a secret with optional repository credentials
-    ## @param config.secret.repositoryCredentials Repository credentials to add to the Argo CD server confgi secret
-    ## E.g.
-    ## repositoryCredentials:
-    ##   sample-ssh-key: |
-    ##     -----BEGIN RSA PRIVATE KEY-----
-    ##     <key content>
-    ##     -----END RSA PRIVATE KEY-----
-    ##
-    repositoryCredentials: {}
-    ## External Cluster Credentials
-    ## Refs:
-    ## - https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters
-    ## - https://argo-cd.readthedocs.io/en/stable/operator-manual/security/#external-cluster-credentials
-    ## @param config.clusterCredentials Configure external cluster credentials
-    ## E.g
-    ##  - name: mycluster
-    ##   server: https://mycluster.com
-    ##   labels: {}
-    ##   annotations: {}
-    ##   config:
-    ##     bearerToken: "<authentication token>"
-    ##     tlsClientConfig:
-    ##       insecure: false
-    ##       caData: "<base64 encoded certificate>"
-    ## - name: mycluster2
-    ##   server: https://mycluster2.com
-    ##   labels: {}
-    ##   annotations: {}
-    ##   namespaces: namespace1,namespace2
-    ##   config:
-    ##     bearerToken: "<authentication token>"
-    ##     tlsClientConfig:
-    ##       insecure: false
-    ##       caData: "<base64 encoded certificate>"
-    ##
-    clusterCredentials: []
-
+    gpgKeys: {}
+    # 4AEE18F83AFDEB23: |
+    #   -----BEGIN PGP PUBLIC KEY BLOCK-----
+    #   ...
+    #   -----END PGP PUBLIC KEY BLOCK-----
+    secret:
+        ## @param config.secret.create Whether to create or not the secret
+        ##
+        create: true
+        ## Annotations to be added to argocd-secret
+        ## @param config.secret.annotations General secret extra annotations
+        ##
+        annotations: {}
+        ## Webhook Configs
+        ## @param config.secret.githubSecret GitHub secret to configure webhooks
+        ## @param config.secret.gitlabSecret GitLab secret to configure webhooks
+        ## @param config.secret.bitbucketServerSecret BitBucket secret to configure webhooks
+        ## @param config.secret.bitbucketUUID BitBucket UUID to configure webhooks
+        ## @param config.secret.gogsSecret Gogs secret to configure webhooks
+        ##
+        githubSecret: ""
+        gitlabSecret: ""
+        bitbucketServerSecret: ""
+        bitbucketUUID: ""
+        gogsSecret: ""
+        ## Extra keys to add to the general config secret. Useful for injecting SSO secrets into environment variables.
+        ## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sso
+        ## @param config.secret.extra Extra keys to add to the configuration secret.
+        ## All values must be non-empty.
+        ## E.g:
+        ##  LDAP_PASSWORD: "mypassword"
+        ##
+        extra:
+            SOPS_AGE_KEY: ENC[AES256_GCM,data:GWmKqxIAI4GdfxKmmZERzsLf2X/2RLdf9mIfWMC1Z3Pr4m/RcpoqB2DzIe3OjHiI1uUefHhkSVoCqAYQ2pxJljISmZLDHV7ihuo=,iv:B4uSLEBDLTAaPhR2AKe4Ek0uhUff42bdLyEzyj5OVEg=,tag:Gxlp+8iotLu/4rwpWCkI7w==,type:str]
+        ## Argo CD TLS Data.
+        ## @param config.secret.argocdServerTlsConfig.key TLS key for the Argo CD config secret
+        ## @param config.secret.argocdServerTlsConfig.crt TLS certificate for the Argo CD config secret
+        ## E.g:
+        ##   key:
+        ##   crt: |
+        ##     -----BEGIN CERTIFICATE-----
+        ##     <cert data>
+        ##     -----END CERTIFICATE-----
+        ##     -----BEGIN CERTIFICATE-----
+        ##     <ca cert data>
+        ##     -----END CERTIFICATE-----
+        ##
+        argocdServerTlsConfig:
+            key: ""
+            crt: ""
+        ## Argo admin password
+        ## @param config.secret.argocdServerAdminPassword Argo CD server admin password. Autogenerated by default.
+        ##
+        argocdServerAdminPassword: ""
+        ## Password modification time defaults to current time if not set
+        ## @param config.secret.argocdServerAdminPasswordMtime Argo CD server password modification time
+        ## E.g:
+        ## argocdServerAdminPasswordMtime: "2006-01-02T15:04:05Z"
+        ##
+        argocdServerAdminPasswordMtime: ""
+        ## Create a secret with optional repository credentials
+        ## @param config.secret.repositoryCredentials Repository credentials to add to the Argo CD server confgi secret
+        ## E.g.
+        ## repositoryCredentials:
+        ##   sample-ssh-key: |
+        ##     -----BEGIN RSA KEY-----
+        ##     <key content>
+        ##     -----END RSA KEY-----
+        ##
+        repositoryCredentials: {}
+        ## External Cluster Credentials
+        ## Refs:
+        ## - https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters
+        ## - https://argo-cd.readthedocs.io/en/stable/operator-manual/security/#external-cluster-credentials
+        ## @param config.clusterCredentials Configure external cluster credentials
+        ## E.g
+        ##  - name: mycluster
+        ##   server: https://mycluster.com
+        ##   labels: {}
+        ##   annotations: {}
+        ##   config:
+        ##     bearerToken: "<authentication token>"
+        ##     tlsClientConfig:
+        ##       insecure: false
+        ##       caData: "<base64 encoded certificate>"
+        ## - name: mycluster2
+        ##   server: https://mycluster2.com
+        ##   labels: {}
+        ##   annotations: {}
+        ##   namespaces: namespace1,namespace2
+        ##   config:
+        ##     bearerToken: "<authentication token>"
+        ##     tlsClientConfig:
+        ##       insecure: false
+        ##       caData: "<base64 encoded certificate>"
+        ##
+        clusterCredentials: []
 redis:
-  enabled: false
-
+    enabled: false
 externalRedis:
-  ## Can be enabled after redisWait.enabled and redis.enabled are set to false
-  ## @param externalRedis.enabled Enables External Redis
-  ##
-  enabled: true
-  ## Redis&reg; host
-  ## @param externalRedis.host External Redis host
-  ##
-  host: "redis-master"
-  ## Redis&reg; port
-  ## @param externalRedis.port External Redis port
-  ##
-  port: 6379
-  ## Redis&reg; password for authentication
-  ## Ignored if existingSecret is set
-  ## @param externalRedis.password External Redis password
-  ##
-  password: ""
-  # password: "superSecretP@ss123"
-  ## Name of existing secret object containing the password
-  ## @param externalRedis.existingSecret Existing secret for the external redis
-  ##
-  existingSecret: "redis-auth"
-  # existingSecret: ""
-  ## Password key to be retrieved from Redis&reg; secret
-  ## @param externalRedis.existingSecretPasswordKey Password key for the existing secret containing the external redis password
-  ##
-  existingSecretPasswordKey: "redis-password"
-  # existingSecretPasswordKey: ""
-  ## Specify a label to use with the label selector
-  ## @param externalRedis.selector External Redis selector labels
-  ##
-  selector: {}
-  #
-  # selector:
-  # app.kubernetes.io/component: master
-  # app.kubernetes.io/instance: redis
-  # app.kubernetes.io/name: redis
-
+    ## Can be enabled after redisWait.enabled and redis.enabled are set to false
+    ## @param externalRedis.enabled Enables External Redis
+    ##
+    enabled: true
+    ## Redis&reg; host
+    ## @param externalRedis.host External Redis host
+    ##
+    host: redis-master
+    ## Redis&reg; port
+    ## @param externalRedis.port External Redis port
+    ##
+    port: 6379
+    ## Redis&reg; password for authentication
+    ## Ignored if existingSecret is set
+    ## @param externalRedis.password External Redis password
+    ##
+    password: ""
+    # password: "superSecretP@ss123"
+    ## Name of existing secret object containing the password
+    ## @param externalRedis.existingSecret Existing secret for the external redis
+    ##
+    existingSecret: ENC[AES256_GCM,data:JdskQGcqHfuGog==,iv:MkbhMZicZWnEtojlYDtgwWvtPKAlfqFF//1RHqY37Ek=,tag:fNK5YvHHIN+1/O5VRPJY4A==,type:str]
+    # existingSecret: ""
+    ## Password key to be retrieved from Redis&reg; secret
+    ## @param externalRedis.existingSecretPasswordKey Password key for the existing secret containing the external redis password
+    ##
+    existingSecretPasswordKey: ENC[AES256_GCM,data:4nUER75RVhjw/Dw/U84=,iv:8i6bLRAwsNl8fw02/d1WsW8sUzJkcdeLnP9hWqbqDgQ=,tag:9CJ9T137pJd/Po93Bnl08g==,type:str]
+    # existingSecretPasswordKey: ""
+    ## Specify a label to use with the label selector
+    ## @param externalRedis.selector External Redis selector labels
+    ##
+    selector: {}
+    #
+    # selector:
+    # app.kubernetes.io/component: master
+    # app.kubernetes.io/instance: redis
+    # app.kubernetes.io/name: redis
 redisWait:
-  ## @param redisWait.enabled Enables waiting for redis
-  ##
-  enabled: false
+    ## @param redisWait.enabled Enables waiting for redis
+    ##
+    enabled: false
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBleDl5emNXNzhsUXJCS2w3
+            ckZUY2Y4YmdXc2lnclVHbkxGVG13VnNxNlNVCmtjclp0cmpibVYzc0hPaGMrdTNz
+            N1FBSno2eXhTeUtQaElVQmVCYzlCSGcKLS0tIFpDSGx0RU5MNTYwQ0dCT2NyT2lm
+            ejhkMGRjRVlDa0VXODRxWDdSM0tNajAKRcVwT9BljHlVPVyLznayC3YIvhFabffK
+            ejFNGp6znxCGVkNwBCldRwfpdA9sa4mt/fRZkhxzRui6pprjeoK7Vw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-08-28T16:18:34Z"
+    mac: ENC[AES256_GCM,data:Wjrf0bx5A2XhRDwo5bZR/HQWd643FEI8DVjfeo/E/VgMMJEqxsHnZsriGQGEMXqiNXY/IA67aEukBlnIH1DXS6Mcu6NpKtau5/fRlHTSHhgqJjb0PHkJkdZh2/gQDfFIHPcgsmXejNtky/thwhWp7YFCY6U3wHPtQNK5gQj7eb4=,iv:rVnk/3wPJObgrg0Xj9OvesiPP8xHDqtPLzUV2ngNx44=,tag:KGsCnMKEO1GnSILjEKG1lA==,type:str]
+    pgp: []
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email)$
+    version: 3.7.1
