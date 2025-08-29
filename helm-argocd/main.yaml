@@ -41,3 +41,71 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ConfigManagementPlugin
+metadata:
+  name: sops-decrypt
+  namespace: argocd
+spec:
+  version: v1.0
+  init:
+    command: ["/bin/sh", "-c"]
+    args:
+      - |
+        set -euo pipefail
+        echo "[CMP:init] preparing sops binary (v3.10.2)..."
+
+        VERSION="v3.10.2"
+        ARCH=$(uname -m)
+        case "$ARCH" in
+          x86_64|amd64) ARCH="amd64" ;;
+          aarch64|arm64) ARCH="arm64" ;;
+          armv7l|armv7) ARCH="arm" ;;
+          *) echo "[CMP:init] Unsupported arch: $ARCH"; exit 1 ;;
+        esac
+
+        OS=$(uname -s | tr '[:upper:]' '[:lower:]') # linux/darwin
+        URL="https://github.com/getsops/sops/releases/download/v${VERSION}/sops-v${VERSION}.${OS}.${ARCH}"
+
+        echo "[CMP:init] Downloading SOPS from: $URL"
+        # -fS: fail on http error and show errors, -L for redirects
+        curl -fSL -o /tmp/sops "${URL}"
+        chmod +x /tmp/sops
+        /tmp/sops --version || (echo "[CMP:init] sops failed to run"; exit 1)
+        echo "[CMP:init] sops ready at /tmp/sops (v${VERSION})"
+  generate:
+    command: ["/bin/sh", "-c"]
+    args:
+      - |
+        set -euo pipefail
+        echo "[CMP:generate] start"
+
+        # Prefer system sops if present, otherwise use downloaded /tmp/sops
+        if command -v sops >/dev/null 2>&1 ; then
+          SOPS_BIN=$(command -v sops)
+        elif [ -x /tmp/sops ]; then
+          SOPS_BIN=/tmp/sops
+        else
+          echo "[CMP:generate] sops not found"; exit 1
+        fi
+        echo "[CMP:generate] using sops: ${SOPS_BIN}"
+
+        # Decrypt all .env.enc -> .env (in the repo/directory)
+        for f in $(find . -type f -name '*.env.enc' 2>/dev/null || true); do
+          out="${f%.enc}"
+          echo "[CMP:generate] decrypting ${f} -> ${out}"
+          "${SOPS_BIN}" --decrypt --output "${out}" "${f}"
+        done
+
+        # Optional: decrypt argocd.values.enc -> argocd.values.yaml (if used)
+        if [ -f "argocd.values.enc.yaml" ]; then
+          echo "[CMP:generate] decrypting argocd.values.enc.yaml -> argocd.values.yaml"
+          "${SOPS_BIN}" --decrypt --output argocd.values.yaml argocd.values.enc.yaml
+        fi
+
+        echo "[CMP:generate] running kustomize build ."
+        kustomize build .
+  discover:
+    fileName: "kustomization.yaml"
+
