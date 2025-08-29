@@ -46,8 +46,8 @@ pipeline {
                 if ! command -v sops &> /dev/null; then
                     echo "Installing SOPS..."
                     SOPS_VERSION=v3.10.2
-                    curl -sLo /usr/local/bin/sops https://github.com/getsops/sops/releases/download/\$SOPS_VERSION/sops-\$SOPS_VERSION.linux.amd64
-                    chmod +x /usr/local/bin/sops
+                    curl -sLo $HOME/.local/bin/sops https://github.com/getsops/sops/releases/download/\$SOPS_VERSION/sops-\$SOPS_VERSION.linux.amd64
+                    chmod +x $HOME/.local/bin/sops
                 fi
 
                 export PATH="\$HOME/.local/bin:\$PATH"
