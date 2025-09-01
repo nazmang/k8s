@@ -1,2 +1,4 @@
 k8s-jenkins
 k8s-postgres
+.pgp/
+.age/
