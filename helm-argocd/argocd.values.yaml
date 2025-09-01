@@ -92,7 +92,7 @@ config:
         ##  LDAP_PASSWORD: "mypassword"
         ##
         extra:
-            SOPS_AGE_KEY: ENC[AES256_GCM,data:aYIb3jZNK/whnriPW3NvNMaY8rNgM+GBLlTvfeWMYM8vjdxr/Qif9MV3pZw1yr53LjtoBj1rYXLzvYwOKpNZGRFdbx94p8cLUvc=,iv:/RuvUmK76UyGeIlu8vQPPXrlA6jeU9itSgQAhAr/PBI=,tag:j7gDRKXk6WvXRS8FNj1dHA==,type:str]
+            SOPS_AGE_KEY: ENC[AES256_GCM,data:UIpB/eP3B7Ua6O7w8SJvvhD/gVaA3nyPLDdMMVKYTtAck5fWuw7viNdzl9AxfkF4yG6nl5oyeQRXjf8qayNRy5DuREyNP5f+eW8=,iv:S964wADtD7JjRh6R/MfFQKBN9wiWiIlNinCY962YIC0=,tag:J58dgvJuDQimHLm6zFeySA==,type:str]
         ## Argo CD TLS Data.
         ## @param config.secret.argocdServerTlsConfig.key TLS key for the Argo CD config secret
         ## @param config.secret.argocdServerTlsConfig.crt TLS certificate for the Argo CD config secret
@@ -180,12 +180,12 @@ externalRedis:
     ## Name of existing secret object containing the password
     ## @param externalRedis.existingSecret Existing secret for the external redis
     ##
-    existingSecret: ENC[AES256_GCM,data:rOUppwKp8rbbow==,iv:wkDoCVIDv/uYitJtFC03wyA7TAjRaHx60sr3PR1CC58=,tag:eLQRce4RXI688uetW0C7Yw==,type:str]
+    existingSecret: ENC[AES256_GCM,data:/6l1E331Yffgeg==,iv:GU1NGFmab4GthlwsWYrrCn/smHxRJHV0GXlc/68ncnU=,tag:WXkNcSsYDMaWz2lcRSHMaw==,type:str]
     # existingSecret: ""
     ## Password key to be retrieved from Redis&reg; secret
     ## @param externalRedis.existingSecretPasswordKey Password key for the existing secret containing the external redis password
     ##
-    existingSecretPasswordKey: ENC[AES256_GCM,data:1IFlcLdgq/YaDeGbhww=,iv:rJHHOLmse4dFKJ9Tj4sAWLCAVo6Xox9ZikOGpzk1EUY=,tag:znsCkGHJC0H4aI8RPZI5Xg==,type:str]
+    existingSecretPasswordKey: ENC[AES256_GCM,data:uReZHPqHmZS3TaFMqrw=,iv:L+heyGcYeLB5Whipe+3TG8WJer7bAK5nflUp5/SB3S4=,tag:ktefzDL2cxm8UNZAIZdkJA==,type:str]
     # existingSecretPasswordKey: ""
     ## Specify a label to use with the label selector
     ## @param externalRedis.selector External Redis selector labels
@@ -233,14 +233,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBsM1hVYjFkM0hyTllhZC82
-            YnlwZW5iamc0Z2MyMWI2Tno3cGJmSUlkc0ZrCm9Rc2Vjb1RReEI4VjVZNWYwaHR5
-            SWtubUZQbnJOQ1VoMmJVSVhZcnFqVUUKLS0tIGhuR2xtODZHU09MUnVxeWs0ZUtq
-            UWp0OVV2RXB3S2RpQ2huSVBBSVptUGsKx/nBBOIE/dzIXLkq80UBJgzTej/wR812
-            8RBe+PYZTPJxD6tJQdeT9FWa62JsPJ4N2wi0rzADoO6ueLIzrBrJxw==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvUkpVZUxWcWptNlZOTGta
+            V3ZCQXM4dVdSSG5lY0dIK29RcTZjK1plVUdvCk5qdzZtSDZ2VDZLd0NBUjZLb21r
+            bXRVTkRiWWFMMUU3VkxlYmlEN29xdmsKLS0tIFFEeHVxNkFOenlHS1hMVFpZdlBQ
+            Q0lHTGluenlFQ2paOE5VY24ydFhaTGsK2iFWv1d8VO96wHAFkpyLz7oJ3KUwe96y
+            I4kjf9Gfbp+ViE21/Hr7k5OgtODCBM8OkIFaOs3Cczm0/OOtqY+0/w==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-09-01T18:46:29Z"
-    mac: ENC[AES256_GCM,data:Wn70wsg8JNGem+NBfiJHxoB5or55UFYXmhnP8Q/yK5WgeyKy95xmjCzPbh4ha3gUjxhBJzHQ+ZDhykuxLSrvD7yg8cOdmyN+S/9TsjjCIW7jhAkca9tiFynB62y7R8ZLT8npgK/x7y3KEsGybr5e6htz9Zt3RhUdi5oOESMUf2Q=,iv:xm8LOisvM5qpCf8mdCw55DeJB9xmNit0UCpskUbDSRU=,tag:cqQBVAYvK42JcmLLZVvPFw==,type:str]
+    lastmodified: "2025-09-01T19:05:33Z"
+    mac: ENC[AES256_GCM,data:q3UfFIXACjqCaAWbaATaNJBLF5pCnJ3Uj2dCqv54fymZCWrOjO4/tMbYfWrC8yv/qVWBSpgo8FHtmyVz85EBX7r2uzSEfqP/YGVM2jMnZ+fZ4aghpmh3CzunivGE7RwsovEFVEqOD5Jf+Zy1j7ZOSq3ypcStly0qU135TI8jhH0=,iv:OHU84HELdaF5XKeWzw3NWPzV8TXt3+Txe1eQG71wviU=,tag:FiaeH9AOsxuatxsy3AQ0zw==,type:str]
     pgp: []
-    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*)$
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL)$
     version: 3.7.1
