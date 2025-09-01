@@ -3,6 +3,8 @@ global:
 notifications:
     enabled: true
 server:
+    config:
+        kustomize.buildOptions: --enable-alpha-plugins --enable-exec
     ingress:
         enabled: true
         hostname: argocd.comintern.local
@@ -90,7 +92,7 @@ config:
         ##  LDAP_PASSWORD: "mypassword"
         ##
         extra:
-            SOPS_AGE_KEY: ENC[AES256_GCM,data:GWmKqxIAI4GdfxKmmZERzsLf2X/2RLdf9mIfWMC1Z3Pr4m/RcpoqB2DzIe3OjHiI1uUefHhkSVoCqAYQ2pxJljISmZLDHV7ihuo=,iv:B4uSLEBDLTAaPhR2AKe4Ek0uhUff42bdLyEzyj5OVEg=,tag:Gxlp+8iotLu/4rwpWCkI7w==,type:str]
+            SOPS_AGE_KEY: ENC[AES256_GCM,data:aYIb3jZNK/whnriPW3NvNMaY8rNgM+GBLlTvfeWMYM8vjdxr/Qif9MV3pZw1yr53LjtoBj1rYXLzvYwOKpNZGRFdbx94p8cLUvc=,iv:/RuvUmK76UyGeIlu8vQPPXrlA6jeU9itSgQAhAr/PBI=,tag:j7gDRKXk6WvXRS8FNj1dHA==,type:str]
         ## Argo CD TLS Data.
         ## @param config.secret.argocdServerTlsConfig.key TLS key for the Argo CD config secret
         ## @param config.secret.argocdServerTlsConfig.crt TLS certificate for the Argo CD config secret
@@ -178,12 +180,12 @@ externalRedis:
     ## Name of existing secret object containing the password
     ## @param externalRedis.existingSecret Existing secret for the external redis
     ##
-    existingSecret: ENC[AES256_GCM,data:JdskQGcqHfuGog==,iv:MkbhMZicZWnEtojlYDtgwWvtPKAlfqFF//1RHqY37Ek=,tag:fNK5YvHHIN+1/O5VRPJY4A==,type:str]
+    existingSecret: ENC[AES256_GCM,data:rOUppwKp8rbbow==,iv:wkDoCVIDv/uYitJtFC03wyA7TAjRaHx60sr3PR1CC58=,tag:eLQRce4RXI688uetW0C7Yw==,type:str]
     # existingSecret: ""
     ## Password key to be retrieved from Redis&reg; secret
     ## @param externalRedis.existingSecretPasswordKey Password key for the existing secret containing the external redis password
     ##
-    existingSecretPasswordKey: ENC[AES256_GCM,data:4nUER75RVhjw/Dw/U84=,iv:8i6bLRAwsNl8fw02/d1WsW8sUzJkcdeLnP9hWqbqDgQ=,tag:9CJ9T137pJd/Po93Bnl08g==,type:str]
+    existingSecretPasswordKey: ENC[AES256_GCM,data:1IFlcLdgq/YaDeGbhww=,iv:rJHHOLmse4dFKJ9Tj4sAWLCAVo6Xox9ZikOGpzk1EUY=,tag:znsCkGHJC0H4aI8RPZI5Xg==,type:str]
     # existingSecretPasswordKey: ""
     ## Specify a label to use with the label selector
     ## @param externalRedis.selector External Redis selector labels
@@ -198,6 +200,30 @@ redisWait:
     ## @param redisWait.enabled Enables waiting for redis
     ##
     enabled: false
+repoServer:
+    # Use init containers to configure custom tooling
+    # https://argoproj.github.io/argo-cd/operator-manual/custom_tools/
+    extraVolumes:
+        - name: custom-tools
+          emptyDir: {}
+    initContainers:
+        - name: install-ksops
+          image: viaductoss/ksops:v4.4.0
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - echo "Installing KSOPS..."; mv ksops /custom-tools/; mv kustomize /custom-tools/; echo "Done.";
+          volumeMounts:
+            - mountPath: /custom-tools
+              name: custom-tools
+    extraVolumeMounts:
+        - mountPath: /usr/local/bin/kustomize
+          name: custom-tools
+          subPath: kustomize
+        - mountPath: /usr/local/bin/ksops
+          name: custom-tools
+          subPath: ksops
 sops:
     kms: []
     gcp_kms: []
@@ -207,14 +233,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBleDl5emNXNzhsUXJCS2w3
-            ckZUY2Y4YmdXc2lnclVHbkxGVG13VnNxNlNVCmtjclp0cmpibVYzc0hPaGMrdTNz
-            N1FBSno2eXhTeUtQaElVQmVCYzlCSGcKLS0tIFpDSGx0RU5MNTYwQ0dCT2NyT2lm
-            ejhkMGRjRVlDa0VXODRxWDdSM0tNajAKRcVwT9BljHlVPVyLznayC3YIvhFabffK
-            ejFNGp6znxCGVkNwBCldRwfpdA9sa4mt/fRZkhxzRui6pprjeoK7Vw==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBsM1hVYjFkM0hyTllhZC82
+            YnlwZW5iamc0Z2MyMWI2Tno3cGJmSUlkc0ZrCm9Rc2Vjb1RReEI4VjVZNWYwaHR5
+            SWtubUZQbnJOQ1VoMmJVSVhZcnFqVUUKLS0tIGhuR2xtODZHU09MUnVxeWs0ZUtq
+            UWp0OVV2RXB3S2RpQ2huSVBBSVptUGsKx/nBBOIE/dzIXLkq80UBJgzTej/wR812
+            8RBe+PYZTPJxD6tJQdeT9FWa62JsPJ4N2wi0rzADoO6ueLIzrBrJxw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-08-28T16:18:34Z"
-    mac: ENC[AES256_GCM,data:Wjrf0bx5A2XhRDwo5bZR/HQWd643FEI8DVjfeo/E/VgMMJEqxsHnZsriGQGEMXqiNXY/IA67aEukBlnIH1DXS6Mcu6NpKtau5/fRlHTSHhgqJjb0PHkJkdZh2/gQDfFIHPcgsmXejNtky/thwhWp7YFCY6U3wHPtQNK5gQj7eb4=,iv:rVnk/3wPJObgrg0Xj9OvesiPP8xHDqtPLzUV2ngNx44=,tag:KGsCnMKEO1GnSILjEKG1lA==,type:str]
+    lastmodified: "2025-09-01T18:46:29Z"
+    mac: ENC[AES256_GCM,data:Wn70wsg8JNGem+NBfiJHxoB5or55UFYXmhnP8Q/yK5WgeyKy95xmjCzPbh4ha3gUjxhBJzHQ+ZDhykuxLSrvD7yg8cOdmyN+S/9TsjjCIW7jhAkca9tiFynB62y7R8ZLT8npgK/x7y3KEsGybr5e6htz9Zt3RhUdi5oOESMUf2Q=,iv:xm8LOisvM5qpCf8mdCw55DeJB9xmNit0UCpskUbDSRU=,tag:cqQBVAYvK42JcmLLZVvPFw==,type:str]
     pgp: []
-    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email)$
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*)$
     version: 3.7.1
