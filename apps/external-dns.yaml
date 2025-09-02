@@ -18,8 +18,7 @@ spec:
     - repoURL: https://github.com/nazmang/k8s.git
       targetRevision: main
       path: helm-external-dns/mikrotik      
-      plugin:
-        name: ksops
+      kustomize: {}
   destination:
     server: https://kubernetes.default.svc
     namespace: external-dns
