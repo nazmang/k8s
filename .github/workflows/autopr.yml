@@ -1,34 +1,20 @@
-name: Auto PR + Merge
+name: Auto PR
 
 on:
   push:
     branches:
-      - feature/*
-      - argocd/*
-
-permissions:
-  contents: write
-  pull-requests: write
+      - feature
+      - argocd
 
 jobs:
-  create-pr:
+  pull-request:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref_name }}
-          base: main
-          title: "Auto PR from ${{ github.ref_name }}"
-          body: "This PR was created automatically"
-
-      - name: Enable Auto-Merge
-        uses: peter-evans/enable-pull-request-automerge@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          merge-method: squash
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+    - uses: actions/checkout@v3
+    - name: pull-request
+    uses: diillson/auto-pull-request@v1.0.1
+      with:
+        destination_branch: "main"
+        pr_title: "Auto PR from ${{ github.ref_name }}r"
+        pr_body: |
+          :crown: *This PR was created automatically*
