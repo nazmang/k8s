@@ -91,8 +91,7 @@ config:
         ## E.g:
         ##  LDAP_PASSWORD: "mypassword"
         ##
-        extra:
-            SOPS_AGE_KEY: ENC[AES256_GCM,data:bbVz6vpi2JljONBqcGkfpJFywe8mYVPndcbbIpe0AeyWJDpGb4ZAKV1gqna2FskWqnG71A4z5qfGx/LC65nQfYHcQDmW3wVGT90=,iv:Xpw/KuK2PSO6OQBrtodugbp+vHAc+bUdiCpJEWsT760=,tag:ysggVkyNo8G5j5XcUYQueA==,type:str]
+        extra: {}
         ## Argo CD TLS Data.
         ## @param config.secret.argocdServerTlsConfig.key TLS key for the Argo CD config secret
         ## @param config.secret.argocdServerTlsConfig.crt TLS certificate for the Argo CD config secret
@@ -180,12 +179,12 @@ externalRedis:
     ## Name of existing secret object containing the password
     ## @param externalRedis.existingSecret Existing secret for the external redis
     ##
-    existingSecret: ENC[AES256_GCM,data:wiNRcmhTBbrNCQ==,iv:iJFmWJGJjj+A4aq9A9gdHQfAQG2KheEwy/sFuQu5wNQ=,tag:D7o1Hchcf9kRbNL2RCP7tQ==,type:str]
+    existingSecret: ENC[AES256_GCM,data:XjqCGBp5x9ygdA==,iv:+egJ2RWjH9nRouxd+TI7D4SJRc3GPJl/svAX6L0WUxI=,tag:uHdYgKTCJh5BNmCbbk5eZg==,type:str]
     # existingSecret: ""
     ## Password key to be retrieved from Redis&reg; secret
     ## @param externalRedis.existingSecretPasswordKey Password key for the existing secret containing the external redis password
     ##
-    existingSecretPasswordKey: ENC[AES256_GCM,data:BPt2pC+EbU55gv2mFy4=,iv:TiExxf3CbphT3Er4fA6jDe90XqTO8rVNbezmkR7iL3M=,tag:lj3aH8J8NEyQGuLnMzsDWw==,type:str]
+    existingSecretPasswordKey: ENC[AES256_GCM,data:CcvpQJtOVK+tv7dbSro=,iv:9vYYgt+9vgqrMxwWW0GHwLHjglA3Sj52Tw+lL7Tx1xQ=,tag:yfF+ZqyiaK5eRKRrwH8jMw==,type:str]
     # existingSecretPasswordKey: ""
     ## Specify a label to use with the label selector
     ## @param externalRedis.selector External Redis selector labels
@@ -224,7 +223,7 @@ repoServer:
         - mountPath: /usr/local/bin/ksops
           name: custom-tools
           subPath: ksops
-    extraEnvVarsSecret: ENC[AES256_GCM,data:vqfqAvRay8vHQc84rw==,iv:jNH7OENiNN02RncSzf737oji38HqQOBVwNVJNjFStXk=,tag:i3DEGA07s2WrTDkMEUsoTw==,type:str]
+    extraEnvVarsSecret: ENC[AES256_GCM,data:sIzBE6EcQSLTbOZX,iv:lbgqfmfNxXSfIljAgijs9JoS7PMaDv0dHDuG7M8OO90=,tag:S9YBoDAGB75Jtl/m6k/0PQ==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -234,14 +233,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBadGlrb2RBN2t1WnVXYkF3
-            WU01d3RacDVsZ09GaGxXa1Y4VzBocVNZckFBCnAzTnU0TTFqUGVqdnpnV1BWNEts
-            U0NOVVhRZ21UcUloazY4dnFOcG1Vd2MKLS0tIEMxRG5CNU9lazZXUEdVR29QSjVE
-            Wk5kOGZ5cVo3MEN3RGRxYXhGQ1VSdjgKF9S/VOA6csyyE05EcdfxHS/vWXTrO0YT
-            D0TAWtN4hwPmGrXTyTdFxBPeOm9PlDYNeCssK+J7qYlOPYrcx1PbCw==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBveFJGQk5UMmJZaXJweTlm
+            amV1T0dQNUlBbUV5THEzdkNoVWN3SGJoNDI0Cm9vWUpBUTRhRElKY1JBN3NjNUZi
+            cGozZ01ybytXQkRNVStNSHc0clRPalEKLS0tIDZiUDVKdVhRM2NhWmxPZ1pzeXVx
+            d0tZdTFjZkd3bEFtL3hTdnA2Rk9aekEKizNhOYz2RfZbVtQuVTwy8K88nguCXenY
+            sHq4yAVZjilM9SIfz3wzaqza5BLcpd3A/YKqamcvAyfi6oYlpqSDog==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-09-02T18:00:29Z"
-    mac: ENC[AES256_GCM,data:0+d+1dwX1ge19U3oImKQTozLL+gMmGSocmieXd9jQeSt3SafbQUUtt91T7Fjp+egzzeQ/YHCEZp9o3fwdqvL5bxYMh2D3L5C/wl7fG5y8mnNRyM2XA7OnnDvbds5VmcNrI7E3iZpSfb2c42NXzrUhLjlQHedOMuOTlpCgVx/kcY=,iv:r+jQKpTrwyX5aSkHpW/o0ZVZArJUpKTdHts1pVWYKkU=,tag:UHCNrNMHi+2q62x48NNFug==,type:str]
+    lastmodified: "2025-09-02T18:12:27Z"
+    mac: ENC[AES256_GCM,data:f/6lvjr73Wv6o56euWXT1LJg7a8bhRUh2f2IhUgC5+mhbZsdS86EBOg+WzLeSwezg6ijQmTXMg81ulTOyl0eZldjYL5wtt6c24FcIzpAO1A9RY+VOUuaC7wGaeH8x7gPMAXlVl2iC4T5McRsBUhZnyTC89HENZTh1L8o5+8wIvA=,iv:aj/JtvjeI2vNI6v9PUvouAdO+rNa7JJFrykdL6oSm7Q=,tag:gn6rRjSrWp+jWkeGENFt7Q==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL)$
     version: 3.7.1
