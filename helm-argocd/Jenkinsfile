@@ -87,6 +87,7 @@ pipeline {
                     export SOPS_AGE_KEY
                     echo "[INFO] Decrypting values file..."
                     sops --decrypt --in-place ${VALUES_URL}
+                    sops --decrypt --in-place ${DEPLOYMENT_CONFIG}
                     """
                 }
             }
