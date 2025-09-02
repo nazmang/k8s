@@ -17,9 +17,7 @@ spec:
       ref: values
     - repoURL: https://github.com/nazmang/k8s.git
       targetRevision: main
-      path: helm-external-dns/mikrotik
-      directory:
-        recurse: true  
+      path: helm-external-dns/mikrotik      
       plugin:
         name: ksops
   destination:
