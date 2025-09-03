@@ -179,12 +179,12 @@ externalRedis:
     ## Name of existing secret object containing the password
     ## @param externalRedis.existingSecret Existing secret for the external redis
     ##
-    existingSecret: redis-auth
+    existingSecret: ENC[AES256_GCM,data:bjGC0EJpPiON6A==,iv:kTd3ZcaYkn84c3dCCNsAUIFK2Av/zxTIUL8Kb6W1ICs=,tag:nRuNx6TOlwzdlhqhFEQI+A==,type:str]
     # existingSecret: ""
     ## Password key to be retrieved from Redis&reg; secret
     ## @param externalRedis.existingSecretPasswordKey Password key for the existing secret containing the external redis password
     ##
-    existingSecretPasswordKey: redis-password
+    existingSecretPasswordKey: ENC[AES256_GCM,data:Y5BHEaGWYn1YLf469RY=,iv:GjEjvQp9mmX61UFIA0ndfc7v5kL0PKP51CPdBjCltAM=,tag:N/vHW7Wrn3cwC7NzydNmbg==,type:str]
     # existingSecretPasswordKey: ""
     ## Specify a label to use with the label selector
     ## @param externalRedis.selector External Redis selector labels
@@ -223,7 +223,26 @@ repoServer:
         - mountPath: /usr/local/bin/ksops
           name: custom-tools
           subPath: ksops
-    extraEnvVarsSecret: sops-age-key
-
+    extraEnvVarsSecret: ENC[AES256_GCM,data:8zL/TME5F0zZYxi0,iv:dVT3JlJ2nnYslPddmkknwvzIbcBiAAeB2Xcfed1j3jQ=,tag:lV23RDn5c0qgIS2KLj3RVA==,type:str]
 controller:
-    resourcesPreset: "small"
+    resourcesPreset: small
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBvYVZqTXpDalZISXhVeGcw
+            N3pwMXJJbG92M3ZTV0ZISG16VXhxNjB5L2tnCjVVeUNGSFdLZklmVjQ4UmEyQ2xx
+            ajdjY28zSkdXSlVucUNDRCtzaC9NZ3MKLS0tIDNsODJlQzNVTkRYMHpxVzFkSVlx
+            RVcvZDlVT3ppQjduaTB0alpnSFlsbGsKI3873x+9ayyh4VSCeJxfKAvfz40Z/meY
+            nG3XdEuud1PNLbwtAkJEUr/jb5aEioN3Z1mME9DhQn1VRkwLi+YBaw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-09-03T16:33:09Z"
+    mac: ENC[AES256_GCM,data:cdkZtaAsETJv2/UVL4VMs3Jb7B0s+WYN0rqwq/iBiuNgOSfUaYqxeUG6QJbcLXxzGB51KnspeFhCgWua2n7RkRv7Pv9GO0gCbVcf9NrW/gp0nAHnBjEXz13ps7V1FzMTRBflpeN+3vko5OKUENuIv94vdQXYowv0y7Foa0ZBuMA=,iv:1M//ON37aFQKyQVFHb+rPBHDVHMJK6Wkemvwi5osHDw=,tag:t7BB37FrY8MLDEoOK/vwdg==,type:str]
+    pgp: []
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL)$
+    version: 3.7.1
