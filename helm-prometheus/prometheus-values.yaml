@@ -2,11 +2,35 @@ grafana:
   enabled: false
   
 alertmanager:
-  enabled: true   
-  
+  enabled: true
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - alertmanager.comintern.local
+    paths: []
+    # - /
+
+    ## For Kubernetes >= 1.18 you should specify the pathType (determines how Ingress paths should be matched)
+    ## See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types
+    # pathType: ImplementationSpecific
+
+    ## TLS configuration for Alertmanager Ingress
+    ## Secret must be manually created in the namespace
+    ##
+    tls: []
+
 prometheus:
   prometheusSpec:
     scrapeInterval: 1m
-    evaluationInterval: 1m    
+    evaluationInterval: 1m
   service:
     type: LoadBalancer
+    loadBalancerIP: "10.0.55.2"
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - prom-k8s.comintern.local
+    paths: []
+    tls: []
