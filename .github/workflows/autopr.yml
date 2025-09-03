@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create Pull Request
+        id: create
         uses: actions/github-script@v6
         with:
           script: |
@@ -41,3 +42,13 @@ jobs:
               issue_number: result.data.number,
               labels: ['automated-pr', 'automerge']
             });
+
+            core.setOutput("pr_number", result.data.number);
+
+      - name: Enable Auto-Merge
+        if: steps.create.outputs.pr_number != ''
+        uses: peter-evans/enable-pull-request-automerge@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.create.outputs.pr_number }}
+          merge-method: squash
