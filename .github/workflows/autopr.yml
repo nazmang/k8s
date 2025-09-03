@@ -39,5 +39,5 @@ jobs:
               owner,
               repo,
               issue_number: result.data.number,
-              labels: ['automated-pr']
+              labels: ['automated-pr', 'automerge']
             });
