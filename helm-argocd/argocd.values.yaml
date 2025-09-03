@@ -179,12 +179,12 @@ externalRedis:
     ## Name of existing secret object containing the password
     ## @param externalRedis.existingSecret Existing secret for the external redis
     ##
-    existingSecret: ENC[AES256_GCM,data:XjqCGBp5x9ygdA==,iv:+egJ2RWjH9nRouxd+TI7D4SJRc3GPJl/svAX6L0WUxI=,tag:uHdYgKTCJh5BNmCbbk5eZg==,type:str]
+    existingSecret: redis-auth
     # existingSecret: ""
     ## Password key to be retrieved from Redis&reg; secret
     ## @param externalRedis.existingSecretPasswordKey Password key for the existing secret containing the external redis password
     ##
-    existingSecretPasswordKey: ENC[AES256_GCM,data:CcvpQJtOVK+tv7dbSro=,iv:9vYYgt+9vgqrMxwWW0GHwLHjglA3Sj52Tw+lL7Tx1xQ=,tag:yfF+ZqyiaK5eRKRrwH8jMw==,type:str]
+    existingSecretPasswordKey: redis-password
     # existingSecretPasswordKey: ""
     ## Specify a label to use with the label selector
     ## @param externalRedis.selector External Redis selector labels
@@ -223,24 +223,7 @@ repoServer:
         - mountPath: /usr/local/bin/ksops
           name: custom-tools
           subPath: ksops
-    extraEnvVarsSecret: ENC[AES256_GCM,data:sIzBE6EcQSLTbOZX,iv:lbgqfmfNxXSfIljAgijs9JoS7PMaDv0dHDuG7M8OO90=,tag:S9YBoDAGB75Jtl/m6k/0PQ==,type:str]
-sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age:
-        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
-          enc: |
-            -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBveFJGQk5UMmJZaXJweTlm
-            amV1T0dQNUlBbUV5THEzdkNoVWN3SGJoNDI0Cm9vWUpBUTRhRElKY1JBN3NjNUZi
-            cGozZ01ybytXQkRNVStNSHc0clRPalEKLS0tIDZiUDVKdVhRM2NhWmxPZ1pzeXVx
-            d0tZdTFjZkd3bEFtL3hTdnA2Rk9aekEKizNhOYz2RfZbVtQuVTwy8K88nguCXenY
-            sHq4yAVZjilM9SIfz3wzaqza5BLcpd3A/YKqamcvAyfi6oYlpqSDog==
-            -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-09-02T18:12:27Z"
-    mac: ENC[AES256_GCM,data:f/6lvjr73Wv6o56euWXT1LJg7a8bhRUh2f2IhUgC5+mhbZsdS86EBOg+WzLeSwezg6ijQmTXMg81ulTOyl0eZldjYL5wtt6c24FcIzpAO1A9RY+VOUuaC7wGaeH8x7gPMAXlVl2iC4T5McRsBUhZnyTC89HENZTh1L8o5+8wIvA=,iv:aj/JtvjeI2vNI6v9PUvouAdO+rNa7JJFrykdL6oSm7Q=,tag:gn6rRjSrWp+jWkeGENFt7Q==,type:str]
-    pgp: []
-    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL)$
-    version: 3.7.1
+    extraEnvVarsSecret: sops-age-key
+
+controller:
+    resourcesPreset: "small"
