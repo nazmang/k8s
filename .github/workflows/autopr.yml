@@ -45,10 +45,10 @@ jobs:
 
             core.setOutput("pr_number", result.data.number);
 
-      - name: Enable Auto-Merge
-        if: steps.create.outputs.pr_number != ''
-        uses: peter-evans/enable-pull-request-automerge@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request-number: ${{ steps.create.outputs.pr_number }}
-          merge-method: squash
+      # - name: Enable Auto-Merge
+      #   if: steps.create.outputs.pr_number != ''
+      #   uses: peter-evans/enable-pull-request-automerge@v2
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     pull-request-number: ${{ steps.create.outputs.pr_number }}
+      #     merge-method: squash
