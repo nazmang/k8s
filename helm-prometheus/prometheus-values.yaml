@@ -2,7 +2,7 @@ grafana:
   enabled: false
   
 alertmanager:
-  enabled: false   
+  enabled: true   
   
 prometheus:
   prometheusSpec:
