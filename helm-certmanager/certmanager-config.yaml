@@ -131,4 +131,3 @@ spec:
   privateKey:
     algorithm: RSA
     size: 2048
-  fullChain: true
