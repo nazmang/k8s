@@ -3,7 +3,8 @@ pipeline {
     parameters {
         booleanParam(name: 'FORCE_DEPLOY', defaultValue: false, description: 'Force deployment ignoring changeset')
     }
-    environment {        
+    environment {
+        SOPS_AGE_KEY = credentials('sops-age-key')
         API_SERVER = "https://${params.K8S_API_HOST}:${params.K8S_API_PORT}"
         CLUSTER_NAME = "${params.K8S_CLUSTER}"
         CONTEXT_NAME = "${params.K8S_CONTEXT}"
@@ -38,9 +39,17 @@ pipeline {
                 else
                     echo "Helm already installed."
                 fi
-                
-                export PATH="$HOME/.local/bin:$PATH"
+
+                if ! command -v sops &> /dev/null; then
+                    echo "Installing SOPS..."
+                    SOPS_VERSION=v3.10.2
+                    curl -sLo $HOME/.local/bin/sops https://github.com/getsops/sops/releases/download/\$SOPS_VERSION/sops-\$SOPS_VERSION.linux.amd64
+                    chmod +x $HOME/.local/bin/sops
+                fi
+
+                export PATH="\$HOME/.local/bin:\$PATH"
                 helm version
+                sops --version
                 """
             }
         }
@@ -58,6 +67,23 @@ pipeline {
                         kubectl config set-credentials jenkins --token=${K8S_TOKEN}
                         kubectl config set-context ${CONTEXT_NAME} --cluster=${CLUSTER_NAME} --user=jenkins
                         kubectl config use-context ${CONTEXT_NAME}                       
+                    """
+                }
+            }
+        }
+        stage('Decrypt values') {
+            when {
+                anyOf {
+                    changeset "**/${env.CHART_DIR}/**"
+                    expression { return params.FORCE_DEPLOY }
+                }
+            }
+            steps {
+                dir("${env.CHART_DIR}") {
+                    sh """
+                    export SOPS_AGE_KEY
+                    echo "[INFO] Decrypting values file..."
+                    sops --decrypt --in-place ${DEPLOYMENT_CONFIG}
                     """
                 }
             }
