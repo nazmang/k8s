@@ -1,133 +1,344 @@
----
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: selfsigned-issuer
+    name: selfsigned-issuer
 spec:
-  selfSigned: {}
+    selfSigned: {}
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlSTZIendNVlF2T0lRRzRh
+            SVpUTVNycU9zdld4dXdMNEhzazN6T3crZWxZCkZQV3JidWN3Vmc0dFlYbnUwamFu
+            eUc4K084SWlGcUEwNUJZR1o3bXA5QWMKLS0tIGUrMmxNVkFWaFJtQXdjbk9PNE9D
+            UnlUa2Zwb0lYc1JnMmt2d1ptTjFXRDgKP2KOvCVR0XcV1KPZlXXpRwp3p8N4zYeo
+            jtd/pN1ibiJ83KuhVgInCxCM3e17wenI9rUe5ubt/4+aiZ3N9TVviw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-09-04T14:41:22Z"
+    mac: ENC[AES256_GCM,data:vGdbHWFHGiu2uIzbGJESEwVYfmkxDSA1NWZQWHncNzLVcZl8rMAMI5N9+Y6XJ13VB4CSeTDjOf/NxIxrqnDNEbczAzmRxtDPvcJfczN6mTJ53xsyXkXp0LucfuwPEWGmlkD8+T3nqfiZYXuWEkZOcTQl0gkRpLPxB67euC2Dt/g=,iv:ThfO860yLWoCW4e2U4ExyYZMzI2R84aYG+BzDoc7QwI=,tag:xp/6WCYMQC6Ebkh97MDTag==,type:str]
+    pgp: []
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token)$
+    version: 3.7.1
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: cert-comintern
+    name: cert-comintern
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlSTZIendNVlF2T0lRRzRh
+            SVpUTVNycU9zdld4dXdMNEhzazN6T3crZWxZCkZQV3JidWN3Vmc0dFlYbnUwamFu
+            eUc4K084SWlGcUEwNUJZR1o3bXA5QWMKLS0tIGUrMmxNVkFWaFJtQXdjbk9PNE9D
+            UnlUa2Zwb0lYc1JnMmt2d1ptTjFXRDgKP2KOvCVR0XcV1KPZlXXpRwp3p8N4zYeo
+            jtd/pN1ibiJ83KuhVgInCxCM3e17wenI9rUe5ubt/4+aiZ3N9TVviw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-09-04T14:41:22Z"
+    mac: ENC[AES256_GCM,data:vGdbHWFHGiu2uIzbGJESEwVYfmkxDSA1NWZQWHncNzLVcZl8rMAMI5N9+Y6XJ13VB4CSeTDjOf/NxIxrqnDNEbczAzmRxtDPvcJfczN6mTJ53xsyXkXp0LucfuwPEWGmlkD8+T3nqfiZYXuWEkZOcTQl0gkRpLPxB67euC2Dt/g=,iv:ThfO860yLWoCW4e2U4ExyYZMzI2R84aYG+BzDoc7QwI=,tag:xp/6WCYMQC6Ebkh97MDTag==,type:str]
+    pgp: []
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token)$
+    version: 3.7.1
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: comintern-cert
-  namespace: cert-comintern
+    name: comintern-cert
+    namespace: cert-comintern
 spec:
-  secretName: comintern-cert-tls
-  duration: 8760h # 1 year
-  renewBefore: 360h # 15 days
-  subject:
-    organizations:
-      - Comintern
-  commonName: comintern.local
-  dnsNames:
-    - comintern.local
-    - '*.comintern.local'
-  issuerRef:
-    name: selfsigned-issuer
-    kind: ClusterIssuer
+    secretName: comintern-cert-tls
+    # 1 year
+    duration: 8760h
+    # 15 days
+    renewBefore: 360h
+    subject:
+        organizations:
+            - Comintern
+    commonName: comintern.local
+    dnsNames:
+        - comintern.local
+        - '*.comintern.local'
+    issuerRef:
+        name: selfsigned-issuer
+        kind: ClusterIssuer
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlSTZIendNVlF2T0lRRzRh
+            SVpUTVNycU9zdld4dXdMNEhzazN6T3crZWxZCkZQV3JidWN3Vmc0dFlYbnUwamFu
+            eUc4K084SWlGcUEwNUJZR1o3bXA5QWMKLS0tIGUrMmxNVkFWaFJtQXdjbk9PNE9D
+            UnlUa2Zwb0lYc1JnMmt2d1ptTjFXRDgKP2KOvCVR0XcV1KPZlXXpRwp3p8N4zYeo
+            jtd/pN1ibiJ83KuhVgInCxCM3e17wenI9rUe5ubt/4+aiZ3N9TVviw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-09-04T14:41:22Z"
+    mac: ENC[AES256_GCM,data:vGdbHWFHGiu2uIzbGJESEwVYfmkxDSA1NWZQWHncNzLVcZl8rMAMI5N9+Y6XJ13VB4CSeTDjOf/NxIxrqnDNEbczAzmRxtDPvcJfczN6mTJ53xsyXkXp0LucfuwPEWGmlkD8+T3nqfiZYXuWEkZOcTQl0gkRpLPxB67euC2Dt/g=,iv:ThfO860yLWoCW4e2U4ExyYZMzI2R84aYG+BzDoc7QwI=,tag:xp/6WCYMQC6Ebkh97MDTag==,type:str]
+    pgp: []
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token)$
+    version: 3.7.1
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: cert-nfs-pv
+    name: cert-nfs-pv
 spec:
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  nfs:
-    server: nas.comintern.local
-    path: /mnt/trash_pool/misc/certs
+    capacity:
+        storage: 1Gi
+    accessModes:
+        - ReadWriteMany
+    persistentVolumeReclaimPolicy: Retain
+    nfs:
+        server: nas.comintern.local
+        path: /mnt/trash_pool/misc/certs
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlSTZIendNVlF2T0lRRzRh
+            SVpUTVNycU9zdld4dXdMNEhzazN6T3crZWxZCkZQV3JidWN3Vmc0dFlYbnUwamFu
+            eUc4K084SWlGcUEwNUJZR1o3bXA5QWMKLS0tIGUrMmxNVkFWaFJtQXdjbk9PNE9D
+            UnlUa2Zwb0lYc1JnMmt2d1ptTjFXRDgKP2KOvCVR0XcV1KPZlXXpRwp3p8N4zYeo
+            jtd/pN1ibiJ83KuhVgInCxCM3e17wenI9rUe5ubt/4+aiZ3N9TVviw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-09-04T14:41:22Z"
+    mac: ENC[AES256_GCM,data:vGdbHWFHGiu2uIzbGJESEwVYfmkxDSA1NWZQWHncNzLVcZl8rMAMI5N9+Y6XJ13VB4CSeTDjOf/NxIxrqnDNEbczAzmRxtDPvcJfczN6mTJ53xsyXkXp0LucfuwPEWGmlkD8+T3nqfiZYXuWEkZOcTQl0gkRpLPxB67euC2Dt/g=,iv:ThfO860yLWoCW4e2U4ExyYZMzI2R84aYG+BzDoc7QwI=,tag:xp/6WCYMQC6Ebkh97MDTag==,type:str]
+    pgp: []
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token)$
+    version: 3.7.1
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: cert-nfs-pvc
-  namespace: cert-comintern
+    name: cert-nfs-pvc
+    namespace: cert-comintern
 spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Gi
-  volumeName: cert-nfs-pv
+    accessModes:
+        - ReadWriteMany
+    resources:
+        requests:
+            storage: 1Gi
+    volumeName: cert-nfs-pv
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlSTZIendNVlF2T0lRRzRh
+            SVpUTVNycU9zdld4dXdMNEhzazN6T3crZWxZCkZQV3JidWN3Vmc0dFlYbnUwamFu
+            eUc4K084SWlGcUEwNUJZR1o3bXA5QWMKLS0tIGUrMmxNVkFWaFJtQXdjbk9PNE9D
+            UnlUa2Zwb0lYc1JnMmt2d1ptTjFXRDgKP2KOvCVR0XcV1KPZlXXpRwp3p8N4zYeo
+            jtd/pN1ibiJ83KuhVgInCxCM3e17wenI9rUe5ubt/4+aiZ3N9TVviw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-09-04T14:41:22Z"
+    mac: ENC[AES256_GCM,data:vGdbHWFHGiu2uIzbGJESEwVYfmkxDSA1NWZQWHncNzLVcZl8rMAMI5N9+Y6XJ13VB4CSeTDjOf/NxIxrqnDNEbczAzmRxtDPvcJfczN6mTJ53xsyXkXp0LucfuwPEWGmlkD8+T3nqfiZYXuWEkZOcTQl0gkRpLPxB67euC2Dt/g=,iv:ThfO860yLWoCW4e2U4ExyYZMzI2R84aYG+BzDoc7QwI=,tag:xp/6WCYMQC6Ebkh97MDTag==,type:str]
+    pgp: []
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token)$
+    version: 3.7.1
 ---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: sync-cert-to-nfs
-  namespace: cert-comintern
+    name: sync-cert-to-nfs
+    namespace: cert-comintern
 spec:
-  schedule: '*/30 * * * *' # each 30 min
-  jobTemplate:
-    spec:
-      template:
+    # each 30 min
+    schedule: '*/30 * * * *'
+    jobTemplate:
         spec:
-          restartPolicy: OnFailure
-          volumes:
-            - name: cert-secret
-              secret:
-                secretName: comintern-cert-tls
-            - name: cert-nfs
-              persistentVolumeClaim:
-                claimName: cert-nfs-pvc
-          containers:
-            - name: sync
-              image: busybox
-              command: ['/bin/sh', '-c']
-              args:
-                - mkdir -p /nfs/comintern.local/ &&
-                  cp /cert/tls.crt /nfs/comintern.local/comintern.crt &&
-                  cp /cert/tls.key /nfs/comintern.local/comintern.key
-              volumeMounts:
-                - mountPath: /cert
-                  name: cert-secret
-                  readOnly: true
-                - mountPath: /nfs
-                  name: cert-nfs
+            template:
+                spec:
+                    restartPolicy: OnFailure
+                    volumes:
+                        - name: cert-secret
+                          secret:
+                            secretName: comintern-cert-tls
+                        - name: cert-nfs
+                          persistentVolumeClaim:
+                            claimName: cert-nfs-pvc
+                    containers:
+                        - name: sync
+                          image: busybox
+                          command:
+                            - /bin/sh
+                            - -c
+                          args:
+                            - mkdir -p /nfs/comintern.local/ && cp /cert/tls.crt /nfs/comintern.local/comintern.crt && cp /cert/tls.key /nfs/comintern.local/comintern.key
+                          volumeMounts:
+                            - mountPath: /cert
+                              name: cert-secret
+                              readOnly: true
+                            - mountPath: /nfs
+                              name: cert-nfs
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlSTZIendNVlF2T0lRRzRh
+            SVpUTVNycU9zdld4dXdMNEhzazN6T3crZWxZCkZQV3JidWN3Vmc0dFlYbnUwamFu
+            eUc4K084SWlGcUEwNUJZR1o3bXA5QWMKLS0tIGUrMmxNVkFWaFJtQXdjbk9PNE9D
+            UnlUa2Zwb0lYc1JnMmt2d1ptTjFXRDgKP2KOvCVR0XcV1KPZlXXpRwp3p8N4zYeo
+            jtd/pN1ibiJ83KuhVgInCxCM3e17wenI9rUe5ubt/4+aiZ3N9TVviw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-09-04T14:41:22Z"
+    mac: ENC[AES256_GCM,data:vGdbHWFHGiu2uIzbGJESEwVYfmkxDSA1NWZQWHncNzLVcZl8rMAMI5N9+Y6XJ13VB4CSeTDjOf/NxIxrqnDNEbczAzmRxtDPvcJfczN6mTJ53xsyXkXp0LucfuwPEWGmlkD8+T3nqfiZYXuWEkZOcTQl0gkRpLPxB67euC2Dt/g=,iv:ThfO860yLWoCW4e2U4ExyYZMzI2R84aYG+BzDoc7QwI=,tag:xp/6WCYMQC6Ebkh97MDTag==,type:str]
+    pgp: []
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token)$
+    version: 3.7.1
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: digitalocean-dns
+    namespace: cert-manager
+type: Opaque
+stringData:
+    access-token: ENC[AES256_GCM,data:ZdSwYkcVivLdMBbzwRoQhili/RpWTdLDCGgXGgd6XAX1HhdbPGgxqk3QDbN9pKs0YxHqw5YEwqBWLRE02skI3ziFtcP/Iu0=,iv:x1GND8PsUS8joR8Kmc7OGpj81qpc1ogETslV9eKllXU=,tag:TEwYKk26qGIFwrMu3ihppw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlSTZIendNVlF2T0lRRzRh
+            SVpUTVNycU9zdld4dXdMNEhzazN6T3crZWxZCkZQV3JidWN3Vmc0dFlYbnUwamFu
+            eUc4K084SWlGcUEwNUJZR1o3bXA5QWMKLS0tIGUrMmxNVkFWaFJtQXdjbk9PNE9D
+            UnlUa2Zwb0lYc1JnMmt2d1ptTjFXRDgKP2KOvCVR0XcV1KPZlXXpRwp3p8N4zYeo
+            jtd/pN1ibiJ83KuhVgInCxCM3e17wenI9rUe5ubt/4+aiZ3N9TVviw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-09-04T14:41:22Z"
+    mac: ENC[AES256_GCM,data:vGdbHWFHGiu2uIzbGJESEwVYfmkxDSA1NWZQWHncNzLVcZl8rMAMI5N9+Y6XJ13VB4CSeTDjOf/NxIxrqnDNEbczAzmRxtDPvcJfczN6mTJ53xsyXkXp0LucfuwPEWGmlkD8+T3nqfiZYXuWEkZOcTQl0gkRpLPxB67euC2Dt/g=,iv:ThfO860yLWoCW4e2U4ExyYZMzI2R84aYG+BzDoc7QwI=,tag:xp/6WCYMQC6Ebkh97MDTag==,type:str]
+    pgp: []
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token)$
+    version: 3.7.1
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: cert-srvx-cc
+    name: cert-srvx-cc
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlSTZIendNVlF2T0lRRzRh
+            SVpUTVNycU9zdld4dXdMNEhzazN6T3crZWxZCkZQV3JidWN3Vmc0dFlYbnUwamFu
+            eUc4K084SWlGcUEwNUJZR1o3bXA5QWMKLS0tIGUrMmxNVkFWaFJtQXdjbk9PNE9D
+            UnlUa2Zwb0lYc1JnMmt2d1ptTjFXRDgKP2KOvCVR0XcV1KPZlXXpRwp3p8N4zYeo
+            jtd/pN1ibiJ83KuhVgInCxCM3e17wenI9rUe5ubt/4+aiZ3N9TVviw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-09-04T14:41:22Z"
+    mac: ENC[AES256_GCM,data:vGdbHWFHGiu2uIzbGJESEwVYfmkxDSA1NWZQWHncNzLVcZl8rMAMI5N9+Y6XJ13VB4CSeTDjOf/NxIxrqnDNEbczAzmRxtDPvcJfczN6mTJ53xsyXkXp0LucfuwPEWGmlkD8+T3nqfiZYXuWEkZOcTQl0gkRpLPxB67euC2Dt/g=,iv:ThfO860yLWoCW4e2U4ExyYZMzI2R84aYG+BzDoc7QwI=,tag:xp/6WCYMQC6Ebkh97MDTag==,type:str]
+    pgp: []
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token)$
+    version: 3.7.1
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: letsencrypt-dns
+    name: letsencrypt-dns
 spec:
-  acme:
-    email: nazmang@gmail.com
-    server: https://acme-v02.api.letsencrypt.org/directory
-    privateKeySecretRef:
-      name: letsencrypt-dns-key
-    solvers:
-      - dns01:
-          digitalocean:
-            tokenSecretRef:
-              name: digitalocean-dns
-              key: access-token
+    acme:
+        email: ENC[AES256_GCM,data:OFw/hmIKv+ePeqDkQAOzyVg=,iv:g1iH4gWuzTBZdynPWLFjgaW7Z6FWo8a0ZhuDe3wNzEA=,tag:V9UI2r0XZrj0xrWtCWjX9g==,type:str]
+        server: https://acme-v02.api.letsencrypt.org/directory
+        privateKeySecretRef:
+            name: ENC[AES256_GCM,data:HNjjGn81I1/Lec23KREWw27Ggw==,iv:RtL1WlON67A/u3OknN8gfVBpavt1LpzCFN6OLATSUAk=,tag:hmTioMNGcsHiYYuCrsO8lw==,type:str]
+        solvers:
+            - dns01:
+                digitalocean:
+                    tokenSecretRef:
+                        name: ENC[AES256_GCM,data:ZGCpFP3Tl7bwUvlc6rbZqw==,iv:btyT/dXlPwuRL+Th6kCug67HYFc2RVqIQFw+Zllw4Kw=,tag:7tc4w/jSGKfoUJi0YmzHsw==,type:str]
+                        key: ENC[AES256_GCM,data:Jl8F3hbKCQyJRuiy,iv:FZ5d0moNstaUXmAJPwWNBrWaT9B3wH+abuqI7GWDU9U=,tag:/Px6z8Kx0brWEQgHA316Iw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlSTZIendNVlF2T0lRRzRh
+            SVpUTVNycU9zdld4dXdMNEhzazN6T3crZWxZCkZQV3JidWN3Vmc0dFlYbnUwamFu
+            eUc4K084SWlGcUEwNUJZR1o3bXA5QWMKLS0tIGUrMmxNVkFWaFJtQXdjbk9PNE9D
+            UnlUa2Zwb0lYc1JnMmt2d1ptTjFXRDgKP2KOvCVR0XcV1KPZlXXpRwp3p8N4zYeo
+            jtd/pN1ibiJ83KuhVgInCxCM3e17wenI9rUe5ubt/4+aiZ3N9TVviw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-09-04T14:41:22Z"
+    mac: ENC[AES256_GCM,data:vGdbHWFHGiu2uIzbGJESEwVYfmkxDSA1NWZQWHncNzLVcZl8rMAMI5N9+Y6XJ13VB4CSeTDjOf/NxIxrqnDNEbczAzmRxtDPvcJfczN6mTJ53xsyXkXp0LucfuwPEWGmlkD8+T3nqfiZYXuWEkZOcTQl0gkRpLPxB67euC2Dt/g=,iv:ThfO860yLWoCW4e2U4ExyYZMzI2R84aYG+BzDoc7QwI=,tag:xp/6WCYMQC6Ebkh97MDTag==,type:str]
+    pgp: []
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token)$
+    version: 3.7.1
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: srvx-cc-wildcard
-  namespace: cert-srvx-cc
+    name: srvx-cc-wildcard
+    namespace: cert-srvx-cc
 spec:
-  secretName: srvx-cc-tls
-  issuerRef:
-    name: letsencrypt-dns
-    kind: ClusterIssuer
-  commonName: '*.srvx.cc'
-  dnsNames:
-    - '*.srvx.cc'
-    - 'srvx.cc'
-  privateKey:
-    algorithm: RSA
-    size: 2048
+    secretName: srvx-cc-tls
+    issuerRef:
+        name: letsencrypt-dns
+        kind: ClusterIssuer
+    commonName: '*.srvx.cc'
+    dnsNames:
+        - '*.srvx.cc'
+        - srvx.cc
+    privateKey:
+        algorithm: RSA
+        size: 2048
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlSTZIendNVlF2T0lRRzRh
+            SVpUTVNycU9zdld4dXdMNEhzazN6T3crZWxZCkZQV3JidWN3Vmc0dFlYbnUwamFu
+            eUc4K084SWlGcUEwNUJZR1o3bXA5QWMKLS0tIGUrMmxNVkFWaFJtQXdjbk9PNE9D
+            UnlUa2Zwb0lYc1JnMmt2d1ptTjFXRDgKP2KOvCVR0XcV1KPZlXXpRwp3p8N4zYeo
+            jtd/pN1ibiJ83KuhVgInCxCM3e17wenI9rUe5ubt/4+aiZ3N9TVviw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-09-04T14:41:22Z"
+    mac: ENC[AES256_GCM,data:vGdbHWFHGiu2uIzbGJESEwVYfmkxDSA1NWZQWHncNzLVcZl8rMAMI5N9+Y6XJ13VB4CSeTDjOf/NxIxrqnDNEbczAzmRxtDPvcJfczN6mTJ53xsyXkXp0LucfuwPEWGmlkD8+T3nqfiZYXuWEkZOcTQl0gkRpLPxB67euC2Dt/g=,iv:ThfO860yLWoCW4e2U4ExyYZMzI2R84aYG+BzDoc7QwI=,tag:xp/6WCYMQC6Ebkh97MDTag==,type:str]
+    pgp: []
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token)$
+    version: 3.7.1
