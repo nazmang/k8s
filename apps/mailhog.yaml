@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-dns
+  namespace: argocd
+spec:  
+  project: default
+  source:
+    repoURL: https://codecentric.github.io/helm-charts
+    targetRevision: 5.8.0
+    chart: mailhog
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: mailhog
+  syncPolicy:
+    automated: {}
+    syncOptions:
+        - CreateNamespace=true
