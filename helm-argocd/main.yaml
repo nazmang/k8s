@@ -28,14 +28,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB2eU1TdkVoZHYzbVZGcXli
-            ejh6Qnc1eUNCcEYzaDJoVkRoR3ExOEpyK0ZrCkFDeUROOVdVek9BK3dRWktrSkRQ
-            a2pNRWltR2E0SnZxaUUxMmJBNHNSNTAKLS0tIEp6cE0vc2w5bXZJeXlVcHJPSGlB
-            UFROYUNtaGprME5ZRWMvQXJjSGh4QU0KVqaEmKydvx1YqRZGSkD6AKecdwd8beJK
-            ZIw4GcxHSJ9+nJv9b0J/wzWm3c77ph3eJt8kwqVlEg+jJ8hU2LOAFQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA3ODdtczFLRVlwdE5kMXpQ
+            QU04NEo2ZmJpZ2hXUTRDdUw2N3lWUzZUNmhnCmxzVEVJMi9JOW1vV1hnMWRNRVZD
+            QzFFb3pGbzRQc2lLYnJld2pFK3l4ZHMKLS0tIHp3aUh0MHl6dnR6b01NT0x1NWx5
+            L2c5QzdGNG5BWFNYc2RDek9Qa1Y4MVUKrTGXLIbQ2WN38Ms6KEayaGzKBd5IdOmo
+            FywL++HeSoBt6jz/1Iz2Sg3y1rmjkyr6M+NZHxV0xJLOdGyDxwhQXg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-09-11T18:45:13Z"
-    mac: ENC[AES256_GCM,data:zCnfW4xUh/FO9VsBmhHtx8ubY0pmvDmDdxws48uLisXtpdWpfOkyJvSiRBdUyS0fHACjK95xMOpPNvtszJTQPRztKX/cFGkl5tkOSdJVelaFPE1bPzcMr2+DCbU46+4o6yVJY4CyjkCTply/ciEgD6vWUF6nvoo88j8iZjHj3wM=,iv:rK5T/g66POWEEr91MID9mbTdSflYy/wku4vgkmnTUUU=,tag:xaBdP4OdXTX2GBZqBePyYQ==,type:str]
+    lastmodified: "2025-09-11T18:51:53Z"
+    mac: ENC[AES256_GCM,data:X7aVLMffuZ0s7+r7eZfblmOqZ/aOoWmNns+SGryR8oIvc5rFcFewnoGUApnGiHr37NCCqZvD2EQkjYsw0+Yb1N9zpN1ZwvX7OTsnPi3ElRvYyCFNGYJO7eExwB2JPlTLuqiKKV4xPLrtxvfqm53cJsdpqCT8qKJ52CJg2IFnIm4=,iv:Q9qkABBgp4g1UYcjDldZbjpsoGnkajrBNk/D+ttmT+A=,tag:paO/5rAEIBq/7vZzQgqBpA==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token)$
     version: 3.7.1
@@ -69,14 +69,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB2eU1TdkVoZHYzbVZGcXli
-            ejh6Qnc1eUNCcEYzaDJoVkRoR3ExOEpyK0ZrCkFDeUROOVdVek9BK3dRWktrSkRQ
-            a2pNRWltR2E0SnZxaUUxMmJBNHNSNTAKLS0tIEp6cE0vc2w5bXZJeXlVcHJPSGlB
-            UFROYUNtaGprME5ZRWMvQXJjSGh4QU0KVqaEmKydvx1YqRZGSkD6AKecdwd8beJK
-            ZIw4GcxHSJ9+nJv9b0J/wzWm3c77ph3eJt8kwqVlEg+jJ8hU2LOAFQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA3ODdtczFLRVlwdE5kMXpQ
+            QU04NEo2ZmJpZ2hXUTRDdUw2N3lWUzZUNmhnCmxzVEVJMi9JOW1vV1hnMWRNRVZD
+            QzFFb3pGbzRQc2lLYnJld2pFK3l4ZHMKLS0tIHp3aUh0MHl6dnR6b01NT0x1NWx5
+            L2c5QzdGNG5BWFNYc2RDek9Qa1Y4MVUKrTGXLIbQ2WN38Ms6KEayaGzKBd5IdOmo
+            FywL++HeSoBt6jz/1Iz2Sg3y1rmjkyr6M+NZHxV0xJLOdGyDxwhQXg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-09-11T18:45:13Z"
-    mac: ENC[AES256_GCM,data:zCnfW4xUh/FO9VsBmhHtx8ubY0pmvDmDdxws48uLisXtpdWpfOkyJvSiRBdUyS0fHACjK95xMOpPNvtszJTQPRztKX/cFGkl5tkOSdJVelaFPE1bPzcMr2+DCbU46+4o6yVJY4CyjkCTply/ciEgD6vWUF6nvoo88j8iZjHj3wM=,iv:rK5T/g66POWEEr91MID9mbTdSflYy/wku4vgkmnTUUU=,tag:xaBdP4OdXTX2GBZqBePyYQ==,type:str]
+    lastmodified: "2025-09-11T18:51:53Z"
+    mac: ENC[AES256_GCM,data:X7aVLMffuZ0s7+r7eZfblmOqZ/aOoWmNns+SGryR8oIvc5rFcFewnoGUApnGiHr37NCCqZvD2EQkjYsw0+Yb1N9zpN1ZwvX7OTsnPi3ElRvYyCFNGYJO7eExwB2JPlTLuqiKKV4xPLrtxvfqm53cJsdpqCT8qKJ52CJg2IFnIm4=,iv:Q9qkABBgp4g1UYcjDldZbjpsoGnkajrBNk/D+ttmT+A=,tag:paO/5rAEIBq/7vZzQgqBpA==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token)$
     version: 3.7.1
@@ -88,7 +88,7 @@ metadata:
     namespace: argocd
 type: Opaque
 stringData:
-    SOPS_AGE_KEY: ENC[AES256_GCM,data:3VjweRVrXQT6r2XZyxUl83Osks2U3zxCXkDGcFMZSjMUY9wKoGrROhPhRxrwNhwR60GkyDphP6VszAPXFCewP/x78QTDCAx6nK0=,iv:U3qq6ouikNwWpTL7XpaOPvIRgk3f5PM9HhPKcfrvJsU=,tag:iDAWUS8rA4E3S5bJO/ol6g==,type:str]
+    SOPS_AGE_KEY: ENC[AES256_GCM,data:QhDnfpm0wS5S7ZvWMDKDW5xd6VXCd5wlREJ0YZhR18mfM8rQUce+/WhqMtFYzKCruubFHxREw3JUtqjonQhblhORd/eGLA95kBE=,iv:lJj/hexrSMbZevRwRKsoyNCpIL5lMOs0NRpgH9k/0UM=,tag:kkYzMpUk1ADsxQrmNECJ1w==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -98,14 +98,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB2eU1TdkVoZHYzbVZGcXli
-            ejh6Qnc1eUNCcEYzaDJoVkRoR3ExOEpyK0ZrCkFDeUROOVdVek9BK3dRWktrSkRQ
-            a2pNRWltR2E0SnZxaUUxMmJBNHNSNTAKLS0tIEp6cE0vc2w5bXZJeXlVcHJPSGlB
-            UFROYUNtaGprME5ZRWMvQXJjSGh4QU0KVqaEmKydvx1YqRZGSkD6AKecdwd8beJK
-            ZIw4GcxHSJ9+nJv9b0J/wzWm3c77ph3eJt8kwqVlEg+jJ8hU2LOAFQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA3ODdtczFLRVlwdE5kMXpQ
+            QU04NEo2ZmJpZ2hXUTRDdUw2N3lWUzZUNmhnCmxzVEVJMi9JOW1vV1hnMWRNRVZD
+            QzFFb3pGbzRQc2lLYnJld2pFK3l4ZHMKLS0tIHp3aUh0MHl6dnR6b01NT0x1NWx5
+            L2c5QzdGNG5BWFNYc2RDek9Qa1Y4MVUKrTGXLIbQ2WN38Ms6KEayaGzKBd5IdOmo
+            FywL++HeSoBt6jz/1Iz2Sg3y1rmjkyr6M+NZHxV0xJLOdGyDxwhQXg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-09-11T18:45:13Z"
-    mac: ENC[AES256_GCM,data:zCnfW4xUh/FO9VsBmhHtx8ubY0pmvDmDdxws48uLisXtpdWpfOkyJvSiRBdUyS0fHACjK95xMOpPNvtszJTQPRztKX/cFGkl5tkOSdJVelaFPE1bPzcMr2+DCbU46+4o6yVJY4CyjkCTply/ciEgD6vWUF6nvoo88j8iZjHj3wM=,iv:rK5T/g66POWEEr91MID9mbTdSflYy/wku4vgkmnTUUU=,tag:xaBdP4OdXTX2GBZqBePyYQ==,type:str]
+    lastmodified: "2025-09-11T18:51:53Z"
+    mac: ENC[AES256_GCM,data:X7aVLMffuZ0s7+r7eZfblmOqZ/aOoWmNns+SGryR8oIvc5rFcFewnoGUApnGiHr37NCCqZvD2EQkjYsw0+Yb1N9zpN1ZwvX7OTsnPi3ElRvYyCFNGYJO7eExwB2JPlTLuqiKKV4xPLrtxvfqm53cJsdpqCT8qKJ52CJg2IFnIm4=,iv:Q9qkABBgp4g1UYcjDldZbjpsoGnkajrBNk/D+ttmT+A=,tag:paO/5rAEIBq/7vZzQgqBpA==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token)$
     version: 3.7.1
@@ -121,7 +121,7 @@ spec:
         kind: Deployment
         name: argocd-argo-cd-app-controller
     minReplicas: 1
-    maxReplicas: 5
+    maxReplicas: 3
     metrics:
         - type: Resource
           resource:
@@ -134,7 +134,7 @@ spec:
             name: memory
             target:
                 type: Utilization
-                averageUtilization: 90
+                averageUtilization: 95
 # ---
 # apiVersion: argoproj.io/v1alpha1
 # kind: ConfigManagementPlugin
@@ -204,14 +204,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB2eU1TdkVoZHYzbVZGcXli
-            ejh6Qnc1eUNCcEYzaDJoVkRoR3ExOEpyK0ZrCkFDeUROOVdVek9BK3dRWktrSkRQ
-            a2pNRWltR2E0SnZxaUUxMmJBNHNSNTAKLS0tIEp6cE0vc2w5bXZJeXlVcHJPSGlB
-            UFROYUNtaGprME5ZRWMvQXJjSGh4QU0KVqaEmKydvx1YqRZGSkD6AKecdwd8beJK
-            ZIw4GcxHSJ9+nJv9b0J/wzWm3c77ph3eJt8kwqVlEg+jJ8hU2LOAFQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA3ODdtczFLRVlwdE5kMXpQ
+            QU04NEo2ZmJpZ2hXUTRDdUw2N3lWUzZUNmhnCmxzVEVJMi9JOW1vV1hnMWRNRVZD
+            QzFFb3pGbzRQc2lLYnJld2pFK3l4ZHMKLS0tIHp3aUh0MHl6dnR6b01NT0x1NWx5
+            L2c5QzdGNG5BWFNYc2RDek9Qa1Y4MVUKrTGXLIbQ2WN38Ms6KEayaGzKBd5IdOmo
+            FywL++HeSoBt6jz/1Iz2Sg3y1rmjkyr6M+NZHxV0xJLOdGyDxwhQXg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-09-11T18:45:13Z"
-    mac: ENC[AES256_GCM,data:zCnfW4xUh/FO9VsBmhHtx8ubY0pmvDmDdxws48uLisXtpdWpfOkyJvSiRBdUyS0fHACjK95xMOpPNvtszJTQPRztKX/cFGkl5tkOSdJVelaFPE1bPzcMr2+DCbU46+4o6yVJY4CyjkCTply/ciEgD6vWUF6nvoo88j8iZjHj3wM=,iv:rK5T/g66POWEEr91MID9mbTdSflYy/wku4vgkmnTUUU=,tag:xaBdP4OdXTX2GBZqBePyYQ==,type:str]
+    lastmodified: "2025-09-11T18:51:53Z"
+    mac: ENC[AES256_GCM,data:X7aVLMffuZ0s7+r7eZfblmOqZ/aOoWmNns+SGryR8oIvc5rFcFewnoGUApnGiHr37NCCqZvD2EQkjYsw0+Yb1N9zpN1ZwvX7OTsnPi3ElRvYyCFNGYJO7eExwB2JPlTLuqiKKV4xPLrtxvfqm53cJsdpqCT8qKJ52CJg2IFnIm4=,iv:Q9qkABBgp4g1UYcjDldZbjpsoGnkajrBNk/D+ttmT+A=,tag:paO/5rAEIBq/7vZzQgqBpA==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token)$
     version: 3.7.1
