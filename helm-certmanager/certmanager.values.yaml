@@ -40,7 +40,8 @@ prometheus:
     scrapeTimeout: 30s
 
     # Additional labels to add to the ServiceMonitor.
-    labels: {}
+    labels: 
+      release: prometheus # example of adding a label to match prometheus instance selector
 
     # Additional annotations to add to the ServiceMonitor.
     annotations: {}
