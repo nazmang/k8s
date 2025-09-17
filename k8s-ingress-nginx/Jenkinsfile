@@ -7,9 +7,17 @@ pipeline {
         API_SERVER = "https://${params.K8S_API_HOST}:${params.K8S_API_PORT}"
         CLUSTER_NAME = "${params.K8S_CLUSTER}"
         CONTEXT_NAME = "${params.K8S_CONTEXT}"
-        DEPLOYMENT_DIR = "${params.DEPLOYMENT_DIR}"
-        DEPLOYMENT_URL = "https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-${params.INGRESS_VER}/deploy/static/provider/cloud/deploy.yaml"
-        DEPLOYMENT_NAME = "ingress-nginx"
+        CHART_DIR = "${params.HELM_CHART_DIR}"
+        HELM_VERSION="v3.13.2"
+        HELM_URL ="https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz"
+        HELM_REPO_NAME = "${params.HELM_REPO_NAME}"
+        HELM_REPO_URL = "${params.HELM_REPO_URL}"
+        HELM_RELEASE_NAME = "${params.HELM_RELEASE_NAME}"
+        HELM_CHART_NAME ="${params.HELM_CHART_NAME}"
+        HELM_CHART_VERSION="${params.HELM_CHART_VERSION}"
+        NAMESPACE = "${params.K8S_NAMESPACE}"
+        VALUES_URL = "${params.VALUES_URL}"
+        DEPLOYMENT_CONFIG="./ingress-config.yaml"
     }
     stages {
         stage('Checkout') {
@@ -22,6 +30,38 @@ pipeline {
             steps {
                 git branch: 'main',
                 url: 'https://github.com/nazmang/k8s.git'
+            }
+        }
+        stage('Install Helm') {
+            when {
+                anyOf {
+                    changeset "**/${env.CHART_DIR}/**"
+                    expression { return params.FORCE_DEPLOY }
+                }
+            }
+            steps {
+                sh """
+                if ! command -v helm &> /dev/null; then
+                    echo "Helm not found, installing..."
+                    mkdir -p $HOME/.local/bin
+                    curl -fsSL $HELM_URL | tar -xz --strip-components=1 -C $HOME/.local/bin linux-amd64/helm
+                    chmod +x $HOME/.local/bin/helm
+                    echo "Helm installed in $HOME/.local/bin"
+                else
+                    echo "Helm already installed."
+                fi
+
+                if ! command -v sops &> /dev/null; then
+                    echo "Installing SOPS..."
+                    SOPS_VERSION=v3.10.2
+                    curl -sLo $HOME/.local/bin/sops https://github.com/getsops/sops/releases/download/\$SOPS_VERSION/sops-\$SOPS_VERSION.linux.amd64
+                    chmod +x $HOME/.local/bin/sops
+                fi
+
+                export PATH="\$HOME/.local/bin:\$PATH"
+                helm version
+                sops --version
+                """
             }
         }
         stage('Prepare Kubernetes') {
@@ -42,18 +82,38 @@ pipeline {
                 }
             }
         }
-        stage('Apply Manifest') {
+        stage('Deploy Chart') {
             when {
                 anyOf {
                     changeset "**/${env.CHART_DIR}/**"
                     expression { return params.FORCE_DEPLOY }
                 }
             }
-            steps {
-                dir("${env.DEPLOYMENT_DIR}") {
+            steps {                
+                withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
+                    dir("${env.CHART_DIR}") {
+                        sh """
+                            helm repo add ${env.HELM_REPO_NAME} ${env.HELM_REPO_URL} 
+                            helm repo update
+                            helm upgrade --install ${env.HELM_RELEASE_NAME} ${env.HELM_CHART_NAME} \
+                            --namespace ${env.NAMESPACE} --version ${env.HELM_CHART_VERSION} --create-namespace -f ${VALUES_URL}
+                        """
+                    }
+                }
+            }
+        }
+        stage('Apply config') {
+            when {
+                anyOf {
+                    changeset "**/${env.CHART_DIR}/**"
+                    expression { return params.FORCE_DEPLOY }
+                }
+            }
+            steps {                
+                dir("${env.CHART_DIR}") {
                     sh """
                     export PATH="$HOME/.local/bin:$PATH"
-                    kubectl apply -f ${DEPLOYMENT_URL} -n ${DEPLOYMENT_NAME}
+                    kubectl apply -f ${DEPLOYMENT_CONFIG}
                     """
                 }
             }
