@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: comintern-igress
+  namespace: default
+  annotations:
+    cert-manager.io/cluster-issuer: "selfsigned-issuer" 
+    acme.cert-manager.io/http01-edit-in-place: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - comintern.local
+      secretName: comintern-cert-tls
+  # rules:
+  #   - host: myapp.example.com
+  #     http:
+  #       paths:
+  #         - path: /
+  #           pathType: Prefix
+  #           backend:
+  #             service:
+  #               name: my-service
+  #               port:
+  #                 number: 80
