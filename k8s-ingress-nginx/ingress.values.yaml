@@ -1,0 +1,74 @@
+controller:
+  ingressClassResource:
+    name: nginx
+    enabled: true
+    default: true 
+  service:
+    type: LoadBalancer 
+  extraArgs:
+    enable-ssl-passthrough: ""
+  metrics:
+    port: 10254
+    portName: metrics
+    # if this port is changed, change healthz-port: in extraArgs: accordingly
+    enabled: true
+    service:
+      # -- Enable the metrics service or not.
+      enabled: true
+      annotations: {}
+      # prometheus.io/scrape: "true"
+      # prometheus.io/port: "10254"
+      # -- Labels to be added to the metrics service resource
+      labels: 
+        release: prometheus
+      # clusterIP: ""
+
+      # -- List of IP addresses at which the stats-exporter service is available
+      ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#external-ips
+      ##
+      externalIPs: []
+      # loadBalancerIP: ""
+      loadBalancerSourceRanges: []
+      servicePort: 10254
+      type: ClusterIP
+      # externalTrafficPolicy: ""
+      # nodePort: ""
+    serviceMonitor:
+      enabled: true
+      additionalLabels: 
+        release: prometheus
+      # -- Annotations to be added to the ServiceMonitor.
+      annotations: {}
+      ## The label to use to retrieve the job name from.
+      ## jobLabel: "app.kubernetes.io/name"
+      namespace: ""
+      namespaceSelector: {}
+      ## Default: scrape .Release.Namespace or namespaceOverride only
+      ## To scrape all, use the following:
+      ## namespaceSelector:
+      ##   any: true
+      scrapeInterval: 30s
+      # honorLabels: true
+      targetLabels: []
+      relabelings: []
+      metricRelabelings: []
+      # -- Per-scrape limit on number of labels that will be accepted for a sample.
+      labelLimit: 0
+      # -- Per-scrape limit on length of labels name that will be accepted for a sample.
+      labelNameLengthLimit: 0
+      # -- Per-scrape limit on length of labels value that will be accepted for a sample.
+      labelValueLengthLimit: 0
+      # -- Defines a per-scrape limit on the number of scraped samples that will be accepted.
+      sampleLimit: 0
+      # -- Defines a limit on the number of scraped targets that will be accepted.
+      targetLimit: 0  
+  config:
+  use-forwarded-headers: "true"
+  set-real-ip-from: "10.0.0.0/8" #!
+  log-format-upstream: '$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" "$http_x_forwarded_for" "$http_x_real_ip" "$request_time"'
+  
+defaultBackend:
+  enabled: true
+serviceAccount:
+    create: true
+    name: nginx-ingress
