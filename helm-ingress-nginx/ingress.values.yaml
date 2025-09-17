@@ -4,7 +4,8 @@ controller:
     enabled: true
     default: true 
   service:
-    type: LoadBalancer 
+    type: LoadBalancer
+    loadBalancerIP: "10.0.55.1"
   extraArgs:
     enable-ssl-passthrough: ""
   metrics:

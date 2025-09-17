@@ -12,6 +12,11 @@ spec:
     - hosts:
         - comintern.local
       secretName: comintern-cert-tls
+  defaultBackend:
+    service:
+      name: my-service
+      port:
+        number: 80    
   # rules:
   #   - host: myapp.example.com
   #     http:
