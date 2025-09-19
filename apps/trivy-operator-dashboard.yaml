@@ -3,60 +3,35 @@ kind: Application
 metadata:
   name: trivy-operator-dashboard
   namespace: argocd
-  labels:
-    app.kubernetes.io/name: trivy-operator-dashboard
 spec:
   project: local
   source:
-    repoURL: https://raoulx24.github.io/trivy-operator-dashboard
-    chart: trivy-operator-dashboard    
-    targetRevision: "*"
-    helm:      
+    repoURL: https://github.com/raoulx24/trivy-operator-dashboard.git
+    targetRevision: main
+    path: deploy/helm/trivy-operator-dashboard
+    helm:
       values: |
         replicaCount: 1
-
         service:
           type: ClusterIP
-          port: 80
-
-        # Включаем ingress — настройте host/tls/auth под ваш кластер
         ingress:
           enabled: true
-          ingressClassName: nginx
+          className: nginx
           hosts:
             - host: trivy-dashboard.example.com
               paths:
                 - path: /
                   pathType: Prefix
           tls:
-            - hosts:
+            - secretName: trivy-dashboard-tls
+              hosts:
                 - trivy-dashboard.example.com
-              secretName: trivy-dashboard-tls
-
-        # RBAC: создаём SA с необходимыми permissions (по умолчанию chart обычно создаёт SA)
-        serviceAccount:
-          create: true
-          name: trivy-operator-dashboard-sa
-
-        # Пример: логирование/метрики
-        metrics:
-          enabled: true
-
-        # Настройки подключения к Trivy Operator API (если есть необходимость)
-        # api:
-        #   trivyOperator:
-        #     host: http://trivy-operator.trivy-operator.svc.cluster.local
-        #     port: 8080
-
   destination:
     server: https://kubernetes.default.svc
     namespace: trivy-dashboard
-
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-
-  
