@@ -18,14 +18,14 @@ spec:
           enabled: true
           className: nginx
           hosts:
-            - host: trivy-dashboard.example.com
+            - host: trivy-dashboard.comintern.local
               paths:
                 - path: /
                   pathType: Prefix
           tls:
             - secretName: trivy-dashboard-tls
               hosts:
-                - trivy-dashboard.example.com
+                - trivy-dashboard.comintern.local
   destination:
     server: https://kubernetes.default.svc
     namespace: trivy-dashboard
