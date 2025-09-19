@@ -7,7 +7,7 @@ spec:
   project: local
   source:
     repoURL: https://github.com/raoulx24/trivy-operator-dashboard.git
-    targetRevision: main
+    targetRevision: master
     path: deploy/helm/trivy-operator-dashboard
     helm:
       values: |
