@@ -179,12 +179,12 @@ externalRedis:
     ## Name of existing secret object containing the password
     ## @param externalRedis.existingSecret Existing secret for the external redis
     ##
-    existingSecret: ENC[AES256_GCM,data:bjGC0EJpPiON6A==,iv:kTd3ZcaYkn84c3dCCNsAUIFK2Av/zxTIUL8Kb6W1ICs=,tag:nRuNx6TOlwzdlhqhFEQI+A==,type:str]
+    existingSecret: ENC[AES256_GCM,data:nBb5082Tna8MCA==,iv:7e5yhUXnxYiI5yjrM6JvsG05S8uJfjlHpF++OP5aPA0=,tag:/TI5S2LgxJxawl/yr8wLzg==,type:str]
     # existingSecret: ""
     ## Password key to be retrieved from Redis&reg; secret
     ## @param externalRedis.existingSecretPasswordKey Password key for the existing secret containing the external redis password
     ##
-    existingSecretPasswordKey: ENC[AES256_GCM,data:Y5BHEaGWYn1YLf469RY=,iv:GjEjvQp9mmX61UFIA0ndfc7v5kL0PKP51CPdBjCltAM=,tag:N/vHW7Wrn3cwC7NzydNmbg==,type:str]
+    existingSecretPasswordKey: ENC[AES256_GCM,data:v0HLzimliZM7QUhcu+o=,iv:tshlVDdBC8y1wDKEjDWSy7bmrlWfSRhyeSWNfZy6Y3Y=,tag:yQF0akuKFeoYVoukXPSVxQ==,type:str]
     # existingSecretPasswordKey: ""
     ## Specify a label to use with the label selector
     ## @param externalRedis.selector External Redis selector labels
@@ -223,7 +223,8 @@ repoServer:
         - mountPath: /usr/local/bin/ksops
           name: custom-tools
           subPath: ksops
-    extraEnvVarsSecret: ENC[AES256_GCM,data:8zL/TME5F0zZYxi0,iv:dVT3JlJ2nnYslPddmkknwvzIbcBiAAeB2Xcfed1j3jQ=,tag:lV23RDn5c0qgIS2KLj3RVA==,type:str]
+    extraEnvVarsSecret: ENC[AES256_GCM,data:74doX/0cz70WusK7,iv:n3NTDkfZCOBCJocGmledZpDrxzoXAPptl3YZwJD4UFU=,tag:x1tYOWdZMGxCqX/K1i35Cg==,type:str]
+    resourcesPreset: small
 controller:
     resourcesPreset: small
 sops:
@@ -235,14 +236,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBvYVZqTXpDalZISXhVeGcw
-            N3pwMXJJbG92M3ZTV0ZISG16VXhxNjB5L2tnCjVVeUNGSFdLZklmVjQ4UmEyQ2xx
-            ajdjY28zSkdXSlVucUNDRCtzaC9NZ3MKLS0tIDNsODJlQzNVTkRYMHpxVzFkSVlx
-            RVcvZDlVT3ppQjduaTB0alpnSFlsbGsKI3873x+9ayyh4VSCeJxfKAvfz40Z/meY
-            nG3XdEuud1PNLbwtAkJEUr/jb5aEioN3Z1mME9DhQn1VRkwLi+YBaw==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBSeGoxMFZVc3FqY1N1N0hU
+            cmpES3gzTlR4L3RNN3RFTVRiekk1VkpKQkQ0ClZzN2hjR2ZkTDBWQm5tdjN4ZjFa
+            dnJ3VFRoZVdub0NnVm1Ib3ZYL24wbU0KLS0tIGtxRHI3c1NTOVE4MVM1YVV2NW13
+            L2Z3cjFScXNLSURkRS9IV0Z4eWtKcEkKuuVwDDGpTbXXvZ8QZzMU3j26E7k8toEn
+            +lco+Ch4vFA+HhzMy4zwBKL+jI7skBsO4jhHAP7fTZ5L2uFJnpBL2g==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-09-03T16:33:09Z"
-    mac: ENC[AES256_GCM,data:cdkZtaAsETJv2/UVL4VMs3Jb7B0s+WYN0rqwq/iBiuNgOSfUaYqxeUG6QJbcLXxzGB51KnspeFhCgWua2n7RkRv7Pv9GO0gCbVcf9NrW/gp0nAHnBjEXz13ps7V1FzMTRBflpeN+3vko5OKUENuIv94vdQXYowv0y7Foa0ZBuMA=,iv:1M//ON37aFQKyQVFHb+rPBHDVHMJK6Wkemvwi5osHDw=,tag:t7BB37FrY8MLDEoOK/vwdg==,type:str]
+    lastmodified: "2025-09-22T19:16:55Z"
+    mac: ENC[AES256_GCM,data:9p2nVvtFE4s5OW94s7pAiRiUn8Mvizalgz87zSve6G8geQVMJsbhKKzzhPmpNFeNBbeH3wMxZ49xtZfo9GEYbDby95TSA0hkMOdax7SpiwtxHeXndmY2+Jizb4rXHv5HeCcj4DfjXAAE4X2qBkL4HwF8Rb4pIEXJz8rheQQQzPA=,iv:I1pGHFR8hfMTG11LytiDefBNVtpuoKybPb8Z8pXlkmw=,tag:ja6ES/7H95uwMo9IbE7kOg==,type:str]
     pgp: []
-    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL)$
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token)$
     version: 3.7.1
