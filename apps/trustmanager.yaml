@@ -13,7 +13,7 @@ spec:
       targetRevision: "0.19.0"
       helm:
         valueFiles:
-            - $values/helm-trustmanager/trustmanager-values.yaml        
+          - $values/helm-trustmanager/trustmanager-values.yaml
     - repoURL: https://github.com/nazmang/k8s.git
       targetRevision: main
       ref: values
@@ -25,4 +25,4 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true 
+      - CreateNamespace=true
