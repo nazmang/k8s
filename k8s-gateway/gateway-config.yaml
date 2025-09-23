@@ -1,0 +1,39 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: srvx-cc-gateway
+  namespace: gateway
+spec:
+  gatewayClassName: nginx # или другой, который ты используешь (gke-l7-gxlb, istio, envoy-gateway и т.д.)
+  listeners:
+    - name: https
+      hostname: "*.srvx.cc"
+      port: 443
+      protocol: HTTPS
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: srvx-cc-tls
+      allowedRoutes:
+        namespaces:
+          from: All
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: argocd-route
+  namespace: argocd
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: argocd.srvx.cc
+spec:
+  parentRefs:
+    - name: srvx-cc-gateway
+      namespace: cert-srvx-cc
+  hostnames:
+    - "argocd.srvx.cc"
+  rules:
+    - backendRefs:
+        - name: argocd-argo-cd-server
+          port: 80
