@@ -1,0 +1,109 @@
+ui:
+  enabled: true
+
+server: 
+  replicas: 3
+
+  service:
+    type: ClusterIP
+    port: 8200
+
+  tls:
+    enabled: true
+    secretName: vault-tls
+
+  dataStorage:
+    enabled: true
+    storageClass: "nfs-client"
+    accessMode: ReadWriteOnce
+    size: 100Gi
+
+  config: |
+    ui = true
+
+    listener "tcp" {
+      address = "0.0.0.0:8200"
+      tls_cert_file = "/vault/tls/tls.crt"
+      tls_key_file  = "/vault/tls/tls.key"
+    }
+
+    storage "raft" {
+      path = "/vault/data"
+    }
+
+    # api_addr — укажите ваш внешний DNS/Ingress hostname
+    api_addr = "https://vault.comintern.local"
+    cluster_addr = "https://vault:8201"
+
+  extraVolumes:
+    - name: vault-tls
+      secret:
+        secretName: vault-tls
+  extraVolumeMounts:
+    - name: vault-tls
+      mountPath: /vault/tls
+      readOnly: true
+
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 2Gi
+
+  readinessProbe:
+    httpGet:
+      path: /v1/sys/health?standbyok=true
+      port: 8200
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 5
+
+  livenessProbe:
+    httpGet:
+      path: /v1/sys/health
+      port: 8200
+    initialDelaySeconds: 15
+    periodSeconds: 20
+    timeoutSeconds: 5
+
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 2
+
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app
+                operator: In
+                values:
+                  - vault
+          topologyKey: "kubernetes.io/hostname"
+
+serviceAccount:
+  create: true
+  name: vault
+
+audit:
+  enabled: true
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+  hosts:
+    - host: vault.comintern.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hosts:
+        - vault.comintern.local
+      secretName: vault-ingress-tls
+
+networkPolicy:
+  enabled: true
