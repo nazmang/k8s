@@ -1,7 +1,7 @@
 ui:
   enabled: true
 
-server: 
+server:
   replicas: 3
 
   service:
@@ -31,16 +31,15 @@ server:
       path = "/vault/data"
     }
 
-    # api_addr — укажите ваш внешний DNS/Ingress hostname
     api_addr = "https://vault.comintern.local"
     cluster_addr = "https://vault:8201"
 
   extraVolumes:
-    - name: vault-tls
-      secret:
-        secretName: vault-tls
+    - type: secret
+      name: vault-tls
+
   extraVolumeMounts:
-    - name: vault-tls
+    - name: userconfig-vault-tls
       mountPath: /vault/tls
       readOnly: true
 
@@ -76,11 +75,10 @@ server:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         - labelSelector:
-            matchExpressions:
-              - key: app.kubernetes.io/name
-                operator: In
-                values:
-                  - vault
+            matchLabels:
+              app.kubernetes.io/name: vault
+              app.kubernetes.io/instance: vault
+              component: server
           topologyKey: kubernetes.io/hostname
 
 serviceAccount:
