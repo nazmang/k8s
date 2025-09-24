@@ -77,11 +77,11 @@ server:
       requiredDuringSchedulingIgnoredDuringExecution:
         - labelSelector:
             matchExpressions:
-              - key: app
+              - key: app.kubernetes.io/name
                 operator: In
                 values:
                   - vault
-          topologyKey: "kubernetes.io/hostname"
+          topologyKey: kubernetes.io/hostname
 
 serviceAccount:
   create: true
