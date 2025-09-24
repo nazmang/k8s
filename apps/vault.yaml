@@ -15,6 +15,12 @@ spec:
     - repoURL: https://github.com/nazmang/k8s.git
       targetRevision: main
       ref: values
+    - repoURL: https://github.com/nazmang/k8s.git
+      targetRevision: main
+      path: helm-vault
+      directory:
+        recurse: false
+        include: vault-config.yaml  
   destination:
     server: https://kubernetes.default.svc
     namespace: vault
