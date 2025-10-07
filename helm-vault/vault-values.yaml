@@ -56,9 +56,9 @@ server:
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" # Tell NGINX to use HTTPS when connecting to Vault.
     hosts:
       - host: vault.comintern.local # External hostname for Vault.
-        paths:
-          - path: / # Route all traffic to Vault.
-            pathType: Prefix
+        # paths:
+        #   - path: / # Route all traffic to Vault.
+        #     pathType: Prefix
     tls:
       - hosts:
           - vault.comintern.local # Host for TLS termination.
