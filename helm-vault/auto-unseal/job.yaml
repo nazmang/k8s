@@ -15,7 +15,7 @@ spec:
           - /bin/sh
           - -c
           - |
-            KEYS=$(yq e '.unseal_keys_b64 | .[0:3][]' /vault-init/vault-init.yaml)
+            KEYS=$(grep ' *- ' /vault-init/vault-init.yaml | head -n 3 | awk '{print $2}')
             for k in $KEYS; do
               vault operator unseal "$k"
             done
