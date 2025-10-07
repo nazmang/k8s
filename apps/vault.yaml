@@ -8,7 +8,7 @@ spec:
   sources:
     - repoURL: https://helm.releases.hashicorp.com
       chart: vault
-      targetRevision: 0.28.1
+      targetRevision: 0.30.1
       helm:
         valueFiles:
           - $values/helm-vault/vault-values.yaml
@@ -20,7 +20,11 @@ spec:
       path: helm-vault
       directory:
         recurse: false
-        include: vault-config.yaml  
+        include: vault-config.yaml
+    - repoURL: https://github.com/nazmang/k8s.git
+      targetRevision: main
+      path: helm-vault/auto-unseal
+      kustomize: {}
   destination:
     server: https://kubernetes.default.svc
     namespace: vault
