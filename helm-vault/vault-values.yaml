@@ -49,6 +49,21 @@ server:
       mountPath: /vault/tls # Mount TLS secret into /vault/tls.
       readOnly: true # Mark as read-only to prevent accidental modifications.
 
+  ingress:
+    enabled: true # Enable ingress to access Vault from outside the cluster.
+    annotations:
+      kubernetes.io/ingress.class: nginx # Use NGINX ingress controller.
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" # Tell NGINX to use HTTPS when connecting to Vault.
+    hosts:
+      - host: vault.comintern.local # External hostname for Vault.
+        paths:
+          - path: / # Route all traffic to Vault.
+            pathType: Prefix
+    tls:
+      - hosts:
+          - vault.comintern.local # Host for TLS termination.
+        secretName: vault-ingress-tls # Secret containing TLS certificate for ingress.
+
   resources:
     # Resource requests and limits for Vault server pods.
     requests:
@@ -80,41 +95,43 @@ server:
     enabled: true # Ensures a minimum number of Vault pods are always running.
     minAvailable: 2 # At least 2 pods must stay available during voluntary disruptions.
 
-  affinity:
-    # Pod anti-affinity to spread Vault pods across different nodes.
+  affinity: | # Ensures pods are placed on different nodes.
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         - labelSelector:
             matchLabels:
-              app.kubernetes.io/name: vault
-              app.kubernetes.io/instance: vault
+              app.kubernetes.io/name: {{ template "vault.name" . }}
+              app.kubernetes.io/instance: "{{ .Release.Name }}"
               component: server
-          topologyKey: kubernetes.io/hostname # Ensures pods are placed on different nodes.
+          topologyKey: kubernetes.io/hostname 
 
 serviceAccount:
   create: true # Create a dedicated service account for Vault.
   name: vault # Name of the service account.
 
-audit:
+auditStorage:
   enabled: true # Enables Vault audit logs (must be configured in Vault after deployment).
-
-ingress:
-  enabled: true # Enable ingress to access Vault from outside the cluster.
-  annotations:
-    kubernetes.io/ingress.class: nginx # Use NGINX ingress controller.
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" # Tell NGINX to use HTTPS when connecting to Vault.
-  hosts:
-    - host: vault.comintern.local # External hostname for Vault.
-      paths:
-        - path: / # Route all traffic to Vault.
-          pathType: Prefix
-  tls:
-    - hosts:
-        - vault.comintern.local # Host for TLS termination.
-      secretName: vault-ingress-tls # Secret containing TLS certificate for ingress.
+  storageClass: "nfs-client" # Storage class for audit log PVC.
+  accessMode: ReadWriteOnce # PVC access mode for audit logs.
 
 networkPolicy:
-  enabled: true # Enable Kubernetes NetworkPolicies for Vault (limits which pods can talk to Vault).
+  enabled: false # Enable Kubernetes NetworkPolicies for Vault (limits which pods can talk to Vault).
+  egress: []
+    # egress:
+    # - to:
+    #   - ipBlock:
+    #       cidr: 10.0.0.0/24
+    #   ports:
+    #   - protocol: TCP
+    #     port: 443
+  ingress:
+    - from:
+      - namespaceSelector: {}
+      ports:
+      - port: 8200
+        protocol: TCP
+      - port: 8201
+        protocol: TCP
 
 # Auto-unseal: AWS exampl- credentials passing through secret / env
 # For helm chart nedd to define necessary env vars in server.env (ex. below)
