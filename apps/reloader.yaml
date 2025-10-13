@@ -6,7 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/name: reloader
 spec:
-  project: default
+  project: local
   sources:
     - repoURL: "https://stakater.github.io/stakater-charts"
       chart: reloader
