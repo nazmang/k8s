@@ -14,6 +14,7 @@ spec:
         - https://*.github.io/*
         - https://*.github.com/*
         - https://stakater.github.io/stakater-charts
+        - https://cloudhippie.github.io/charts
     destinations:
         - namespace: '*'
           server: https://kubernetes.default.svc
@@ -34,14 +35,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBsbFhRZ1FPNS9CbUtoMTFv
-            aHhkejNKZUw4VmZzUXdGL0hHN3hTMzF6SjA4CkxmdHpBT2ZIbXlHeWFBOTF1dlk3
-            elBBL3BIV29xSGdabXM5dTN2WFJtc1EKLS0tIGFkME9PRGFDZ2VxYTE4V2VZV1M3
-            TXpPMTZWa00wL2d1Q0ZYaHRzVGpyL0UK/DLWn0NGWoGjXL/gGECr6InIifeZMPkj
-            5KNi+MIhanDcfxZ61BGyjdOHMooJ7nUmTquDs4NOuCf5Vw9jU1ORMg==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvZTF1RGJ2d282QnJDYmlq
+            dURMeEo2amkvcVp3TU8rTE9lWlozSEl5TFNvClYrOEpVUjlHVjYvdjEzbWlOTUNn
+            T1FreDNCL0t5aWp5ZE9lZkJVL0RXb0kKLS0tIFJocmZiL2RMeWRkNkVLTms3N1N6
+            UTVBb2VTSTZzM3ZQRkpTRWFHRlBVL1kKvtozC5ZOOBdbZWNKr6svV0u58wsrth5d
+            Ks3mIu0g2GIRG8kqOK97QP+9i0VAwj72Sn1Qs340ditzePZI58CF2A==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-13T08:38:54Z"
-    mac: ENC[AES256_GCM,data:vODdhLVTBWPbzrwYg47CnSvWPAZKnkWtsB205w5rNTP79uSxes+rtHNLTWvSRSe3f0o6tIrKzrxLpvT34Mk7d/CYG43DNWH2OZV3WPGbAMmpXLC70WlOXTTu11aEES2B1w/oM8V5LLAXpqd5LdAMaVvNqyBsHuexNZBXAOipUcM=,iv:EnVIdtB0MyouWB772ATbds1ABeJh040ZoC74GYZF2iU=,tag:rRr190l+xh/g79oHxYYnYg==,type:str]
+    lastmodified: "2025-10-24T16:40:25Z"
+    mac: ENC[AES256_GCM,data:ydxh5r3qGkzEUTbLe/GvQ6oGAdJTuX5sAjAR9JoRnlqjda76nriF8dnoXL18GcArw3OZsgu3zeSa8SZCitGGNKXk7rwGBKd1BEs/48dRLwtiEm8KPCPNcOL/RyL6pscZEhPUL1AK8umhadL6r0nOjX4XgLXsGdkf5WkWAn3NxvY=,iv:rJ2CIugLI+bcqmw5FLkY4a2hI1mOSP52vPd2Djsf+eo=,tag:uAP8VrFyrXrilVywPuOIWQ==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
@@ -75,14 +76,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBsbFhRZ1FPNS9CbUtoMTFv
-            aHhkejNKZUw4VmZzUXdGL0hHN3hTMzF6SjA4CkxmdHpBT2ZIbXlHeWFBOTF1dlk3
-            elBBL3BIV29xSGdabXM5dTN2WFJtc1EKLS0tIGFkME9PRGFDZ2VxYTE4V2VZV1M3
-            TXpPMTZWa00wL2d1Q0ZYaHRzVGpyL0UK/DLWn0NGWoGjXL/gGECr6InIifeZMPkj
-            5KNi+MIhanDcfxZ61BGyjdOHMooJ7nUmTquDs4NOuCf5Vw9jU1ORMg==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvZTF1RGJ2d282QnJDYmlq
+            dURMeEo2amkvcVp3TU8rTE9lWlozSEl5TFNvClYrOEpVUjlHVjYvdjEzbWlOTUNn
+            T1FreDNCL0t5aWp5ZE9lZkJVL0RXb0kKLS0tIFJocmZiL2RMeWRkNkVLTms3N1N6
+            UTVBb2VTSTZzM3ZQRkpTRWFHRlBVL1kKvtozC5ZOOBdbZWNKr6svV0u58wsrth5d
+            Ks3mIu0g2GIRG8kqOK97QP+9i0VAwj72Sn1Qs340ditzePZI58CF2A==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-13T08:38:54Z"
-    mac: ENC[AES256_GCM,data:vODdhLVTBWPbzrwYg47CnSvWPAZKnkWtsB205w5rNTP79uSxes+rtHNLTWvSRSe3f0o6tIrKzrxLpvT34Mk7d/CYG43DNWH2OZV3WPGbAMmpXLC70WlOXTTu11aEES2B1w/oM8V5LLAXpqd5LdAMaVvNqyBsHuexNZBXAOipUcM=,iv:EnVIdtB0MyouWB772ATbds1ABeJh040ZoC74GYZF2iU=,tag:rRr190l+xh/g79oHxYYnYg==,type:str]
+    lastmodified: "2025-10-24T16:40:25Z"
+    mac: ENC[AES256_GCM,data:ydxh5r3qGkzEUTbLe/GvQ6oGAdJTuX5sAjAR9JoRnlqjda76nriF8dnoXL18GcArw3OZsgu3zeSa8SZCitGGNKXk7rwGBKd1BEs/48dRLwtiEm8KPCPNcOL/RyL6pscZEhPUL1AK8umhadL6r0nOjX4XgLXsGdkf5WkWAn3NxvY=,iv:rJ2CIugLI+bcqmw5FLkY4a2hI1mOSP52vPd2Djsf+eo=,tag:uAP8VrFyrXrilVywPuOIWQ==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
@@ -94,7 +95,7 @@ metadata:
     namespace: argocd
 type: Opaque
 stringData:
-    SOPS_AGE_KEY: ENC[AES256_GCM,data:LGG/k3IIEMVM9mMTz+e7YjAFOX2dXBl8L8eX/+89E0pdwwqIXUTzsqhNeKxZO8Yaa4CPkTuLzxyM4O0UW763I4n8nusSyTgOGDY=,iv:J378apgA/naADhPBBsl2Z14qs/q02Y1IeqVALDUs14s=,tag:SYxIgfbaIvAxU+ImZ857hw==,type:str]
+    SOPS_AGE_KEY: ENC[AES256_GCM,data:w0ns+XoQKBUz1xbl68Zf5WUKk8SXZjAiie+bJaChEWQvxGZnwGy4liyOgzTZ2lUgwl9kng82SrzXxiLbxyatteco5s9vwyf9m30=,iv:Lrjp480Rki9g9HkGyfKAhQf4WJJG1P+plyk6KbomGQk=,tag:ZFk2LzOiS8e91aLcl258Fw==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -104,14 +105,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBsbFhRZ1FPNS9CbUtoMTFv
-            aHhkejNKZUw4VmZzUXdGL0hHN3hTMzF6SjA4CkxmdHpBT2ZIbXlHeWFBOTF1dlk3
-            elBBL3BIV29xSGdabXM5dTN2WFJtc1EKLS0tIGFkME9PRGFDZ2VxYTE4V2VZV1M3
-            TXpPMTZWa00wL2d1Q0ZYaHRzVGpyL0UK/DLWn0NGWoGjXL/gGECr6InIifeZMPkj
-            5KNi+MIhanDcfxZ61BGyjdOHMooJ7nUmTquDs4NOuCf5Vw9jU1ORMg==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvZTF1RGJ2d282QnJDYmlq
+            dURMeEo2amkvcVp3TU8rTE9lWlozSEl5TFNvClYrOEpVUjlHVjYvdjEzbWlOTUNn
+            T1FreDNCL0t5aWp5ZE9lZkJVL0RXb0kKLS0tIFJocmZiL2RMeWRkNkVLTms3N1N6
+            UTVBb2VTSTZzM3ZQRkpTRWFHRlBVL1kKvtozC5ZOOBdbZWNKr6svV0u58wsrth5d
+            Ks3mIu0g2GIRG8kqOK97QP+9i0VAwj72Sn1Qs340ditzePZI58CF2A==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-13T08:38:54Z"
-    mac: ENC[AES256_GCM,data:vODdhLVTBWPbzrwYg47CnSvWPAZKnkWtsB205w5rNTP79uSxes+rtHNLTWvSRSe3f0o6tIrKzrxLpvT34Mk7d/CYG43DNWH2OZV3WPGbAMmpXLC70WlOXTTu11aEES2B1w/oM8V5LLAXpqd5LdAMaVvNqyBsHuexNZBXAOipUcM=,iv:EnVIdtB0MyouWB772ATbds1ABeJh040ZoC74GYZF2iU=,tag:rRr190l+xh/g79oHxYYnYg==,type:str]
+    lastmodified: "2025-10-24T16:40:25Z"
+    mac: ENC[AES256_GCM,data:ydxh5r3qGkzEUTbLe/GvQ6oGAdJTuX5sAjAR9JoRnlqjda76nriF8dnoXL18GcArw3OZsgu3zeSa8SZCitGGNKXk7rwGBKd1BEs/48dRLwtiEm8KPCPNcOL/RyL6pscZEhPUL1AK8umhadL6r0nOjX4XgLXsGdkf5WkWAn3NxvY=,iv:rJ2CIugLI+bcqmw5FLkY4a2hI1mOSP52vPd2Djsf+eo=,tag:uAP8VrFyrXrilVywPuOIWQ==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
@@ -150,14 +151,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBsbFhRZ1FPNS9CbUtoMTFv
-            aHhkejNKZUw4VmZzUXdGL0hHN3hTMzF6SjA4CkxmdHpBT2ZIbXlHeWFBOTF1dlk3
-            elBBL3BIV29xSGdabXM5dTN2WFJtc1EKLS0tIGFkME9PRGFDZ2VxYTE4V2VZV1M3
-            TXpPMTZWa00wL2d1Q0ZYaHRzVGpyL0UK/DLWn0NGWoGjXL/gGECr6InIifeZMPkj
-            5KNi+MIhanDcfxZ61BGyjdOHMooJ7nUmTquDs4NOuCf5Vw9jU1ORMg==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvZTF1RGJ2d282QnJDYmlq
+            dURMeEo2amkvcVp3TU8rTE9lWlozSEl5TFNvClYrOEpVUjlHVjYvdjEzbWlOTUNn
+            T1FreDNCL0t5aWp5ZE9lZkJVL0RXb0kKLS0tIFJocmZiL2RMeWRkNkVLTms3N1N6
+            UTVBb2VTSTZzM3ZQRkpTRWFHRlBVL1kKvtozC5ZOOBdbZWNKr6svV0u58wsrth5d
+            Ks3mIu0g2GIRG8kqOK97QP+9i0VAwj72Sn1Qs340ditzePZI58CF2A==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-13T08:38:54Z"
-    mac: ENC[AES256_GCM,data:vODdhLVTBWPbzrwYg47CnSvWPAZKnkWtsB205w5rNTP79uSxes+rtHNLTWvSRSe3f0o6tIrKzrxLpvT34Mk7d/CYG43DNWH2OZV3WPGbAMmpXLC70WlOXTTu11aEES2B1w/oM8V5LLAXpqd5LdAMaVvNqyBsHuexNZBXAOipUcM=,iv:EnVIdtB0MyouWB772ATbds1ABeJh040ZoC74GYZF2iU=,tag:rRr190l+xh/g79oHxYYnYg==,type:str]
+    lastmodified: "2025-10-24T16:40:25Z"
+    mac: ENC[AES256_GCM,data:ydxh5r3qGkzEUTbLe/GvQ6oGAdJTuX5sAjAR9JoRnlqjda76nriF8dnoXL18GcArw3OZsgu3zeSa8SZCitGGNKXk7rwGBKd1BEs/48dRLwtiEm8KPCPNcOL/RyL6pscZEhPUL1AK8umhadL6r0nOjX4XgLXsGdkf5WkWAn3NxvY=,iv:rJ2CIugLI+bcqmw5FLkY4a2hI1mOSP52vPd2Djsf+eo=,tag:uAP8VrFyrXrilVywPuOIWQ==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
@@ -256,14 +257,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBsbFhRZ1FPNS9CbUtoMTFv
-            aHhkejNKZUw4VmZzUXdGL0hHN3hTMzF6SjA4CkxmdHpBT2ZIbXlHeWFBOTF1dlk3
-            elBBL3BIV29xSGdabXM5dTN2WFJtc1EKLS0tIGFkME9PRGFDZ2VxYTE4V2VZV1M3
-            TXpPMTZWa00wL2d1Q0ZYaHRzVGpyL0UK/DLWn0NGWoGjXL/gGECr6InIifeZMPkj
-            5KNi+MIhanDcfxZ61BGyjdOHMooJ7nUmTquDs4NOuCf5Vw9jU1ORMg==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvZTF1RGJ2d282QnJDYmlq
+            dURMeEo2amkvcVp3TU8rTE9lWlozSEl5TFNvClYrOEpVUjlHVjYvdjEzbWlOTUNn
+            T1FreDNCL0t5aWp5ZE9lZkJVL0RXb0kKLS0tIFJocmZiL2RMeWRkNkVLTms3N1N6
+            UTVBb2VTSTZzM3ZQRkpTRWFHRlBVL1kKvtozC5ZOOBdbZWNKr6svV0u58wsrth5d
+            Ks3mIu0g2GIRG8kqOK97QP+9i0VAwj72Sn1Qs340ditzePZI58CF2A==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-13T08:38:54Z"
-    mac: ENC[AES256_GCM,data:vODdhLVTBWPbzrwYg47CnSvWPAZKnkWtsB205w5rNTP79uSxes+rtHNLTWvSRSe3f0o6tIrKzrxLpvT34Mk7d/CYG43DNWH2OZV3WPGbAMmpXLC70WlOXTTu11aEES2B1w/oM8V5LLAXpqd5LdAMaVvNqyBsHuexNZBXAOipUcM=,iv:EnVIdtB0MyouWB772ATbds1ABeJh040ZoC74GYZF2iU=,tag:rRr190l+xh/g79oHxYYnYg==,type:str]
+    lastmodified: "2025-10-24T16:40:25Z"
+    mac: ENC[AES256_GCM,data:ydxh5r3qGkzEUTbLe/GvQ6oGAdJTuX5sAjAR9JoRnlqjda76nriF8dnoXL18GcArw3OZsgu3zeSa8SZCitGGNKXk7rwGBKd1BEs/48dRLwtiEm8KPCPNcOL/RyL6pscZEhPUL1AK8umhadL6r0nOjX4XgLXsGdkf5WkWAn3NxvY=,iv:rJ2CIugLI+bcqmw5FLkY4a2hI1mOSP52vPd2Djsf+eo=,tag:uAP8VrFyrXrilVywPuOIWQ==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
