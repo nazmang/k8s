@@ -6,7 +6,7 @@ Below is a table of subdirectories containing deployment manifests and charts, w
 |---|---|---:|
 | [apps/](apps/) | ArgoCD Application manifests and app-specific configurations. | [![status](https://img.shields.io/badge/status-unknown-lightgrey)](apps/) |
 | [charts/](charts/) | Helm charts (shared/local charts). | [![status](https://img.shields.io/badge/status-unknown-lightgrey)](charts/) |
-| [helm-argocd/](helm-argocd/) | ArgoCD Helm chart for GitOps management. | [![Build Status](https://jenkins.srvxapp.com/buildStatus/icon?job=k8s+Deployments%2Finitial%2Fargocd-deploy&style=plastic)](http://jenkins.srvxapp.com/job/k8s%20Deployments/job/initial/job/argocd-deploy/) |
+| [helm-argocd/](helm-argocd/) | ArgoCD Helm chart for GitOps management. | [![Build Status](https://jenkins.srvxapp.com/buildStatus/icon?job=k8s+Deployments%2Finitial%2Fargocd-deploy)](http://jenkins.srvxapp.com/job/k8s%20Deployments/job/initial/job/argocd-deploy/) |
 | [helm-certmanager/](helm-certmanager/) | Cert-Manager Helm chart for TLS certificate management. | [![status](https://img.shields.io/badge/status-unknown-lightgrey)](helm-certmanager/) |
 | [helm-external-dns/](helm-external-dns/) | ExternalDNS Helm chart for DNS record management. | [![status](https://img.shields.io/badge/status-unknown-lightgrey)](helm-external-dns/) |
 | [helm-ingress-nginx/](helm-ingress-nginx/) | Ingress-NGINX controller and related configs. | [![status](https://img.shields.io/badge/status-unknown-lightgrey)](helm-ingress-nginx/) |
