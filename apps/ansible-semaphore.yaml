@@ -20,7 +20,7 @@ spec:
       targetRevision: "14.0.0" 
       helm:
         valueFiles:
-            - $values/helm-ansible-semaphore/semaphore.values.yaml
+            - secrets://$values/helm-ansible-semaphore/semaphore.values.yaml
     - repoURL: https://github.com/nazmang/k8s.git
       targetRevision: main
       ref: values
