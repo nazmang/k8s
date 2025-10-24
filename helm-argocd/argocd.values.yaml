@@ -5,6 +5,13 @@ notifications:
 server:
     config:
         kustomize.buildOptions: --enable-alpha-plugins --enable-exec
+        helm.valuesFileSchemes: secrets+gpg-import, secrets+gpg-import-kubernetes, secrets+age-import, secrets+age-import-kubernetes, secrets, secrets+literal, https
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: 50
+        targetMemory: 50
     ingress:
         enabled: true
         hostname: argocd.comintern.local
@@ -179,12 +186,12 @@ externalRedis:
     ## Name of existing secret object containing the password
     ## @param externalRedis.existingSecret Existing secret for the external redis
     ##
-    existingSecret: ENC[AES256_GCM,data:xF8hmTCls11hng==,iv:4xnSzwyw2OpmoNwTynWN5n0OvwZZhiypw111HO/lPvs=,tag:9aMqwrKzkXzaPH2m0AeugA==,type:str]
+    existingSecret: ENC[AES256_GCM,data:7McRT1J+EM7Dyw==,iv:Sg6h5CdKLiCs7+UgVyQUTkF5vWALppGKH7MG8Yanx5A=,tag:VrW+amHwc98lOi91We5H9A==,type:str]
     # existingSecret: ""
     ## Password key to be retrieved from Redis&reg; secret
     ## @param externalRedis.existingSecretPasswordKey Password key for the existing secret containing the external redis password
     ##
-    existingSecretPasswordKey: ENC[AES256_GCM,data:xr3b8kBWplrLLfNuPyk=,iv:4EWzXJ5eBTGdSOTQRvz/GiY+EOgW6ggfuwSnVaGiz1Q=,tag:6hlLt08chZBAbNcALW0mBA==,type:str]
+    existingSecretPasswordKey: ENC[AES256_GCM,data:iY5smH9QSzrrbkn+y6E=,iv:VWNxLFSg6Zr5y214Rt6RTPLGXQ/vIvQL7I7cNin/Cys=,tag:uFNimaFl8NaCy60PNFe0jg==,type:str]
     # existingSecretPasswordKey: ""
     ## Specify a label to use with the label selector
     ## @param externalRedis.selector External Redis selector labels
@@ -200,6 +207,12 @@ redisWait:
     ##
     enabled: false
 repoServer:
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: 50
+        targetMemory: 50
     # Use init containers to configure custom tooling
     # https://argoproj.github.io/argo-cd/operator-manual/custom_tools/
     env:
@@ -217,6 +230,12 @@ repoServer:
           value: /gitops-tools/kubectl
         - name: HELM_SECRETS_BACKEND
           value: sops
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         - name: HELM_SECRETS_VALUES_ALLOW_SYMLINKS
@@ -319,13 +338,10 @@ repoServer:
     # - name: helm-secrets-private-keys
     #   secret:
     #       secretName: helm-secrets-private-keys
-    extraEnvVarsSecret: ENC[AES256_GCM,data:OWE6P6myADOp9/Dg,iv:OzA3iRGvJ2qB7shk9GmNnuptaMMIx7DAAcwvHaaqDg8=,tag:8QIxGjbs/uZokr106sYs7g==,type:str]
+    extraEnvVarsSecret: ENC[AES256_GCM,data:z4ixKLb9kOwOlfce,iv:ba4DU06o8jd6pzK3tRGZtDZsKdApR25+aMZ8ifp3sMQ=,tag:tiklwvlz1kF+91OQoaIM9g==,type:str]
     resourcesPreset: small
 controller:
     resourcesPreset: small
-configs:
-    cm:
-        helm.valuesFileSchemes: secrets+gpg-import, secrets+gpg-import-kubernetes, secrets+age-import, secrets+age-import-kubernetes, secrets, secrets+literal, https
 sops:
     kms: []
     gcp_kms: []
@@ -335,14 +351,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBsMU43S0svdVdzRU5oYnA0
-            R1hxZ1JsRnY1b1ZZZ0lkankyRzB5NXBDRVdJCjBQNHJMRmJGNHcra0xaZEdzTGRk
-            a1dMTUtLWWcrOHMrT2F5Zkd5eGZnWU0KLS0tIHcwUWNpVHNMYXZ4ZmZ3NkUyNksw
-            M3dvVUQvQ2M2aUNJMzNkNXl4SlRSS3MKIfN1Nql6xZGxfxKY12i3L4AqYMDpq5jo
-            boBuwkWuu0zWCKJNP94WpUrCFIH1+HCx5RELJ0kda0jcWZjnaHTt8A==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBFR1hWbjNYNTI1MzhLeXox
+            SktsempJUEQvRGtob091alNURnk4ZjV2VzA0ClNtRVZQdzRVQUtvelRxSDQ1a2Zl
+            STRBa01ubUNqR2p6cy9uczhTVFZwdGMKLS0tIG4vaVM1QTJzVlZoaHlkUjdTd3Zp
+            Y0Z3OS80OFkzdFRQWFZaNGl5RE90a1kKXiP5RddmTnptFwvDSI0WxDfilHXGhwsC
+            Z3K2+u7r0hBLjluysF9Vqai9U1fPkt7XnvlPgA9EZ9b4wpTCq7HK4w==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-24T16:45:53Z"
-    mac: ENC[AES256_GCM,data:usjadjRMGtzqjYnmE0+F5PqN43SRVYO98V/5ypGLikKdxs+m1Tdc7bBRfgCMy/AxcwVDeGpMIaAb8yLMfAcv7unHQkgD6qBtohkVa79H5orNY18hEsfHkGSljDg8XMU4tjdVG3y0ZXZLf2gw1nCG2zT4lMBnRU1graMID9o1ICw=,iv:WOh5lormrEcQNklBgX7ymX2PEDvKtAdQZdikN1fmWR8=,tag:ZwWnTyceimdvC9gQbiJLuQ==,type:str]
+    lastmodified: "2025-10-24T18:38:10Z"
+    mac: ENC[AES256_GCM,data:e2+tP/YZLYEte7yQuZCAoDDsBK8R4LSa0gdYjhXL7eym1zSETbGQuJzRX8g+O8vOmVS+PK/uIovvxHcTZ+n6iotIs0NXYezBfHUPD2e1fZ/FrAQYSPUP6mf0jbirPb7XZZ9sLWfIG1U76195c21qVOGhwhS5S/AEtoxoMG+gC9s=,iv:ycsobLKNdllrs5m+CLFkMImp6ljz6Lt7B6SshS1vu2E=,tag:I1a28uFwgfPJgM+O4fTgBg==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
