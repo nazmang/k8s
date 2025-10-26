@@ -185,12 +185,12 @@ externalRedis:
     ## Name of existing secret object containing the password
     ## @param externalRedis.existingSecret Existing secret for the external redis
     ##
-    existingSecret: ENC[AES256_GCM,data:qgUAtOSZM4p3uA==,iv:4YVPkbeTHveBzAb31pJqNHDjia2fR3gOHuziEQQxP3g=,tag:lHWboKgNL5P0w3ZMiUJORw==,type:str]
+    existingSecret: ENC[AES256_GCM,data:Hixmly41Ohk2zA==,iv:dXEAVdwZhrjMbTdvnQ/gyRVmT+8+N2HD++o+uXanPkw=,tag:kRKatSImNXROGzvpDnDlqg==,type:str]
     # existingSecret: ""
     ## Password key to be retrieved from Redis&reg; secret
     ## @param externalRedis.existingSecretPasswordKey Password key for the existing secret containing the external redis password
     ##
-    existingSecretPasswordKey: ENC[AES256_GCM,data:JKw1TMTPl3fCWcSMO0U=,iv:7M+sxvOrW+eIkCNXhRiKGYev+e6NlE/Qwe8XM1ptp0w=,tag:+XohGDRCA5bI56k2hyRIsw==,type:str]
+    existingSecretPasswordKey: ENC[AES256_GCM,data:ot2PuQ7/BIZF5Z1ZjKc=,iv:OBSf8Fb+0cojlPkzLZii/t+YuaUiicviBGeKsmRr/ik=,tag:llsvmONHgUSxX800Eaz8+A==,type:str]
     # existingSecretPasswordKey: ""
     ## Specify a label to use with the label selector
     ## @param externalRedis.selector External Redis selector labels
@@ -234,7 +234,10 @@ repoServer:
             - /bin/sh
             - -c
           args:
-            - apk add --no-cache sops && cp /usr/bin/sops /custom-tools/sops;
+            - |
+              apk add --no-cache wget && \
+              wget -q https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64 -O /custom-tools/sops && \
+              chmod +x /custom-tools/sops;
           volumeMounts:
             - name: custom-tools
               mountPath: /custom-tools
@@ -248,7 +251,7 @@ repoServer:
         - mountPath: /usr/local/bin/sops
           name: custom-tools
           subPath: sops
-    extraEnvVarsSecret: ENC[AES256_GCM,data:uuaRIGtIWDExv9Bl,iv:6okTtvY+oNvIhc5DIv8D7V9JVzhX0KSY4mEDLplR/EI=,tag:iwc8QzSWyqQ0s8/iQemhIQ==,type:str]
+    extraEnvVarsSecret: ENC[AES256_GCM,data:aHR4C7RTsLU+3xAS,iv:iE2HPdiP44gFcKhs+hitiy1ukj0Va2vtIoikgxMcARk=,tag:KAE20mgvEj+HS5eT6JENqg==,type:str]
     resourcesPreset: small
 controller:
     resourcesPreset: small
@@ -261,14 +264,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBNUTVPK0V4ZTlBMnFSRzV1
-            ZU9YR0d3N2FMbTZrVmpyTWx3RlVDaVc5Q0dBClRXM0RKNHVWMndkRGtqNGRwQksw
-            THU0aUU5SFNySXIyek9YNjNUVy9UN1kKLS0tIHBKK3hCeWFuVEtMRU5CanJjSFU2
-            SHdSYWJWTERVbzNDM1ZUZDc0Q1pSaHMKSCNMWyg2Esv4HGuk8CFOVZe8G9cHPwVV
-            ptE8lSmA1MLqrR+MFeWlE2kvopB2j/xM1rq/+jcuJRYJDAvqhXHVZQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvYjhUb2hTTzcxZHNuQ05T
+            UWs2QUh4VVR6VzVYd01CLzgzTmFNUko4N2tBClRmZkhpQnhPWUlqQUg5WE5BNS9K
+            WjlUTDdDTitTNVlmOHg1R1p6bWI4MTgKLS0tIFFJb1ZPWEdDMXZxa2dHckU2MDRn
+            NllSTXVpSzVGb0llenNsTWRJYVJrY1kKFFPdeziL47Y/rgXQX0QD/OA7FqA0iksF
+            hVSeuvwf73X1oOuTn54UqytMvGYCdFrmldUrxarIduQJrIZtidFaUQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-24T18:56:20Z"
-    mac: ENC[AES256_GCM,data:ftpbLC54HQMJ3m/S2DTZkc6rQfrjDidnpov1Qkb16Zan2e4QSGlAXIlSO4mcd+lHnCwM6QSk4gpdcYMNngPPMF0newxOOVlIzTjxkY1p2cEW9Vawxpvs2qMVA1ijThMsdEZ/A81FF2pue0HiShAG4/Sz6q1mApsGDQ+CMkeRlb4=,iv:Ljn2QXNhCmpda6fUPCmiWfemQJ6wqpzk0ei3+bIVJNU=,tag:79Z/1Foxu4or51gAEoZ0Lg==,type:str]
+    lastmodified: "2025-10-26T15:22:47Z"
+    mac: ENC[AES256_GCM,data:IZcII9M+7dz9clNdLIDuo4cmKEgUKmP+IcC7m+mBSPUeuKW1ctToYmZtIWLtp7tMg46Ret9phd+eTCTgnV1jwmlQqRmw8JQuAnMnb/h8sFiz0+NUWjIxXfBrtqkOHDswkf9EjrEH8qm6FbgRfTnjmbLpIVxRiouCY8EvAaPwR6U=,iv:CcnaW8sRVSjgLWcNJAoJfu/4HuFHbWbCdeTaLOC4qJQ=,tag:Ea1Cq8Blpxn1ZYGjN9AAGA==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
