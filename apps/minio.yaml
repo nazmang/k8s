@@ -1,0 +1,60 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minio-operator
+  namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: minio
+  annotations:
+    argocd.argoproj.io/sync-wave: "8"
+spec:
+  project: default
+  sources:
+    - repoURL: 'https://github.com/minio/operator.git'
+      targetRevision: master
+      path: helm/operator
+      helm:
+        releaseName: minio-operator
+        valueFiles:
+          - $values/helm-minio/minio.values.yaml
+    - repoURL: https://github.com/nazmang/k8s.git
+      targetRevision: main
+      ref: values
+        # values: |-
+        #   operator:
+        #     console:
+        #       enabled: true
+        #     persistence:
+        #       enabled: true
+        #       storageClass: nfs-csi
+        #       size: 10Gi
+        #   tenant:
+        #     consoles:
+        #       - name: console-1
+        #         replicas: 1
+        #         mountPath: /export
+        #         persistence:
+        #           enabled: true
+        #           storageClass: nfs-csi
+        #           size: 10Gi
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: minio-operator
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+  ignoreDifferences:
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      jsonPointers:
+        - /spec
+    - group: ""
+      kind: Namespace
+      jsonPointers:
+        - /metadata/labels
+        - /metadata/annotations
+
