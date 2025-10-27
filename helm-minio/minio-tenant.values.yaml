@@ -498,21 +498,31 @@ ingress:
   api:
     enabled: true
     ingressClassName: "nginx"
-    labels: { }
-    annotations: { }
-    tls: [ ]
+    labels: {}
+    annotations:
+      cert-manager.io/cluster-issuer: "selfsigned-issuer"   # или "letsencrypt-staging", если тестируешь
+    tls:
+      - hosts:
+          - minio.comintern.local
+        secretName: minio-api-tls
     host: minio.comintern.local
     path: /
     pathType: Prefix
+
   console:
     enabled: true
     ingressClassName: "nginx"
-    labels: { }
-    annotations: { }
-    tls: [ ]
+    labels: {}
+    annotations:
+      cert-manager.io/cluster-issuer: "selfsigned-issuer"
+    tls:
+      - hosts:
+          - minio-console.comintern.local
+        secretName: minio-console-tls
     host: minio-console.comintern.local
     path: /
     pathType: Prefix
+
 # Use an extraResources template section to include additional Kubernetes resources
 # with the Helm deployment.
 #extraResources:
