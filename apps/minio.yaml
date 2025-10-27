@@ -6,7 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/part-of: minio
   annotations:
-    argocd.argoproj.io/sync-wave: "8"
+    argocd.argoproj.io/sync-wave: '8'
 spec:
   project: default
   sources:
@@ -17,16 +17,33 @@ spec:
         releaseName: minio-operator
         valueFiles:
           - $values/helm-minio/minio.values.yaml
+      destination:
+        namespace: minio-operator
+      plugin:
+        env:
+          - name: HELM_RELEASE
+            value: operator
+      syncWave: '8'
+
     - repoURL: 'https://github.com/minio/operator.git'
       targetRevision: master
       path: helm/tenant
       helm:
         releaseName: minio-tenant
         valueFiles:
-          - $values/helm-minio/minio.values.yaml      
+          - $values/helm-minio/minio.values.yaml
+      destination:
+        namespace: minio-operator
+      plugin:
+        env:
+          - name: HELM_RELEASE
+            value: tenant
+      syncWave: '9'
+
     - repoURL: https://github.com/nazmang/k8s.git
       targetRevision: main
-      ref: values
+      ref:
+        values
         # values: |-
         #   operator:
         #     console:
@@ -59,9 +76,8 @@ spec:
       kind: CustomResourceDefinition
       jsonPointers:
         - /spec
-    - group: ""
+    - group: ''
       kind: Namespace
       jsonPointers:
         - /metadata/labels
         - /metadata/annotations
-
