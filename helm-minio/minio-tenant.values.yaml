@@ -237,7 +237,7 @@ tenant:
   ###
   # Configures a Prometheus-compatible scraping endpoint at the specified port.
   metrics:
-    enabled: false
+    enabled: true
     port: 9000
     protocol: http
   ###
@@ -500,7 +500,8 @@ ingress:
     ingressClassName: "nginx"
     labels: {}
     annotations:
-      cert-manager.io/cluster-issuer: "selfsigned-issuer"   # или "letsencrypt-staging", если тестируешь
+      cert-manager.io/cluster-issuer: "selfsigned-issuer"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     tls:
       - hosts:
           - minio.comintern.local
@@ -515,6 +516,7 @@ ingress:
     labels: {}
     annotations:
       cert-manager.io/cluster-issuer: "selfsigned-issuer"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     tls:
       - hosts:
           - minio-console.comintern.local
