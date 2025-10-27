@@ -5,6 +5,22 @@ notifications:
 server:
     config:
         kustomize.buildOptions: --enable-alpha-plugins --enable-exec
+        configManagementPlugins: |
+            apiVersion: argoproj.io/v1alpha1
+            kind: ConfigManagementPlugin
+            metadata:
+              name: argocd-vault-plugin
+              namespace: argocd
+            spec:
+              version: v1.0
+              init:
+                command: ["/bin/sh", "-c"]
+                args: ["echo 'Initializing argocd-vault-plugin'"]
+              generate:
+                command: ["argocd-vault-plugin", "generate", "."]
+              discover:
+                find:
+                  command: ["sh", "-c", "find . -maxdepth 1 -type f -name 'Chart.yaml' -print -quit | grep -q . || find . -maxdepth 1 -type f -name 'kustomization.yaml' -print -quit | grep -q . || find . -maxdepth 1 -type f -name '.avp-config.yaml' -print -quit | grep -q ."]
     autoscaling:
         enabled: false
         minReplicas: 1
@@ -185,12 +201,12 @@ externalRedis:
     ## Name of existing secret object containing the password
     ## @param externalRedis.existingSecret Existing secret for the external redis
     ##
-    existingSecret: ENC[AES256_GCM,data:Hixmly41Ohk2zA==,iv:dXEAVdwZhrjMbTdvnQ/gyRVmT+8+N2HD++o+uXanPkw=,tag:kRKatSImNXROGzvpDnDlqg==,type:str]
+    existingSecret: ENC[AES256_GCM,data:pF+GDGAmQ7NlkA==,iv:WH6Msq5Jy7qgbddmoMd7fU6r8ui5JiMUQgquTdFsdtw=,tag:/MoLmE62OrskNGJxp+6D7A==,type:str]
     # existingSecret: ""
     ## Password key to be retrieved from Redis&reg; secret
     ## @param externalRedis.existingSecretPasswordKey Password key for the existing secret containing the external redis password
     ##
-    existingSecretPasswordKey: ENC[AES256_GCM,data:ot2PuQ7/BIZF5Z1ZjKc=,iv:OBSf8Fb+0cojlPkzLZii/t+YuaUiicviBGeKsmRr/ik=,tag:llsvmONHgUSxX800Eaz8+A==,type:str]
+    existingSecretPasswordKey: ENC[AES256_GCM,data:Aa5POi2GK7PiCmhVOwk=,iv:qQv5vrLA7otSo51sMEz5EpiuLkKghEKiavAsDSwCxQk=,tag:R9M272XMwbhCxO6KUA7b4A==,type:str]
     # existingSecretPasswordKey: ""
     ## Specify a label to use with the label selector
     ## @param externalRedis.selector External Redis selector labels
@@ -207,7 +223,7 @@ redisWait:
     enabled: false
 repoServer:
     autoscaling:
-        enabled: false
+        enabled: true
         minReplicas: 1
         maxReplicas: 5
         targetCPU: 50
@@ -251,7 +267,7 @@ repoServer:
         - mountPath: /usr/local/bin/sops
           name: custom-tools
           subPath: sops
-    extraEnvVarsSecret: ENC[AES256_GCM,data:aHR4C7RTsLU+3xAS,iv:iE2HPdiP44gFcKhs+hitiy1ukj0Va2vtIoikgxMcARk=,tag:KAE20mgvEj+HS5eT6JENqg==,type:str]
+    extraEnvVarsSecret: ENC[AES256_GCM,data:YBaAyQYqO7hMkVQw,iv:mNfNNfxbtVKxsln5CCrOXHcsXLkNLRLG/vXuE0JAIuM=,tag:+cl5k318yUr1MKhqaJTDzg==,type:str]
     resourcesPreset: small
 controller:
     resourcesPreset: small
@@ -264,14 +280,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvYjhUb2hTTzcxZHNuQ05T
-            UWs2QUh4VVR6VzVYd01CLzgzTmFNUko4N2tBClRmZkhpQnhPWUlqQUg5WE5BNS9K
-            WjlUTDdDTitTNVlmOHg1R1p6bWI4MTgKLS0tIFFJb1ZPWEdDMXZxa2dHckU2MDRn
-            NllSTXVpSzVGb0llenNsTWRJYVJrY1kKFFPdeziL47Y/rgXQX0QD/OA7FqA0iksF
-            hVSeuvwf73X1oOuTn54UqytMvGYCdFrmldUrxarIduQJrIZtidFaUQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBiR2x5Y3JINzNTcDlHQnAw
+            TDFLQklIUVRpV3Y3STJDS25teHRFMG5aSVYwCjIvM1J0Q1I0c2E4aWc3S1JJUU1I
+            UDJYcU9UdzJ6d3NOVldpUHIvK1FBOWsKLS0tIDE1RFhRY1VTOWJNbktUbnR6MGlS
+            cG92WENQandzcjNvUmdGQnBQYklxeWsKeZ6D7NO8bD7P+o8cMoRUx7Py4vltrf91
+            +TRmfL6PV/XlBI2kqoJ6ph/5jseThUFrMAXpx2ZyjvEgaL9NYTEH0Q==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-26T15:22:47Z"
-    mac: ENC[AES256_GCM,data:IZcII9M+7dz9clNdLIDuo4cmKEgUKmP+IcC7m+mBSPUeuKW1ctToYmZtIWLtp7tMg46Ret9phd+eTCTgnV1jwmlQqRmw8JQuAnMnb/h8sFiz0+NUWjIxXfBrtqkOHDswkf9EjrEH8qm6FbgRfTnjmbLpIVxRiouCY8EvAaPwR6U=,iv:CcnaW8sRVSjgLWcNJAoJfu/4HuFHbWbCdeTaLOC4qJQ=,tag:Ea1Cq8Blpxn1ZYGjN9AAGA==,type:str]
+    lastmodified: "2025-10-27T16:55:18Z"
+    mac: ENC[AES256_GCM,data:ObA9ucIbaH3oJVL1djCyecyecOaLQVvbLB8mKQPqpHTOA7880YmoX5rvtuis0Nauj3haONxz/udp2/lTlrE/7fHZzIFTh+SlY6iFewpnVKIXzYb14WQh9DwbHADGAv7sq7fsQboFuT105Dt7Pz4gfwFePVlEjG0OQcYmVsrTWCw=,iv:QaVTBOQz5cS4NLJ4xI8zFRAtodaRYAxElXwSEBiFWMs=,tag:ye/inchPxWqyl1c8/FKszw==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
