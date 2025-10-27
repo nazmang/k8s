@@ -21,6 +21,10 @@ operator:
   env:
     - name: OPERATOR_STS_ENABLED
       value: "on"
+    - name: PROMETHEUS_NAMESPACE
+      value: "monitoring"
+    # - name: PROMETHEUS_NAME
+    #   value: "kube-prometheus-stack-prometheus"
   # An array of additional annotations to be applied to the operator service account
   serviceAccountAnnotations: []
   # additional labels to be applied to operator resources
