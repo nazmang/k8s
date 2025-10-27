@@ -4,7 +4,7 @@ metadata:
   name: ansible-semaphore
   namespace: argocd
 spec:
-  project:  local
+  project: local
   destination:
     server: https://kubernetes.default.svc
     namespace: semaphore
@@ -17,14 +17,15 @@ spec:
   sources:
     - repoURL: "https://cloudhippie.github.io/charts"
       chart: ansible-semaphore
-      targetRevision: "14.0.0" 
+      targetRevision: "14.0.0"
       helm:
         valueFiles:
-            - $values/helm-ansible-semaphore/semaphore.values.enc.yaml
+          - $values/helm-ansible-semaphore/semaphore.values.enc.yaml
     - repoURL: https://github.com/nazmang/k8s.git
       targetRevision: main
       ref: values
+  plugin:
+    name: argocd-vault-plugin
   info:
     - name: artifacthub
       value: "https://artifacthub.io/packages/helm/cloudhippie/ansible-semaphore"
-status: {}
