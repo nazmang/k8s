@@ -35,14 +35,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvZTF1RGJ2d282QnJDYmlq
-            dURMeEo2amkvcVp3TU8rTE9lWlozSEl5TFNvClYrOEpVUjlHVjYvdjEzbWlOTUNn
-            T1FreDNCL0t5aWp5ZE9lZkJVL0RXb0kKLS0tIFJocmZiL2RMeWRkNkVLTms3N1N6
-            UTVBb2VTSTZzM3ZQRkpTRWFHRlBVL1kKvtozC5ZOOBdbZWNKr6svV0u58wsrth5d
-            Ks3mIu0g2GIRG8kqOK97QP+9i0VAwj72Sn1Qs340ditzePZI58CF2A==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBxdVkzVHd5VitseGgyT0w2
+            MXJjWVNtNTIwK0RQMThIa0xiVTh5NUxuWmw0CjEwYjVSYytxOWpMcW9CSGx6UVk5
+            bm0yckk4N2pqekZ4NFh1aGR3d0paNGsKLS0tIGIzdUxRWUdjUTBzQmRLYzAzNlkx
+            MTlWOUxjQ3ZZSW5rcFJXaTlvcGxuLzgKY2omrFfl7cBTfh2C5iF7SQHHJjij9EOb
+            aoWRBvCqHgdbLVX/driHLSw+WHxYawHtNPCbLQ9wG8HC04N/8yfjOg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-24T16:40:25Z"
-    mac: ENC[AES256_GCM,data:ydxh5r3qGkzEUTbLe/GvQ6oGAdJTuX5sAjAR9JoRnlqjda76nriF8dnoXL18GcArw3OZsgu3zeSa8SZCitGGNKXk7rwGBKd1BEs/48dRLwtiEm8KPCPNcOL/RyL6pscZEhPUL1AK8umhadL6r0nOjX4XgLXsGdkf5WkWAn3NxvY=,iv:rJ2CIugLI+bcqmw5FLkY4a2hI1mOSP52vPd2Djsf+eo=,tag:uAP8VrFyrXrilVywPuOIWQ==,type:str]
+    lastmodified: "2025-10-27T16:55:46Z"
+    mac: ENC[AES256_GCM,data:yqSblDTeMUNWk3OT3nVlxccOgzwBUDPQrG29nrsUWr6zOz3OJPpqLQqvb/TacLdoghXGlUaBsL4bRIQSvVJVrUE6mhf68gO64YhZ4UiDYQGGrSB/MkG5xUT61WiCRcUOi44+JkoqesAGLyT0GpQ2TdA3fSDYnFyzEph7nu0hsLQ=,iv:kxg4y4/VOzIVoHxt2k0iZkXVTft4ryjQfl1QhNCO0DQ=,tag:G7rvOFkjiRZJGsjgn4w1Gw==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
@@ -76,14 +76,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvZTF1RGJ2d282QnJDYmlq
-            dURMeEo2amkvcVp3TU8rTE9lWlozSEl5TFNvClYrOEpVUjlHVjYvdjEzbWlOTUNn
-            T1FreDNCL0t5aWp5ZE9lZkJVL0RXb0kKLS0tIFJocmZiL2RMeWRkNkVLTms3N1N6
-            UTVBb2VTSTZzM3ZQRkpTRWFHRlBVL1kKvtozC5ZOOBdbZWNKr6svV0u58wsrth5d
-            Ks3mIu0g2GIRG8kqOK97QP+9i0VAwj72Sn1Qs340ditzePZI58CF2A==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBxdVkzVHd5VitseGgyT0w2
+            MXJjWVNtNTIwK0RQMThIa0xiVTh5NUxuWmw0CjEwYjVSYytxOWpMcW9CSGx6UVk5
+            bm0yckk4N2pqekZ4NFh1aGR3d0paNGsKLS0tIGIzdUxRWUdjUTBzQmRLYzAzNlkx
+            MTlWOUxjQ3ZZSW5rcFJXaTlvcGxuLzgKY2omrFfl7cBTfh2C5iF7SQHHJjij9EOb
+            aoWRBvCqHgdbLVX/driHLSw+WHxYawHtNPCbLQ9wG8HC04N/8yfjOg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-24T16:40:25Z"
-    mac: ENC[AES256_GCM,data:ydxh5r3qGkzEUTbLe/GvQ6oGAdJTuX5sAjAR9JoRnlqjda76nriF8dnoXL18GcArw3OZsgu3zeSa8SZCitGGNKXk7rwGBKd1BEs/48dRLwtiEm8KPCPNcOL/RyL6pscZEhPUL1AK8umhadL6r0nOjX4XgLXsGdkf5WkWAn3NxvY=,iv:rJ2CIugLI+bcqmw5FLkY4a2hI1mOSP52vPd2Djsf+eo=,tag:uAP8VrFyrXrilVywPuOIWQ==,type:str]
+    lastmodified: "2025-10-27T16:55:46Z"
+    mac: ENC[AES256_GCM,data:yqSblDTeMUNWk3OT3nVlxccOgzwBUDPQrG29nrsUWr6zOz3OJPpqLQqvb/TacLdoghXGlUaBsL4bRIQSvVJVrUE6mhf68gO64YhZ4UiDYQGGrSB/MkG5xUT61WiCRcUOi44+JkoqesAGLyT0GpQ2TdA3fSDYnFyzEph7nu0hsLQ=,iv:kxg4y4/VOzIVoHxt2k0iZkXVTft4ryjQfl1QhNCO0DQ=,tag:G7rvOFkjiRZJGsjgn4w1Gw==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
@@ -95,7 +95,7 @@ metadata:
     namespace: argocd
 type: Opaque
 stringData:
-    SOPS_AGE_KEY: ENC[AES256_GCM,data:w0ns+XoQKBUz1xbl68Zf5WUKk8SXZjAiie+bJaChEWQvxGZnwGy4liyOgzTZ2lUgwl9kng82SrzXxiLbxyatteco5s9vwyf9m30=,iv:Lrjp480Rki9g9HkGyfKAhQf4WJJG1P+plyk6KbomGQk=,tag:ZFk2LzOiS8e91aLcl258Fw==,type:str]
+    SOPS_AGE_KEY: ENC[AES256_GCM,data:d8nfcRihCAyYDAakUk9W1zgXmckges4yNK+IFE68l7xFNz+DTOlSV7cnylKKM8gf8TYgfZ0y+IZsEbqFqjT2ZEQo4NrB8jEcTjA=,iv:xk+VUYJkyzizxvknM7DlKlB1sb2vgaJc/eWRSvdteTI=,tag:/MI7YqdsOl19wMQaIk9sjw==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -105,14 +105,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvZTF1RGJ2d282QnJDYmlq
-            dURMeEo2amkvcVp3TU8rTE9lWlozSEl5TFNvClYrOEpVUjlHVjYvdjEzbWlOTUNn
-            T1FreDNCL0t5aWp5ZE9lZkJVL0RXb0kKLS0tIFJocmZiL2RMeWRkNkVLTms3N1N6
-            UTVBb2VTSTZzM3ZQRkpTRWFHRlBVL1kKvtozC5ZOOBdbZWNKr6svV0u58wsrth5d
-            Ks3mIu0g2GIRG8kqOK97QP+9i0VAwj72Sn1Qs340ditzePZI58CF2A==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBxdVkzVHd5VitseGgyT0w2
+            MXJjWVNtNTIwK0RQMThIa0xiVTh5NUxuWmw0CjEwYjVSYytxOWpMcW9CSGx6UVk5
+            bm0yckk4N2pqekZ4NFh1aGR3d0paNGsKLS0tIGIzdUxRWUdjUTBzQmRLYzAzNlkx
+            MTlWOUxjQ3ZZSW5rcFJXaTlvcGxuLzgKY2omrFfl7cBTfh2C5iF7SQHHJjij9EOb
+            aoWRBvCqHgdbLVX/driHLSw+WHxYawHtNPCbLQ9wG8HC04N/8yfjOg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-24T16:40:25Z"
-    mac: ENC[AES256_GCM,data:ydxh5r3qGkzEUTbLe/GvQ6oGAdJTuX5sAjAR9JoRnlqjda76nriF8dnoXL18GcArw3OZsgu3zeSa8SZCitGGNKXk7rwGBKd1BEs/48dRLwtiEm8KPCPNcOL/RyL6pscZEhPUL1AK8umhadL6r0nOjX4XgLXsGdkf5WkWAn3NxvY=,iv:rJ2CIugLI+bcqmw5FLkY4a2hI1mOSP52vPd2Djsf+eo=,tag:uAP8VrFyrXrilVywPuOIWQ==,type:str]
+    lastmodified: "2025-10-27T16:55:46Z"
+    mac: ENC[AES256_GCM,data:yqSblDTeMUNWk3OT3nVlxccOgzwBUDPQrG29nrsUWr6zOz3OJPpqLQqvb/TacLdoghXGlUaBsL4bRIQSvVJVrUE6mhf68gO64YhZ4UiDYQGGrSB/MkG5xUT61WiCRcUOi44+JkoqesAGLyT0GpQ2TdA3fSDYnFyzEph7nu0hsLQ=,iv:kxg4y4/VOzIVoHxt2k0iZkXVTft4ryjQfl1QhNCO0DQ=,tag:G7rvOFkjiRZJGsjgn4w1Gw==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
@@ -151,14 +151,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvZTF1RGJ2d282QnJDYmlq
-            dURMeEo2amkvcVp3TU8rTE9lWlozSEl5TFNvClYrOEpVUjlHVjYvdjEzbWlOTUNn
-            T1FreDNCL0t5aWp5ZE9lZkJVL0RXb0kKLS0tIFJocmZiL2RMeWRkNkVLTms3N1N6
-            UTVBb2VTSTZzM3ZQRkpTRWFHRlBVL1kKvtozC5ZOOBdbZWNKr6svV0u58wsrth5d
-            Ks3mIu0g2GIRG8kqOK97QP+9i0VAwj72Sn1Qs340ditzePZI58CF2A==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBxdVkzVHd5VitseGgyT0w2
+            MXJjWVNtNTIwK0RQMThIa0xiVTh5NUxuWmw0CjEwYjVSYytxOWpMcW9CSGx6UVk5
+            bm0yckk4N2pqekZ4NFh1aGR3d0paNGsKLS0tIGIzdUxRWUdjUTBzQmRLYzAzNlkx
+            MTlWOUxjQ3ZZSW5rcFJXaTlvcGxuLzgKY2omrFfl7cBTfh2C5iF7SQHHJjij9EOb
+            aoWRBvCqHgdbLVX/driHLSw+WHxYawHtNPCbLQ9wG8HC04N/8yfjOg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-24T16:40:25Z"
-    mac: ENC[AES256_GCM,data:ydxh5r3qGkzEUTbLe/GvQ6oGAdJTuX5sAjAR9JoRnlqjda76nriF8dnoXL18GcArw3OZsgu3zeSa8SZCitGGNKXk7rwGBKd1BEs/48dRLwtiEm8KPCPNcOL/RyL6pscZEhPUL1AK8umhadL6r0nOjX4XgLXsGdkf5WkWAn3NxvY=,iv:rJ2CIugLI+bcqmw5FLkY4a2hI1mOSP52vPd2Djsf+eo=,tag:uAP8VrFyrXrilVywPuOIWQ==,type:str]
+    lastmodified: "2025-10-27T16:55:46Z"
+    mac: ENC[AES256_GCM,data:yqSblDTeMUNWk3OT3nVlxccOgzwBUDPQrG29nrsUWr6zOz3OJPpqLQqvb/TacLdoghXGlUaBsL4bRIQSvVJVrUE6mhf68gO64YhZ4UiDYQGGrSB/MkG5xUT61WiCRcUOi44+JkoqesAGLyT0GpQ2TdA3fSDYnFyzEph7nu0hsLQ=,iv:kxg4y4/VOzIVoHxt2k0iZkXVTft4ryjQfl1QhNCO0DQ=,tag:G7rvOFkjiRZJGsjgn4w1Gw==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
@@ -188,66 +188,6 @@ spec:
               controlledResources:
                 - cpu
                 - memory
-# ---
-# apiVersion: argoproj.io/v1alpha1
-# kind: ConfigManagementPlugin
-# metadata:
-#   name: sops-decrypt
-#   namespace: argocd
-# spec:
-#   version: v1.0
-#   init:
-#     command: ["/bin/sh", "-c"]
-#     args:
-#       - |
-#         set -euo pipefail
-#         echo "[CMP:init] preparing sops binary (v3.10.2)..."
-#         VERSION="v3.10.2"
-#         ARCH=$(uname -m)
-#         case "$ARCH" in
-#           x86_64|amd64) ARCH="amd64" ;;
-#           aarch64|arm64) ARCH="arm64" ;;
-#           armv7l|armv7) ARCH="arm" ;;
-#           *) echo "[CMP:init] Unsupported arch: $ARCH"; exit 1 ;;
-#         esac
-#         OS=$(uname -s | tr '[:upper:]' '[:lower:]') # linux/darwin
-#         URL="https://github.com/getsops/sops/releases/download/v${VERSION}/sops-v${VERSION}.${OS}.${ARCH}"
-#         echo "[CMP:init] Downloading SOPS from: $URL"
-#         # -fS: fail on http error and show errors, -L for redirects
-#         curl -fSL -o /tmp/sops "${URL}"
-#         chmod +x /tmp/sops
-#         /tmp/sops --version || (echo "[CMP:init] sops failed to run"; exit 1)
-#         echo "[CMP:init] sops ready at /tmp/sops (v${VERSION})"
-#   generate:
-#     command: ["/bin/sh", "-c"]
-#     args:
-#       - |
-#         set -euo pipefail
-#         echo "[CMP:generate] start"
-#         # Prefer system sops if present, otherwise use downloaded /tmp/sops
-#         if command -v sops >/dev/null 2>&1 ; then
-#           SOPS_BIN=$(command -v sops)
-#         elif [ -x /tmp/sops ]; then
-#           SOPS_BIN=/tmp/sops
-#         else
-#           echo "[CMP:generate] sops not found"; exit 1
-#         fi
-#         echo "[CMP:generate] using sops: ${SOPS_BIN}"
-#         # Decrypt all .env.enc -> .env (in the repo/directory)
-#         for f in $(find . -type f -name '*.env.enc' 2>/dev/null || true); do
-#           out="${f%.enc}"
-#           echo "[CMP:generate] decrypting ${f} -> ${out}"
-#           "${SOPS_BIN}" --decrypt --output "${out}" "${f}"
-#         done
-#         # Optional: decrypt argocd.values.enc -> argocd.values.yaml (if used)
-#         if [ -f "argocd.values.enc.yaml" ]; then
-#           echo "[CMP:generate] decrypting argocd.values.enc.yaml -> argocd.values.yaml"
-#           "${SOPS_BIN}" --decrypt --output argocd.values.yaml argocd.values.enc.yaml
-#         fi
-#         echo "[CMP:generate] running kustomize build ."
-#         kustomize build .
-#   discover:
-#     fileName: "kustomization.yaml"
 sops:
     kms: []
     gcp_kms: []
@@ -257,14 +197,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvZTF1RGJ2d282QnJDYmlq
-            dURMeEo2amkvcVp3TU8rTE9lWlozSEl5TFNvClYrOEpVUjlHVjYvdjEzbWlOTUNn
-            T1FreDNCL0t5aWp5ZE9lZkJVL0RXb0kKLS0tIFJocmZiL2RMeWRkNkVLTms3N1N6
-            UTVBb2VTSTZzM3ZQRkpTRWFHRlBVL1kKvtozC5ZOOBdbZWNKr6svV0u58wsrth5d
-            Ks3mIu0g2GIRG8kqOK97QP+9i0VAwj72Sn1Qs340ditzePZI58CF2A==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBxdVkzVHd5VitseGgyT0w2
+            MXJjWVNtNTIwK0RQMThIa0xiVTh5NUxuWmw0CjEwYjVSYytxOWpMcW9CSGx6UVk5
+            bm0yckk4N2pqekZ4NFh1aGR3d0paNGsKLS0tIGIzdUxRWUdjUTBzQmRLYzAzNlkx
+            MTlWOUxjQ3ZZSW5rcFJXaTlvcGxuLzgKY2omrFfl7cBTfh2C5iF7SQHHJjij9EOb
+            aoWRBvCqHgdbLVX/driHLSw+WHxYawHtNPCbLQ9wG8HC04N/8yfjOg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-24T16:40:25Z"
-    mac: ENC[AES256_GCM,data:ydxh5r3qGkzEUTbLe/GvQ6oGAdJTuX5sAjAR9JoRnlqjda76nriF8dnoXL18GcArw3OZsgu3zeSa8SZCitGGNKXk7rwGBKd1BEs/48dRLwtiEm8KPCPNcOL/RyL6pscZEhPUL1AK8umhadL6r0nOjX4XgLXsGdkf5WkWAn3NxvY=,iv:rJ2CIugLI+bcqmw5FLkY4a2hI1mOSP52vPd2Djsf+eo=,tag:uAP8VrFyrXrilVywPuOIWQ==,type:str]
+    lastmodified: "2025-10-27T16:55:46Z"
+    mac: ENC[AES256_GCM,data:yqSblDTeMUNWk3OT3nVlxccOgzwBUDPQrG29nrsUWr6zOz3OJPpqLQqvb/TacLdoghXGlUaBsL4bRIQSvVJVrUE6mhf68gO64YhZ4UiDYQGGrSB/MkG5xUT61WiCRcUOi44+JkoqesAGLyT0GpQ2TdA3fSDYnFyzEph7nu0hsLQ=,iv:kxg4y4/VOzIVoHxt2k0iZkXVTft4ryjQfl1QhNCO0DQ=,tag:G7rvOFkjiRZJGsjgn4w1Gw==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
