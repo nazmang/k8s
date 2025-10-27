@@ -4,7 +4,7 @@ tenant:
   # The Tenant name
   #
   # Change this to match your preferred MinIO Tenant name.
-  name: myminio
+  name: minio-comintern
   ###
   # Specify the Operator container image to use for the deployment.
   # ``image.tag`` 
@@ -298,7 +298,10 @@ tenant:
   #    - name: my-minio-bucket
   #      objectLock: false        # optional
   #      region: us-east-1        # optional
-  buckets: [ ]
+  buckets:
+    - name: thanos
+      objectLock: false
+      region: us-east-1
   ###
   # Array of Kubernetes secrets from which the Operator generates MinIO users during tenant provisioning.
   # Each element in the array is an object consisting of a key-value pair ``name: <string>``, where the ``<string>`` references an opaque Kubernetes secret.
@@ -339,7 +342,7 @@ tenant:
   serviceAccountName: ""
   ###
   # Directs the Operator to add the Tenant's metric scrape configuration to an existing Kubernetes Prometheus deployment managed by the Prometheus Operator.
-  prometheusOperator: false
+  prometheusOperator: true
   ###
   # Configure pod logging configuration for the MinIO Tenant.
   #
@@ -493,7 +496,7 @@ tenant:
 # Set the keys to conform to the Ingress controller and configuration of your choice.
 ingress:
   api:
-    enabled: false
+    enabled: true
     ingressClassName: "nginx"
     labels: { }
     annotations: { }
