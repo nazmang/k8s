@@ -17,6 +17,13 @@ spec:
         releaseName: minio-operator
         valueFiles:
           - $values/helm-minio/minio.values.yaml
+    - repoURL: 'https://github.com/minio/operator.git'
+      targetRevision: master
+      path: helm/tenant
+      helm:
+        releaseName: minio-tenant
+        valueFiles:
+          - $values/helm-minio/minio.values.yaml      
     - repoURL: https://github.com/nazmang/k8s.git
       targetRevision: main
       ref: values
