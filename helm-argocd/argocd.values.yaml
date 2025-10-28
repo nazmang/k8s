@@ -202,12 +202,12 @@ externalRedis:
     ## Name of existing secret object containing the password
     ## @param externalRedis.existingSecret Existing secret for the external redis
     ##
-    existingSecret: ENC[AES256_GCM,data:W3A9jYfKmuZs3A==,iv:20sRpDxyg2Sz101Mg8spHYZR4PSE3xYVGeVt4xJqzqc=,tag:v7laPsbc0lOdyg02YPfPSQ==,type:str]
+    existingSecret: ENC[AES256_GCM,data:Q0//5ZMNhst/wQ==,iv:bWVhRNa1meKpeQlcMnwVIvV0TkDacswUz23+WPD0gN0=,tag:OS+Ht9oRKLN78ytMcTGkrQ==,type:str]
     # existingSecret: ""
     ## Password key to be retrieved from Redis&reg; secret
     ## @param externalRedis.existingSecretPasswordKey Password key for the existing secret containing the external redis password
     ##
-    existingSecretPasswordKey: ENC[AES256_GCM,data:tniQFXkjpF9IxI5l12U=,iv:l4w1ZTvy/0CJm9xfP+21gv+wBQVbG9P7ptzBVgKLZb8=,tag:7l54WLrSwToRx4rfT72D6w==,type:str]
+    existingSecretPasswordKey: ENC[AES256_GCM,data:6xfnKGZwh/rEIepnXuM=,iv:jkh1sCydDbClZbeFigwaOFJcqKiClo4HplV0n8RltEg=,tag:zScKGn8Hlg0VscoJx1C1JA==,type:str]
     # existingSecretPasswordKey: ""
     ## Specify a label to use with the label selector
     ## @param externalRedis.selector External Redis selector labels
@@ -247,20 +247,20 @@ repoServer:
               echo "Creating /custom-tools directory...";
               mkdir -p /custom-tools;
 
-              echo "Installing dependencies...";
-              apk add --no-cache wget tar;
-
               echo "Installing Kustomize...";
-              wget -qO- https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.4.2/kustomize_v5.4.2_linux_amd64.tar.gz | tar xz -C /custom-tools;
+              busybox wget -qO- https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.4.2/kustomize_v5.4.2_linux_amd64.tar.gz | tar xz -C /custom-tools;
 
               echo "Installing KSOPS...";
-              wget -qO- https://github.com/viaduct-ai/kustomize-sops/releases/download/v4.4.0/ksops_4.4.0_Linux_x86_64.tar.gz | tar xz -C /custom-tools;
+              busybox wget -qO- https://github.com/viaduct-ai/kustomize-sops/releases/download/v4.4.0/ksops_4.4.0_Linux_x86_64.tar.gz | tar xz -C /custom-tools;
 
               echo "Installing SOPS...";
-              wget -q https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64 -O /custom-tools/sops;
+              busybox wget -q https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64 -O /custom-tools/sops;
               chmod +x /custom-tools/sops;
 
               echo "All tools installed successfully.";
+              volumeMounts:
+                - mountPath: /custom-tools
+                  name: custom-tools
           volumeMounts:
             - mountPath: /custom-tools
               name: custom-tools
@@ -274,7 +274,7 @@ repoServer:
         - mountPath: /usr/local/bin/sops
           name: custom-tools
           subPath: sops
-    extraEnvVarsSecret: ENC[AES256_GCM,data:q4gK2yMt/P4//B44,iv:BV4Y92STEsui3j793pz+yRG43A+Y+HibDleXQvj8FsY=,tag:06Ry+IWQ3DbORtqD7NxekQ==,type:str]
+    extraEnvVarsSecret: ENC[AES256_GCM,data:8k93cWTBzLxY+8S5,iv:oUXSXEtcoevfQQe48+BQt9/92pJAwKCvFO4eT8e0OUw=,tag:5LrcJvj44WiQhOqGapIQAA==,type:str]
     resourcesPreset: small
 controller:
     resourcesPreset: small
@@ -287,14 +287,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA5VzBHcStwc3ZMZkJnUE1q
-            a1pGZE9VNmhHMzcxbkRoU2d3YmFsUUNPOFVrClR6L3Rrdytmdk05eFRuVWRSR25R
-            TDdPckdFVHljbHExbDFTNEQ0emk0L1kKLS0tIHZHYWJJWnNIUWFKMDZQaEpsaElr
-            eU9Xdm53VUR4cFVvN25Oc2g3eEdtVjQKcgpI871/Py6eaSd6vECkWvDpCbNkLazq
-            33Z44CpUPXHxseKS3s+Pt91RJp5CTm/EgQFvei5BMnPIkjqVhjSsoA==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBLZWFpU1JONFNKNU5KWTFH
+            bGtvVno1ZHRkRUJvc3RDSWg4Y1RJZHNzcGp3Cmt4RW1TZ0pGV0E3SW1hVS80Z2VJ
+            VkVTcUlvQ0ZvZTlDSTVweWg1OHk5U1UKLS0tIDAyQjR6R3FTbGNUUDhTekhkaU1B
+            WVdlbmU4clB6djRBSXdPSGpHNk9jc2sKcA3AOcm0lU9jS7rYhiR6UnjiK5tUEiDq
+            RHS+p8djA3VIAdbTLbEh8R+ZIEtFMypMl/ZqcWXbhAXafePKj3OjZw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-28T15:17:09Z"
-    mac: ENC[AES256_GCM,data:D8O47bpkLjIT2RuA7UokN2u8K6ipxwgHFTv5Z6z53Yr5K8JWAzxJB0DzCfOUA3RTpH23QiBfqNFrU3D56kDkvqwkJoS5x9pLvXv7gc6sLDqhDkf8S3djoHsB2PtIMjqEgMn4rYIlqljFBclfa5Kk6qxAl9ruZlpS3uc1SY5jhVI=,iv:7+HGtHHxRPuqSJPWg23ceZUHtvCt7+8StHn8dsNNmuo=,tag:o8SDj/5vXurtIygsIoQoqA==,type:str]
+    lastmodified: "2025-10-28T15:27:43Z"
+    mac: ENC[AES256_GCM,data:JwXt5hEjZ0ZIh2HiQaQXSJbpBqsmxBK84e/uDvC+Z+vvXZV3xu97Iddek7d1WPMx9m/JjZrUmFGbTKn2ezYAQfU1BW9VPX9Z2uY8XE7BpBll1hBo7GfzaU+v5P7d1UQ1e3Rk9FhiwSKyOsJj+tp8mJ+KwRy5r/EjMqYxNDuLeOg=,iv:54Uyv5c5bIPITaSiG7aQH19oFA0rkUbYCIm5A5Ejn7w=,tag:q2t8jVROHzCF88rPOWzgtQ==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
