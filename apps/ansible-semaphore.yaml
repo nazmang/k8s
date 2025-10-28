@@ -19,7 +19,7 @@ spec:
       chart: ansible-semaphore
       targetRevision: "14.0.0"
       plugin:
-        name: argocd-vault-plugin
+        # name: argocd-vault-plugin
         env:
           - name: VALUES_FILE
             value: $values/helm-ansible-semaphore/semaphore.values.enc.yaml        
