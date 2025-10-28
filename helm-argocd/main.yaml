@@ -35,14 +35,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBxdVkzVHd5VitseGgyT0w2
-            MXJjWVNtNTIwK0RQMThIa0xiVTh5NUxuWmw0CjEwYjVSYytxOWpMcW9CSGx6UVk5
-            bm0yckk4N2pqekZ4NFh1aGR3d0paNGsKLS0tIGIzdUxRWUdjUTBzQmRLYzAzNlkx
-            MTlWOUxjQ3ZZSW5rcFJXaTlvcGxuLzgKY2omrFfl7cBTfh2C5iF7SQHHJjij9EOb
-            aoWRBvCqHgdbLVX/driHLSw+WHxYawHtNPCbLQ9wG8HC04N/8yfjOg==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBXUmJtMVcrOXB2amR4MHdG
+            VEM3eWN4ajNjZ3NyODB1Q2tnL2pKa214UlRvCm4yT3FSMTRWRzZnU1ZPY2xQajUz
+            VmhBbDJiN1kzcCtmcEVKaGp4WjNzbW8KLS0tIE14QktGcWQxbGMwR25aNU9mVnBr
+            SWtMb3J0cFZjQWgyckxlZjhFZTgzSjAKupjZvylmdo7WW02o3Jf8VCXnVPxIVSUH
+            oOSCH9iktpgTZRrAArzqyWTQwHdFWUiqVf6xubGVtL0UMTDXXO3PEw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-27T16:55:46Z"
-    mac: ENC[AES256_GCM,data:yqSblDTeMUNWk3OT3nVlxccOgzwBUDPQrG29nrsUWr6zOz3OJPpqLQqvb/TacLdoghXGlUaBsL4bRIQSvVJVrUE6mhf68gO64YhZ4UiDYQGGrSB/MkG5xUT61WiCRcUOi44+JkoqesAGLyT0GpQ2TdA3fSDYnFyzEph7nu0hsLQ=,iv:kxg4y4/VOzIVoHxt2k0iZkXVTft4ryjQfl1QhNCO0DQ=,tag:G7rvOFkjiRZJGsjgn4w1Gw==,type:str]
+    lastmodified: "2025-10-28T15:58:51Z"
+    mac: ENC[AES256_GCM,data:dtbTTOcdNhF/I48+q7jiyaSl9qoSy9rOe1Zptg4CQgiNIZp07rgw1LXXNqGi6+d4JY+ijat4B2a3YmmvgOHPFooTcpQ2gNe+VwkkXmdu896lt9KM36G8jJf8CkybtvgPm/mQlylSLV00lti+1+K+2YCq1kWv4KRcw7uBHTpiNj4=,iv:bAhoj6AbAj/ivB72uVMUneyv+lH4bk/8rOddLuj8iiE=,tag:C+Wm9nrlRIGOLaLv/HoL9g==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
@@ -76,14 +76,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBxdVkzVHd5VitseGgyT0w2
-            MXJjWVNtNTIwK0RQMThIa0xiVTh5NUxuWmw0CjEwYjVSYytxOWpMcW9CSGx6UVk5
-            bm0yckk4N2pqekZ4NFh1aGR3d0paNGsKLS0tIGIzdUxRWUdjUTBzQmRLYzAzNlkx
-            MTlWOUxjQ3ZZSW5rcFJXaTlvcGxuLzgKY2omrFfl7cBTfh2C5iF7SQHHJjij9EOb
-            aoWRBvCqHgdbLVX/driHLSw+WHxYawHtNPCbLQ9wG8HC04N/8yfjOg==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBXUmJtMVcrOXB2amR4MHdG
+            VEM3eWN4ajNjZ3NyODB1Q2tnL2pKa214UlRvCm4yT3FSMTRWRzZnU1ZPY2xQajUz
+            VmhBbDJiN1kzcCtmcEVKaGp4WjNzbW8KLS0tIE14QktGcWQxbGMwR25aNU9mVnBr
+            SWtMb3J0cFZjQWgyckxlZjhFZTgzSjAKupjZvylmdo7WW02o3Jf8VCXnVPxIVSUH
+            oOSCH9iktpgTZRrAArzqyWTQwHdFWUiqVf6xubGVtL0UMTDXXO3PEw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-27T16:55:46Z"
-    mac: ENC[AES256_GCM,data:yqSblDTeMUNWk3OT3nVlxccOgzwBUDPQrG29nrsUWr6zOz3OJPpqLQqvb/TacLdoghXGlUaBsL4bRIQSvVJVrUE6mhf68gO64YhZ4UiDYQGGrSB/MkG5xUT61WiCRcUOi44+JkoqesAGLyT0GpQ2TdA3fSDYnFyzEph7nu0hsLQ=,iv:kxg4y4/VOzIVoHxt2k0iZkXVTft4ryjQfl1QhNCO0DQ=,tag:G7rvOFkjiRZJGsjgn4w1Gw==,type:str]
+    lastmodified: "2025-10-28T15:58:51Z"
+    mac: ENC[AES256_GCM,data:dtbTTOcdNhF/I48+q7jiyaSl9qoSy9rOe1Zptg4CQgiNIZp07rgw1LXXNqGi6+d4JY+ijat4B2a3YmmvgOHPFooTcpQ2gNe+VwkkXmdu896lt9KM36G8jJf8CkybtvgPm/mQlylSLV00lti+1+K+2YCq1kWv4KRcw7uBHTpiNj4=,iv:bAhoj6AbAj/ivB72uVMUneyv+lH4bk/8rOddLuj8iiE=,tag:C+Wm9nrlRIGOLaLv/HoL9g==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
@@ -95,7 +95,7 @@ metadata:
     namespace: argocd
 type: Opaque
 stringData:
-    SOPS_AGE_KEY: ENC[AES256_GCM,data:d8nfcRihCAyYDAakUk9W1zgXmckges4yNK+IFE68l7xFNz+DTOlSV7cnylKKM8gf8TYgfZ0y+IZsEbqFqjT2ZEQo4NrB8jEcTjA=,iv:xk+VUYJkyzizxvknM7DlKlB1sb2vgaJc/eWRSvdteTI=,tag:/MI7YqdsOl19wMQaIk9sjw==,type:str]
+    SOPS_AGE_KEY: ENC[AES256_GCM,data:J+A/ESi6zu3brLn1tJaEzAXJ5nTIwAtnSyD9df4Ir6bETwSiLKW1FY/jcpHhaI5L89iLEbA9JXUWcFQv373Hs7ns6H1gByqGw+M=,iv:Eb+Pqb6qEyLirk/LpSeFN091R751bHQV2hLIAPhW7Y0=,tag:dxaK5PS6qNGymZ4h7SVY5A==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -105,43 +105,93 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBxdVkzVHd5VitseGgyT0w2
-            MXJjWVNtNTIwK0RQMThIa0xiVTh5NUxuWmw0CjEwYjVSYytxOWpMcW9CSGx6UVk5
-            bm0yckk4N2pqekZ4NFh1aGR3d0paNGsKLS0tIGIzdUxRWUdjUTBzQmRLYzAzNlkx
-            MTlWOUxjQ3ZZSW5rcFJXaTlvcGxuLzgKY2omrFfl7cBTfh2C5iF7SQHHJjij9EOb
-            aoWRBvCqHgdbLVX/driHLSw+WHxYawHtNPCbLQ9wG8HC04N/8yfjOg==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBXUmJtMVcrOXB2amR4MHdG
+            VEM3eWN4ajNjZ3NyODB1Q2tnL2pKa214UlRvCm4yT3FSMTRWRzZnU1ZPY2xQajUz
+            VmhBbDJiN1kzcCtmcEVKaGp4WjNzbW8KLS0tIE14QktGcWQxbGMwR25aNU9mVnBr
+            SWtMb3J0cFZjQWgyckxlZjhFZTgzSjAKupjZvylmdo7WW02o3Jf8VCXnVPxIVSUH
+            oOSCH9iktpgTZRrAArzqyWTQwHdFWUiqVf6xubGVtL0UMTDXXO3PEw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-27T16:55:46Z"
-    mac: ENC[AES256_GCM,data:yqSblDTeMUNWk3OT3nVlxccOgzwBUDPQrG29nrsUWr6zOz3OJPpqLQqvb/TacLdoghXGlUaBsL4bRIQSvVJVrUE6mhf68gO64YhZ4UiDYQGGrSB/MkG5xUT61WiCRcUOi44+JkoqesAGLyT0GpQ2TdA3fSDYnFyzEph7nu0hsLQ=,iv:kxg4y4/VOzIVoHxt2k0iZkXVTft4ryjQfl1QhNCO0DQ=,tag:G7rvOFkjiRZJGsjgn4w1Gw==,type:str]
+    lastmodified: "2025-10-28T15:58:51Z"
+    mac: ENC[AES256_GCM,data:dtbTTOcdNhF/I48+q7jiyaSl9qoSy9rOe1Zptg4CQgiNIZp07rgw1LXXNqGi6+d4JY+ijat4B2a3YmmvgOHPFooTcpQ2gNe+VwkkXmdu896lt9KM36G8jJf8CkybtvgPm/mQlylSLV00lti+1+K+2YCq1kWv4KRcw7uBHTpiNj4=,iv:bAhoj6AbAj/ivB72uVMUneyv+lH4bk/8rOddLuj8iiE=,tag:C+Wm9nrlRIGOLaLv/HoL9g==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
 ---
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
+apiVersion: v1
+kind: ConfigMap
 metadata:
-    name: argocd-application-controller-hpa
+    name: argocd-vault-plugin
     namespace: argocd
-spec:
-    scaleTargetRef:
-        apiVersion: apps/v1
-        kind: Deployment
-        name: argocd-argo-cd-app-controller
-    minReplicas: 1
-    maxReplicas: 3
-    metrics:
-        - type: Resource
-          resource:
-            name: cpu
-            target:
-                type: Utilization
-                averageUtilization: 70
-        - type: Resource
-          resource:
-            name: memory
-            target:
-                type: Utilization
-                averageUtilization: 95
+data:
+    configManagementPlugins.yaml: |
+        apiVersion: argoproj.io/v1alpha1
+        kind: ConfigManagementPlugin
+        metadata:
+          name: argocd-vault-plugin
+          namespace: argocd
+        spec:
+          version: v1.0
+          init:
+            command: ["/bin/sh", "-c"]
+            args: ["echo 'Initializing argocd-vault-plugin'"]
+          generate:
+            command: ["/bin/sh", "-c"]
+            args: ["/usr/local/bin/sops -d $VALUES_FILE"]
+          discover:
+            find:
+              command: ["sh", "-c", "find . -maxdepth 1 -type f -name '*.enc.yaml' -print -quit"]
+# ---
+# apiVersion: autoscaling/v2
+# kind: HorizontalPodAutoscaler
+# metadata:
+#     name: argocd-application-controller-hpa
+#     namespace: argocd
+# spec:
+#     scaleTargetRef:
+#         apiVersion: apps/v1
+#         kind: Deployment
+#         name: argocd-argo-cd-app-controller
+#     minReplicas: 1
+#     maxReplicas: 3
+#     metrics:
+#         - type: Resource
+#           resource:
+#             name: cpu
+#             target:
+#                 type: Utilization
+#                 averageUtilization: 70
+#         - type: Resource
+#           resource:
+#             name: memory
+#             target:
+#                 type: Utilization
+#                 averageUtilization: 95
+# ---
+# apiVersion: autoscaling.k8s.io/v1
+# kind: VerticalPodAutoscaler
+# metadata:
+#     name: argocd-argo-cd-repo-server-vpa
+#     namespace: argocd
+# spec:
+#     targetRef:
+#         apiVersion: apps/v1
+#         kind: Deployment
+#         name: argocd-argo-cd-repo-server
+#     updatePolicy:
+#         # Auto | Off | Initial
+#         updateMode: Auto
+#     resourcePolicy:
+#         containerPolicies:
+#             - containerName: '*'
+#               minAllowed:
+#                 cpu: 100m
+#                 memory: 256Mi
+#               maxAllowed:
+#                 cpu: "1"
+#                 memory: 756Mi
+#               controlledResources:
+#                 - cpu
+#                 - memory
 sops:
     kms: []
     gcp_kms: []
@@ -151,60 +201,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBxdVkzVHd5VitseGgyT0w2
-            MXJjWVNtNTIwK0RQMThIa0xiVTh5NUxuWmw0CjEwYjVSYytxOWpMcW9CSGx6UVk5
-            bm0yckk4N2pqekZ4NFh1aGR3d0paNGsKLS0tIGIzdUxRWUdjUTBzQmRLYzAzNlkx
-            MTlWOUxjQ3ZZSW5rcFJXaTlvcGxuLzgKY2omrFfl7cBTfh2C5iF7SQHHJjij9EOb
-            aoWRBvCqHgdbLVX/driHLSw+WHxYawHtNPCbLQ9wG8HC04N/8yfjOg==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBXUmJtMVcrOXB2amR4MHdG
+            VEM3eWN4ajNjZ3NyODB1Q2tnL2pKa214UlRvCm4yT3FSMTRWRzZnU1ZPY2xQajUz
+            VmhBbDJiN1kzcCtmcEVKaGp4WjNzbW8KLS0tIE14QktGcWQxbGMwR25aNU9mVnBr
+            SWtMb3J0cFZjQWgyckxlZjhFZTgzSjAKupjZvylmdo7WW02o3Jf8VCXnVPxIVSUH
+            oOSCH9iktpgTZRrAArzqyWTQwHdFWUiqVf6xubGVtL0UMTDXXO3PEw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-27T16:55:46Z"
-    mac: ENC[AES256_GCM,data:yqSblDTeMUNWk3OT3nVlxccOgzwBUDPQrG29nrsUWr6zOz3OJPpqLQqvb/TacLdoghXGlUaBsL4bRIQSvVJVrUE6mhf68gO64YhZ4UiDYQGGrSB/MkG5xUT61WiCRcUOi44+JkoqesAGLyT0GpQ2TdA3fSDYnFyzEph7nu0hsLQ=,iv:kxg4y4/VOzIVoHxt2k0iZkXVTft4ryjQfl1QhNCO0DQ=,tag:G7rvOFkjiRZJGsjgn4w1Gw==,type:str]
-    pgp: []
-    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
-    version: 3.7.1
----
-apiVersion: autoscaling.k8s.io/v1
-kind: VerticalPodAutoscaler
-metadata:
-    name: argocd-argo-cd-repo-server-vpa
-    namespace: argocd
-spec:
-    targetRef:
-        apiVersion: apps/v1
-        kind: Deployment
-        name: argocd-argo-cd-repo-server
-    updatePolicy:
-        # Auto | Off | Initial
-        updateMode: Auto
-    resourcePolicy:
-        containerPolicies:
-            - containerName: '*'
-              minAllowed:
-                cpu: 100m
-                memory: 256Mi
-              maxAllowed:
-                cpu: "1"
-                memory: 756Mi
-              controlledResources:
-                - cpu
-                - memory
-sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age:
-        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
-          enc: |
-            -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBxdVkzVHd5VitseGgyT0w2
-            MXJjWVNtNTIwK0RQMThIa0xiVTh5NUxuWmw0CjEwYjVSYytxOWpMcW9CSGx6UVk5
-            bm0yckk4N2pqekZ4NFh1aGR3d0paNGsKLS0tIGIzdUxRWUdjUTBzQmRLYzAzNlkx
-            MTlWOUxjQ3ZZSW5rcFJXaTlvcGxuLzgKY2omrFfl7cBTfh2C5iF7SQHHJjij9EOb
-            aoWRBvCqHgdbLVX/driHLSw+WHxYawHtNPCbLQ9wG8HC04N/8yfjOg==
-            -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-27T16:55:46Z"
-    mac: ENC[AES256_GCM,data:yqSblDTeMUNWk3OT3nVlxccOgzwBUDPQrG29nrsUWr6zOz3OJPpqLQqvb/TacLdoghXGlUaBsL4bRIQSvVJVrUE6mhf68gO64YhZ4UiDYQGGrSB/MkG5xUT61WiCRcUOi44+JkoqesAGLyT0GpQ2TdA3fSDYnFyzEph7nu0hsLQ=,iv:kxg4y4/VOzIVoHxt2k0iZkXVTft4ryjQfl1QhNCO0DQ=,tag:G7rvOFkjiRZJGsjgn4w1Gw==,type:str]
+    lastmodified: "2025-10-28T15:58:51Z"
+    mac: ENC[AES256_GCM,data:dtbTTOcdNhF/I48+q7jiyaSl9qoSy9rOe1Zptg4CQgiNIZp07rgw1LXXNqGi6+d4JY+ijat4B2a3YmmvgOHPFooTcpQ2gNe+VwkkXmdu896lt9KM36G8jJf8CkybtvgPm/mQlylSLV00lti+1+K+2YCq1kWv4KRcw7uBHTpiNj4=,iv:bAhoj6AbAj/ivB72uVMUneyv+lH4bk/8rOddLuj8iiE=,tag:C+Wm9nrlRIGOLaLv/HoL9g==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
