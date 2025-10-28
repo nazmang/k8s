@@ -1,218 +1,152 @@
-global:
-    defaultStorageClass: nfs-client
+global: null
+# defaultStorageClass: nfs-client
+configs:
+    # General Argo CD configuration. Any values you put under `.configs.cm` are passed to argocd-cm ConfigMap.
+    ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
+    cm:
+        # -- Create the argocd-cm configmap for [declarative setup]
+        create: true
+    ssh:
+        # -- Specifies if the argocd-ssh-known-hosts-cm configmap should be created by Helm.
+        create: true
+        # -- Annotations to be added to argocd-ssh-known-hosts-cm configmap
+        annotations: {}
+        # -- Known hosts to be added to the known host list by default.
+        # @default -- See [values.yaml]
+        knownHosts: |
+            [ssh.github.com]:443 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
+            [ssh.github.com]:443 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+            [ssh.github.com]:443 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JTJ72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51ZqExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk=
+            bitbucket.org ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPIQmuzMBuKdWeF4+a2sjSSpBK0iqitSQ+5BM9KhpexuGt20JpTVM7u5BDZngncgrqDMbWdxMWWOGtZ9UgbqgZE=
+            bitbucket.org ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIazEu89wgQZ4bqs3d63QSMzYVa0MuJ2e2gKTKqu+UUO
+            bitbucket.org ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDQeJzhupRu0u0cdegZIa8e86EG2qOCsIsD1Xw0xSeiPDlCr7kq97NLmMbpKTX6Esc30NuoqEEHCuc7yWtwp8dI76EEEB1VqY9QJq6vk+aySyboD5QF61I/1WeTwu+deCbgKMGbUijeXhtfbxSxm6JwGrXrhBdofTsbKRUsrN1WoNgUa8uqN1Vx6WAJw1JHPhglEGGHea6QICwJOAr/6mrui/oB7pkaWKHj3z7d1IC4KWLtY47elvjbaTlkN04Kc/5LFEirorGYVbt15kAUlqGM65pk6ZBxtaO3+30LVlORZkxOh+LKL/BvbZ/iRNhItLqNyieoQj/uh/7Iv4uyH/cV/0b4WDSd3DptigWq84lJubb9t/DnZlrJazxyDCulTmKdOR7vs9gMTo+uoIrPSb8ScTtvw65+odKAlBj59dhnVp9zd7QUojOpXlL62Aw56U4oO+FALuevvMjiWeavKhJqlR7i5n9srYcrNV7ttmDw7kf/97P5zauIhxcjX+xHv4M=
+            github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
+            github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+            github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JTJ72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51ZqExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk=
+            gitlab.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFSMqzJeV9rUzU4kWitGjeR4PWSa29SPqJ1fVkhtj3Hw9xjLVXVYrU9QlYWrOLXBpQ6KWjbjTDTdDkoohFzgbEY=
+            gitlab.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf
+            gitlab.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsj2bNKTBSpIYDEGk9KxsGh3mySTRgMtXL583qmBpzeQ+jqCMRgBqB98u3z++J1sKlXHWfM9dyhSevkMwSbhoR8XIq/U0tCNyokEi/ueaBMCvbcTHhO7FcwzY92WK4Yt0aGROY5qX2UKSeOvuP4D6TPqKF1onrSzH9bx9XUf2lEdWT/ia1NEKjunUqu1xOB/StKDHMoX4/OKyIzuS0q/T1zOATthvasJFoPrAjkohTyaDUz2LN5JoH839hViyEG82yB+MjcFV5MU3N1l1QL3cVUCh93xSaua1N85qivl+siMkPGbO5xR/En4iEY6K2XPASUEMaieWVNTRCtJ4S8H+9
+            ssh.dev.azure.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
+            vs-ssh.visualstudio.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
+        # -- Additional known hosts for private repositories
+        extraHosts: ""
+    cmp:
+        # -- Create the argocd-cmp-cm configmap
+        create: false
+        # -- Annotations to be added to argocd-cmp-cm configmap
+        annotations: {}
+        # -- Plugin yaml files to be added to argocd-cmp-cm
+        plugins: {}
+        # --- First plugin
+        # my-plugin:
+        #   init:
+        #     command: [sh]
+        #     args: [-c, 'echo "Initializing..."']
+        #   generate:
+        #     command: [sh, -c]
+        #     args:
+        #       - |
+        #         echo "{\"kind\": \"ConfigMap\", \"apiVersion\": \"v1\", \"metadata\": { \"name\": \"$ARGOCD_APP_NAME\", \"namespace\": \"$ARGOCD_APP_NAMESPACE\", \"annotations\": {\"Foo\": \"$ARGOCD_ENV_FOO\", \"KubeVersion\": \"$KUBE_VERSION\", \"KubeApiVersion\": \"$KUBE_API_VERSIONS\",\"Bar\": \"baz\"}}}"
+        #   discover:
+        #     fileName: "./subdir/s*.yaml"
+        #     find:
+        #       glob: "**/Chart.yaml"
+        #       command: [sh, -c, find . -name env.yaml]
+    # --- Second plugin
+    # my-plugin2:
+    #   init:
+    #     command: [sh]
+    #     args: [-c, 'echo "Initializing..."']
+    #   generate:
+    #     command: [sh, -c]
+    #     args:
+    #       - |
+    #         echo "{\"kind\": \"ConfigMap\", \"apiVersion\": \"v1\", \"metadata\": { \"name\": \"$ARGOCD_APP_NAME\", \"namespace\": \"$ARGOCD_APP_NAMESPACE\", \"annotations\": {\"Foo\": \"$ARGOCD_ENV_FOO\", \"KubeVersion\": \"$KUBE_VERSION\", \"KubeApiVersion\": \"$KUBE_API_VERSIONS\",\"Bar\": \"baz\"}}}"
+    #   discover:
+    #     fileName: "./subdir/s*.yaml"
+    #     find:
+    #       glob: "**/Chart.yaml"
+    #       command: [sh, -c, find . -name env.yaml]  
+    # Argo CD sensitive data
+    # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sensitive-data-and-sso-client-secrets
+    secret:
+        # -- Create the argocd-secret
+        createSecret: ENC[AES256_GCM,data:oenNwg==,iv:lvCtrGJsOHgDWKsSpYG24uTK6xEn6YFOp67MpQ6MsWI=,tag:k2TCz6woXy9nqCPDryS1DQ==,type:bool]
+        # -- Labels to be added to argocd-secret
+        labels: {}
+        # -- Annotations to be added to argocd-secret
+        annotations: {}
+        # -- Shared secret for authenticating GitHub webhook events
+        githubSecret: ""
+        # -- Shared secret for authenticating GitLab webhook events
+        gitlabSecret: ""
+        # -- Shared secret for authenticating BitbucketServer webhook events
+        bitbucketServerSecret: ""
+        # -- UUID for authenticating Bitbucket webhook events
+        bitbucketUUID: ""
+        # -- Shared secret for authenticating Gogs webhook events
+        gogsSecret: ""
+        ## Azure DevOps
+        azureDevops:
+            # -- Shared secret username for authenticating Azure DevOps webhook events
+            username: ""
+            # -- Shared secret password for authenticating Azure DevOps webhook events
+            password: ""
+        # -- add additional secrets to be added to argocd-secret
+        ## Custom secrets. Useful for injecting SSO secrets into environment variables.
+        ## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sensitive-data-and-sso-client-secrets
+        ## Note that all values must be non-empty.
+        extra: {}
+        # LDAP_PASSWORD: "mypassword"
+        # -- Bcrypt hashed admin password
+        ## Argo expects the password in the secret to be bcrypt hashed. You can create this hash with
+        ## `htpasswd -nbBC 10 "" $ARGO_PWD | tr -d ':\n' | sed 's/$2y/$2a/'`
+        argocdServerAdminPassword: ""
+        # -- Admin password modification time. Eg. `"2006-01-02T15:04:05Z"`
+        # @default -- `""` (defaults to current time)
+        argocdServerAdminPasswordMtime: ""
 notifications:
     enabled: true
 server:
-    config:
-        kustomize.buildOptions: --enable-alpha-plugins --enable-exec
     autoscaling:
         enabled: true
         minReplicas: 1
         maxReplicas: 5
-        targetCPU: 50
-        targetMemory: 50
+        targetCPUUtilizationPercentage: 50
+        targetMemoryUtilizationPercentage: 50
     ingress:
         enabled: true
         hostname: argocd.comintern.local
-        ## e.g:
-        ## annotations:
-        ##   kubernetes.io/ingress.class: nginx
-        ##   cert-manager.io/cluster-issuer: cluster-issuer-name
-        ##
         annotations:
             kubernetes.io/ingress.class: nginx
             cert-manager.io/cluster-issuer: selfsigned-issuer
             nginx.ingress.kubernetes.io/backend-protocol: HTTPS
             nginx.ingress.kubernetes.io/ssl-redirect: "true"
             nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-        ## Enable TLS configuration for the hostname defined at ingress.hostname parameter
-        ## TLS certificates will be retrieved from a TLS secret with name: {{- printf "%s-tls" .Values.ingress.hostname }}
-        ## You can use the ingress.secrets parameter to create this TLS secret or rely on cert-manager to create it
-        ##
         tls: false
-        ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
-        ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
-        ##
         ingressClassName: nginx
 dex:
     enabled: false
-config:
-    ## @param config.knownHosts [string] Known hosts to be added to the known hosts list by default. Check the values to see the default value
-    ##
-    knownHosts: |
-        bitbucket.org ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAubiN81eDcafrgMeLzaFPsw2kNvEcqTKl/VqLat/MaB33pZy0y3rJZtnqwR2qOOvbwKZYKiEO1O6VqNEBxKvJJelCq0dTXWT5pbO2gDXC6h6QDXCaHo6pOHGPUy+YBaGQRGuSusMEASYiWunYN0vCAI8QaXnWMXNMdFP3jHAJH0eDsoiGnLPBlBp4TNm6rYI74nMzgz3B9IikW4WVK+dc8KZJZWYjAuORU3jc1c/NPskD2ASinf8v3xnfXeukU0sJ5N6m5E8VLjObPEO+mN2t/FZTMZLiFqPWc/ALSqnMnnhwrNi2rbfg/rd/IpL8Le3pSBne8+seeFVBoGqzHM9yXw==
-        github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
-        gitlab.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFSMqzJeV9rUzU4kWitGjeR4PWSa29SPqJ1fVkhtj3Hw9xjLVXVYrU9QlYWrOLXBpQ6KWjbjTDTdDkoohFzgbEY=
-        gitlab.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf
-        gitlab.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsj2bNKTBSpIYDEGk9KxsGh3mySTRgMtXL583qmBpzeQ+jqCMRgBqB98u3z++J1sKlXHWfM9dyhSevkMwSbhoR8XIq/U0tCNyokEi/ueaBMCvbcTHhO7FcwzY92WK4Yt0aGROY5qX2UKSeOvuP4D6TPqKF1onrSzH9bx9XUf2lEdWT/ia1NEKjunUqu1xOB/StKDHMoX4/OKyIzuS0q/T1zOATthvasJFoPrAjkohTyaDUz2LN5JoH839hViyEG82yB+MjcFV5MU3N1l1QL3cVUCh93xSaua1N85qivl+siMkPGbO5xR/En4iEY6K2XPASUEMaieWVNTRCtJ4S8H+9
-        ssh.dev.azure.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
-        vs-ssh.visualstudio.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
-    ## @param config.tlsCerts TLS certificates used to verify the authenticity of the repository servers
-    ## Certificates will be generated by default if the values are not set.
-    ## E.g:
-    ## tlsCerts:
-    ##   argocd-1.example.com: |
-    ##     -----BEGIN CERTIFICATE-----
-    ##     (...)
-    ##     -----END CERTIFICATE-----
-    ##   argocd-2.example.com: |
-    ##     -----BEGIN CERTIFICATE-----
-    ##     (...)
-    ##     -----END CERTIFICATE-----
-    ##
-    tlsCerts: {}
-    ## @param config.gpgKeys GnuPG public keys to add to the keyring
-    ## Keys will be generated by default if the values are not set.
-    ## Note: Public keys should be exported with `gpg --export --armor <KEY>`
-    ##
-    gpgKeys: {}
-    # 4AEE18F83AFDEB23: |
-    #   -----BEGIN PGP PUBLIC KEY BLOCK-----
-    #   ...
-    #   -----END PGP PUBLIC KEY BLOCK-----
-    secret:
-        ## @param config.secret.create Whether to create or not the secret
-        ##
-        create: true
-        ## Annotations to be added to argocd-secret
-        ## @param config.secret.annotations General secret extra annotations
-        ##
-        annotations: {}
-        ## Webhook Configs
-        ## @param config.secret.githubSecret GitHub secret to configure webhooks
-        ## @param config.secret.gitlabSecret GitLab secret to configure webhooks
-        ## @param config.secret.bitbucketServerSecret BitBucket secret to configure webhooks
-        ## @param config.secret.bitbucketUUID BitBucket UUID to configure webhooks
-        ## @param config.secret.gogsSecret Gogs secret to configure webhooks
-        ##
-        githubSecret: ""
-        gitlabSecret: ""
-        bitbucketServerSecret: ""
-        bitbucketUUID: ""
-        gogsSecret: ""
-        ## Extra keys to add to the general config secret. Useful for injecting SSO secrets into environment variables.
-        ## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sso
-        ## @param config.secret.extra Extra keys to add to the configuration secret.
-        ## All values must be non-empty.
-        ## E.g:
-        ##  LDAP_PASSWORD: "mypassword"
-        ##
-        extra: {}
-        ## Argo CD TLS Data.
-        ## @param config.secret.argocdServerTlsConfig.key TLS key for the Argo CD config secret
-        ## @param config.secret.argocdServerTlsConfig.crt TLS certificate for the Argo CD config secret
-        ## E.g:
-        ##   key:
-        ##   crt: |
-        ##     -----BEGIN CERTIFICATE-----
-        ##     <cert data>
-        ##     -----END CERTIFICATE-----
-        ##     -----BEGIN CERTIFICATE-----
-        ##     <ca cert data>
-        ##     -----END CERTIFICATE-----
-        ##
-        argocdServerTlsConfig:
-            key: ""
-            crt: ""
-        ## Argo admin password
-        ## @param config.secret.argocdServerAdminPassword Argo CD server admin password. Autogenerated by default.
-        ##
-        argocdServerAdminPassword: ""
-        ## Password modification time defaults to current time if not set
-        ## @param config.secret.argocdServerAdminPasswordMtime Argo CD server password modification time
-        ## E.g:
-        ## argocdServerAdminPasswordMtime: "2006-01-02T15:04:05Z"
-        ##
-        argocdServerAdminPasswordMtime: ""
-        ## Create a secret with optional repository credentials
-        ## @param config.secret.repositoryCredentials Repository credentials to add to the Argo CD server confgi secret
-        ## E.g.
-        ## repositoryCredentials:
-        ##   sample-ssh-key: |
-        ##     -----BEGIN RSA KEY-----
-        ##     <key content>
-        ##     -----END RSA KEY-----
-        ##
-        repositoryCredentials: {}
-        ## External Cluster Credentials
-        ## Refs:
-        ## - https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters
-        ## - https://argo-cd.readthedocs.io/en/stable/operator-manual/security/#external-cluster-credentials
-        ## @param config.clusterCredentials Configure external cluster credentials
-        ## E.g
-        ##  - name: mycluster
-        ##   server: https://mycluster.com
-        ##   labels: {}
-        ##   annotations: {}
-        ##   config:
-        ##     bearerToken: "<authentication token>"
-        ##     tlsClientConfig:
-        ##       insecure: false
-        ##       caData: "<base64 encoded certificate>"
-        ## - name: mycluster2
-        ##   server: https://mycluster2.com
-        ##   labels: {}
-        ##   annotations: {}
-        ##   namespaces: namespace1,namespace2
-        ##   config:
-        ##     bearerToken: "<authentication token>"
-        ##     tlsClientConfig:
-        ##       insecure: false
-        ##       caData: "<base64 encoded certificate>"
-        ##
-        clusterCredentials: []
 redis:
     enabled: false
 externalRedis:
-    ## Can be enabled after redisWait.enabled and redis.enabled are set to false
-    ## @param externalRedis.enabled Enables External Redis
-    ##
     enabled: true
-    ## Redis&reg; host
-    ## @param externalRedis.host External Redis host
-    ##
     host: redis-master
-    ## Redis&reg; port
-    ## @param externalRedis.port External Redis port
-    ##
     port: 6379
-    ## Redis&reg; password for authentication
-    ## Ignored if existingSecret is set
-    ## @param externalRedis.password External Redis password
-    ##
+    username: ""
     password: ""
-    # password: "superSecretP@ss123"
-    ## Name of existing secret object containing the password
-    ## @param externalRedis.existingSecret Existing secret for the external redis
-    ##
-    existingSecret: ENC[AES256_GCM,data:9jZmPW/quWb27g==,iv:hkTmeYufc5AY8t5y8uJcpY7BpZfzhEI1eFSidfJW7W8=,tag:RugN6GNwU8zon+2/vYxtVw==,type:str]
-    # existingSecret: ""
-    ## Password key to be retrieved from Redis&reg; secret
-    ## @param externalRedis.existingSecretPasswordKey Password key for the existing secret containing the external redis password
-    ##
-    existingSecretPasswordKey: ENC[AES256_GCM,data:WBYNBcjFJBL0Pbj7kiY=,iv:v8xsgGam+7MN9LRATv8XSGQfghY0j8z2VZ9oqFXHmu4=,tag:FS//yMz/ojIoRBwxIepRBg==,type:str]
-    # existingSecretPasswordKey: ""
-    ## Specify a label to use with the label selector
-    ## @param externalRedis.selector External Redis selector labels
-    ##
-    selector: {}
-    #
-    # selector:
-    # app.kubernetes.io/component: master
-    # app.kubernetes.io/instance: redis
-    # app.kubernetes.io/name: redis
-redisWait:
-    ## @param redisWait.enabled Enables waiting for redis
-    ##
-    enabled: false
+    existingSecret: ENC[AES256_GCM,data:1f7/8hblI25vEA==,iv:S6apzsOzl64JQCUS46LY9XoEDKLeJ/FXpT5bD40Ch8Q=,tag:+VANs21zgKT2Qwt7xaKuJA==,type:str]
+    secretAnnotations: {}
+    # existingSecretPasswordKey: redis-password
+    # selector: {}
 repoServer:
     autoscaling:
         enabled: true
         minReplicas: 1
         maxReplicas: 5
-        targetCPU: 50
-        targetMemory: 50
-    extraVolumes:
+        targetCPUUtilizationPercentage: 50
+        targetMemoryUtilizationPercentage: 50
+    volumes:
         - name: argocd-vault-plugin
           configMap:
             name: argocd-vault-plugin
@@ -232,7 +166,7 @@ repoServer:
           volumeMounts:
             - mountPath: /custom-tools
               name: custom-tools
-    extraVolumeMounts:
+    volumeMounts:
         - mountPath: /usr/local/bin/kustomize
           name: custom-tools
           subPath: kustomize
@@ -242,10 +176,9 @@ repoServer:
         - mountPath: /usr/local/bin/sops
           name: custom-tools
           subPath: sops
-    extraEnvVarsSecret: ENC[AES256_GCM,data:JtPIzeKCf6yQIEM+,iv:cABckEIuveHZkNV6Y1x7o8bGL6o4SxOt1ZcOdjuti1U=,tag:W3m+wbKRWhVY8ae1789c/Q==,type:str]
-    resourcesPreset: small
-controller:
-    resourcesPreset: small
+    extraEnvFrom:
+        - secretRef:
+            name: sops-age-key
 sops:
     kms: []
     gcp_kms: []
@@ -255,14 +188,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBmR2kvMGFVT0x5dElqbldl
-            UUMzalhMcUdWV0lpY0N6QUEvZmYreE5yY0RnCjZVaUZmOHpKcU5MSFF2aThQTmxN
-            T2E5c3FvcE81cTk2NVY0dHFDR1Bzc28KLS0tIGpWMlZCdFdWeVNLUFNNY2JnS000
-            YitkeEFReC8wZ2NKOUlFalFMaDh1QzAKeUgijUnEFV7BhMEn/K2O3/ocvry9Utwi
-            uRwHJo7lpUwNwbEw78m6Wq6ZLxYZrw/TiUPzB8L0xhLcwlwEbSuWyA==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBzNEV2aHNXa1FibStWRzF4
+            K0Izd2NGM241SFIvZ0kxM0oxbUlLaHBSZUFvCm5VZk5TZ1Mybzg4S1VOcWFDZDJL
+            YUEvZVZENU9vR2MzMEpHRzBZSXRXQ3cKLS0tIGhrVmZRQWZyV0VHeUlNVHJjNVpl
+            Rk1rN1ZmR2JoM2JzODc0VmlRUEVlRlUKK5rwVL9gLuwxbpdDoLKJ82EBYiwiC09y
+            laqW+s3L1zMaDAr4Qdq4H70Jkf7mSrUfcthxL+ysDiTzEi6L55YDNw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-28T15:58:56Z"
-    mac: ENC[AES256_GCM,data:4K75wWOcxK20QlIIAAAQsEH/fCR3EUpaxBCmOCIg4pZpnaA1kgWIzC/gi0RBZnEIWhUloPdAVl7sWh6ocfPXoyUc3uJ3rzhYuKt4y5jIAgJPAsdA1jvukpuUIOkLqSMy+3MZLPwVt+UkCeQlWFDAtnQfqLHYvtCap9iTIavgZo4=,iv:k/aHtHBdzCoSCqN4G5UobBvUDP7NmMI7YqwHg1cnZtw=,tag:ukPdAb6nvf0qh9CubEh6Mw==,type:str]
+    lastmodified: "2025-10-28T17:33:48Z"
+    mac: ENC[AES256_GCM,data:8Z2DqfHaGrrg3gLwxOQUlJHpYqZVvR8GE34G4TfNRJQCgFB601q0JI/G0bPBPe0ggo5vfXmgNIkSbCAXukeRIf3a9pMAiHa8zXbSwL3XEvVUpzykHEzsAEtGkTMs3J8bLPoEu/z7enR7fnR8T+y4/f0GfPj0rRSWEw3+Qi2GMnQ=,iv:cW3lbc8jV6W1C0WhWLpwxndBPpZLVIf9S0IDiUnpnsE=,tag:Y1Arep17vlN9KqdroncxXA==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
