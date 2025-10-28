@@ -106,10 +106,9 @@ pipeline {
                             helm repo add ${env.HELM_REPO_NAME} ${env.HELM_REPO_URL}
                             helm repo update
                             helm upgrade --install ${env.HELM_RELEASE_NAME} ${env.HELM_CHART_NAME} \
-                            --namespace ${env.NAMESPACE} --version ${env.HELM_CHART_VERSION} --create-namespace -f ${VALUES_URL} \
-                            | tee helm-deploy.log
+                            --namespace ${env.NAMESPACE} --version ${env.HELM_CHART_VERSION} --create-namespace -f ${VALUES_URL} 
                         """
-                        archiveArtifacts artifacts: "helm-deploy.log", fingerprint: true
+                        // archiveArtifacts artifacts: "helm-deploy.log", fingerprint: true
                     }
                 }
             }
@@ -125,10 +124,9 @@ pipeline {
                 dir("${env.CHART_DIR}") {
                     sh """
                         export PATH="$HOME/.local/bin:$PATH"
-                        kubectl apply -f ${env.DEPLOYMENT_CONFIG} -n ${env.NAMESPACE} \
-                        | tee apply-manifest.log
+                        kubectl apply -f ${env.DEPLOYMENT_CONFIG} -n ${env.NAMESPACE} 
                     """
-                    archiveArtifacts artifacts: "apply-manifest.log", fingerprint: true
+                    // archiveArtifacts artifacts: "apply-manifest.log", fingerprint: true
                 }
             }
         }
@@ -143,10 +141,9 @@ pipeline {
                 dir("${env.APPS_DIR}") {
                     sh """
                         export PATH="$HOME/.local/bin:$PATH"
-                        kubectl apply -f *.yaml -n ${env.NAMESPACE} \
-                        | tee apply-apps.log
+                        kubectl apply -f *.yaml -n ${env.NAMESPACE} 
                     """
-                    archiveArtifacts artifacts: "apply-apps.log", fingerprint: true
+                    // archiveArtifacts artifacts: "apply-apps.log", fingerprint: true
                 }
             }
         }
