@@ -202,12 +202,12 @@ externalRedis:
     ## Name of existing secret object containing the password
     ## @param externalRedis.existingSecret Existing secret for the external redis
     ##
-    existingSecret: ENC[AES256_GCM,data:81XaEP0d9YYGVw==,iv:dsWgD2Pfmt0e8A/Du51mZwY43r0LTREvkyzQtZBIJCg=,tag:rqGqeDEdQYN58Thq1y4+Zg==,type:str]
+    existingSecret: ENC[AES256_GCM,data:W3A9jYfKmuZs3A==,iv:20sRpDxyg2Sz101Mg8spHYZR4PSE3xYVGeVt4xJqzqc=,tag:v7laPsbc0lOdyg02YPfPSQ==,type:str]
     # existingSecret: ""
     ## Password key to be retrieved from Redis&reg; secret
     ## @param externalRedis.existingSecretPasswordKey Password key for the existing secret containing the external redis password
     ##
-    existingSecretPasswordKey: ENC[AES256_GCM,data:c5rJyfP21+oOTp2mPWc=,iv:FSEqOgnhycWoI4AgCLY6oOHCMcRyePJZb04lbSRH83M=,tag:xnHuYlQX8pRfv/w+Q/pSqQ==,type:str]
+    existingSecretPasswordKey: ENC[AES256_GCM,data:tniQFXkjpF9IxI5l12U=,iv:l4w1ZTvy/0CJm9xfP+21gv+wBQVbG9P7ptzBVgKLZb8=,tag:7l54WLrSwToRx4rfT72D6w==,type:str]
     # existingSecretPasswordKey: ""
     ## Specify a label to use with the label selector
     ## @param externalRedis.selector External Redis selector labels
@@ -229,35 +229,41 @@ repoServer:
         maxReplicas: 5
         targetCPU: 50
         targetMemory: 50
-    # Use init containers to configure custom tooling
-    # https://argoproj.github.io/argo-cd/operator-manual/custom_tools/
     extraVolumes:
         - name: custom-tools
           emptyDir: {}
     initContainers:
-        - name: install-ksops
-          image: viaductoss/ksops:v4
-          command:
-            - /bin/sh
-            - -c
-          args:
-            - echo "Installing KSOPS..."; mv ksops /custom-tools/; mv kustomize /custom-tools/; echo "Done.";
-          volumeMounts:
-            - mountPath: /custom-tools
-              name: custom-tools
-        - name: install-sops
+        - name: install-tools
           image: alpine:3.18
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 999
           command:
             - /bin/sh
             - -c
           args:
             - |
-              apk add --no-cache wget && \
-              wget -q https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64 -O /custom-tools/sops && \
+              set -eux;
+              echo "Creating /custom-tools directory...";
+              mkdir -p /custom-tools;
+
+              echo "Installing dependencies...";
+              apk add --no-cache wget tar;
+
+              echo "Installing Kustomize...";
+              wget -qO- https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.4.2/kustomize_v5.4.2_linux_amd64.tar.gz | tar xz -C /custom-tools;
+
+              echo "Installing KSOPS...";
+              wget -qO- https://github.com/viaduct-ai/kustomize-sops/releases/download/v4.4.0/ksops_4.4.0_Linux_x86_64.tar.gz | tar xz -C /custom-tools;
+
+              echo "Installing SOPS...";
+              wget -q https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64 -O /custom-tools/sops;
               chmod +x /custom-tools/sops;
+
+              echo "All tools installed successfully.";
           volumeMounts:
-            - name: custom-tools
-              mountPath: /custom-tools
+            - mountPath: /custom-tools
+              name: custom-tools
     extraVolumeMounts:
         - mountPath: /usr/local/bin/kustomize
           name: custom-tools
@@ -268,7 +274,7 @@ repoServer:
         - mountPath: /usr/local/bin/sops
           name: custom-tools
           subPath: sops
-    extraEnvVarsSecret: ENC[AES256_GCM,data:pHY3FLgnSqt5IeNd,iv:IgNDk2jIPtQ7xV12iIStlWXswKm8O9z7oqO7xpehDLo=,tag:SQbKj9bpeuOfWh8dlY6wrA==,type:str]
+    extraEnvVarsSecret: ENC[AES256_GCM,data:q4gK2yMt/P4//B44,iv:BV4Y92STEsui3j793pz+yRG43A+Y+HibDleXQvj8FsY=,tag:06Ry+IWQ3DbORtqD7NxekQ==,type:str]
     resourcesPreset: small
 controller:
     resourcesPreset: small
@@ -281,14 +287,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB2NjhYZzVBY1JQUFRnZzNN
-            eFJyeWZMYnk1S3NMZkRuYk91bmc1OTNTOXljCmNkMEszVmo3L0x2S0JWUzBTY2o4
-            SVJBeS91bmZuWjB1RFZuRWdnRnVpcE0KLS0tIDhYSWQ3VXVNaGUwUGpUbHZOWDVz
-            aFZjV2dXNCt5Ni9Ia0pVK2dQNXdjMUUKjjKcTv5H3vgHS+l+RPSoa9+XMojfkrm3
-            f5QwC47JIIs5dI3KzznoXLupvMzxMtl/LAjXQsZyfRZ8PieOENukMQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA5VzBHcStwc3ZMZkJnUE1q
+            a1pGZE9VNmhHMzcxbkRoU2d3YmFsUUNPOFVrClR6L3Rrdytmdk05eFRuVWRSR25R
+            TDdPckdFVHljbHExbDFTNEQ0emk0L1kKLS0tIHZHYWJJWnNIUWFKMDZQaEpsaElr
+            eU9Xdm53VUR4cFVvN25Oc2g3eEdtVjQKcgpI871/Py6eaSd6vECkWvDpCbNkLazq
+            33Z44CpUPXHxseKS3s+Pt91RJp5CTm/EgQFvei5BMnPIkjqVhjSsoA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-28T14:52:00Z"
-    mac: ENC[AES256_GCM,data:Y7rFVOeljFm8XnFCkja4FOKiPAoM3cBIITWp+HbBX0SDHbjjFi5443z+Vm21Z382HQ/pMd8in+MerrfYHjTWcIm6zT8nhGHPoQDiKzVXgxxPaxLArnNxpfrunNV4PCBi8MFkezZF5Oao2LH8Qg6yWFXVE6BHyBANP1VMJQ5cGx8=,iv:ap+a1T+0alaQqYVF8tz/Xp/GmB/VIsUCpSw+N5Dyu8M=,tag:NymYF+G7KmG8Y9Z3j3QwiA==,type:str]
+    lastmodified: "2025-10-28T15:17:09Z"
+    mac: ENC[AES256_GCM,data:D8O47bpkLjIT2RuA7UokN2u8K6ipxwgHFTv5Z6z53Yr5K8JWAzxJB0DzCfOUA3RTpH23QiBfqNFrU3D56kDkvqwkJoS5x9pLvXv7gc6sLDqhDkf8S3djoHsB2PtIMjqEgMn4rYIlqljFBclfa5Kk6qxAl9ruZlpS3uc1SY5jhVI=,iv:7+HGtHHxRPuqSJPWg23ceZUHtvCt7+8StHn8dsNNmuo=,tag:o8SDj/5vXurtIygsIoQoqA==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
