@@ -1,4 +1,5 @@
-# global: 
+global:
+    domain: argocd.comintern.local
 # defaultStorageClass: nfs-client
 configs:
     # General Argo CD configuration. Any values you put under `.configs.cm` are passed to argocd-cm ConfigMap.
@@ -32,28 +33,32 @@ configs:
         extraHosts: ""
     cmp:
         # -- Create the argocd-cmp-cm configmap
-        create: false
+        create: true
         # -- Annotations to be added to argocd-cmp-cm configmap
         annotations: {}
         # -- Plugin yaml files to be added to argocd-cmp-cm
-        plugins: {}
-        # --- First plugin
-        # my-plugin:
-        #   init:
-        #     command: [sh]
-        #     args: [-c, 'echo "Initializing..."']
-        #   generate:
-        #     command: [sh, -c]
-        #     args:
-        #       - |
-        #         echo "{\"kind\": \"ConfigMap\", \"apiVersion\": \"v1\", \"metadata\": { \"name\": \"$ARGOCD_APP_NAME\", \"namespace\": \"$ARGOCD_APP_NAMESPACE\", \"annotations\": {\"Foo\": \"$ARGOCD_ENV_FOO\", \"KubeVersion\": \"$KUBE_VERSION\", \"KubeApiVersion\": \"$KUBE_API_VERSIONS\",\"Bar\": \"baz\"}}}"
-        #   discover:
-        #     fileName: "./subdir/s*.yaml"
-        #     find:
-        #       glob: "**/Chart.yaml"
-        #       command: [sh, -c, find . -name env.yaml]
-    # --- Second plugin
-    # my-plugin2:
+        plugins:
+            argocd-vault-plugin:
+                init:
+                    command:
+                        - /bin/sh
+                        - -c
+                    args:
+                        - echo 'Initializing argocd-vault-plugin'
+                generate:
+                    command:
+                        - /bin/sh
+                        - -c
+                    args:
+                        - /usr/local/bin/sops -d $VALUES_FILE
+                discover:
+                    find:
+                        command:
+                            - sh
+                            - -c
+                            - find . -maxdepth 1 -type f -name '*.enc.yaml' -print -quit
+    secret:
+    # my-plugin:
     #   init:
     #     command: [sh]
     #     args: [-c, 'echo "Initializing..."']
@@ -66,12 +71,10 @@ configs:
     #     fileName: "./subdir/s*.yaml"
     #     find:
     #       glob: "**/Chart.yaml"
-    #       command: [sh, -c, find . -name env.yaml]  
-    # Argo CD sensitive data
+    #       command: [sh, -c, find . -name env.yaml]
     # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sensitive-data-and-sso-client-secrets
-    secret:
         # -- Create the argocd-secret
-        createSecret: ENC[AES256_GCM,data:q4lLEw==,iv:t8Yc7Ec+8lXnpdzF6eMrr3I5WfSQlIHIkLwpgPSZ3VU=,tag:SOvwOYK10uwMQv7FOU8Hcw==,type:bool]
+        createSecret: ENC[AES256_GCM,data:5vjXyg==,iv:eiBhSeZEbfAOMIgPgfEvGQa6pq9Tuzkf1jZGcHaHr8Y=,tag:vIaxJo2uqZUhmNw7jNsAcw==,type:bool]
         # -- Labels to be added to argocd-secret
         labels: {}
         # -- Annotations to be added to argocd-secret
@@ -135,7 +138,7 @@ externalRedis:
     port: 6379
     username: ""
     password: ""
-    existingSecret: ENC[AES256_GCM,data:NbxXYd9Ghh6KTg==,iv:05wQR4sjVvOZlBo5EiYCaPYsz6u5+6LpDhd42lJqqLo=,tag:SO6XVoL7YUkUIUYv0t4rWA==,type:str]
+    existingSecret: ENC[AES256_GCM,data:Q0mgdvlHobsliA==,iv:+zfLGfLZt2kLRZHV4R1sD7RTh2VBVDaq7tq9hxIQ+bw=,tag:6K3S+HTZuBLXm6aQ5WPRhA==,type:str]
     secretAnnotations: {}
     # existingSecretPasswordKey: redis-password
     # selector: {}
@@ -188,14 +191,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBVN2c3SE9nakc5a3VNWjJC
-            dDhORDV3Yk9LQnZIRFBaRHBKckd0ZnVLNkRvCnJ4blM1UmdFY0NKa3pUQ2Z3MENP
-            NnZRVmczRy9PRmNERTBxWm1GaERQQ0UKLS0tIGNmYmhvZ3RVaWJFMm9XVFduQWdH
-            UFo5cGRTdU40UnNaOURnZ3pMQXZ2VXMKVFdFIw5+gHFqppqkWqL33/iiYd/hJ6XQ
-            RZgmU4PR/yFSjK/YYR+g0vg8XRTHXyz8vrI7Bc4GH6WuF1auSwkdkQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBDeHlOb1NLZElSRzBIRHF6
+            TVZLRTlkNURPTEZRYkNtczUyTEFOSHJjcWg0CjdZMHdTbGVXUlZta3QrR1JNNE9x
+            dm11MERaMU9CY09mYTB6d000TkxobWMKLS0tIFk1aWJIVFFpMndCanRYOU9xUzFr
+            WEsxZlJRLzBhQm1WZ1ZZTzEybFZLQ1UK6oihWv+9in7jQ5KK3dNYZnqTXWroHO6I
+            KVeRmxB4135mloCM8QCPRYjG1Z9bOD5+qjwQZFbo6BOBhj4UtAAgSQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-28T17:38:36Z"
-    mac: ENC[AES256_GCM,data:C7HF435wUMWkLoejBQ0KyDsZ5MIcBrsoVbYZ1gcCIvOwtQSWHAU2Y1AJCKkDzO5bVtVF/NKHpoli+IfzLXhBVcxb77kPR6KCbN3mGn6hYd2pkxHwhce9GuHFOeVbFdJbkqIjAaeq0gajjfp+hCEO+t37PS/zoGm5eGeZpINQMTs=,iv:h9x+DEE1w96e9fOOZfL6kVbp+MBjTahZ/EfV/OSwqoM=,tag:nWYsuQmzYpr6jR2cEOcvZA==,type:str]
+    lastmodified: "2025-10-28T17:56:35Z"
+    mac: ENC[AES256_GCM,data:eL8QhNztfx4HBbXpcBvsYE65dNBv52qX0sfKLOw3rlApM+vv1IZcLKbn/T59pdYBF5qC1CBQLrBu4xnTYbFwbwkDqsJ1F5QQ/3nHZtJPQV+WLq5+dko/w3uggdE3cT3nNqOA956AsF5cd9HKNPWpNZqYyiSjkfv04MZZgUy/4e0=,iv:qnppUgiycWKg0kVbrVKGGmXw4bjxg8anei5iOQONA3o=,tag:bB9XZEBaR2/WIeKqD2Xp2Q==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1

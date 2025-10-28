@@ -141,7 +141,7 @@ pipeline {
                 dir("${env.APPS_DIR}") {
                     sh """
                         export PATH="$HOME/.local/bin:$PATH"
-                        kubectl apply -f *.yaml -n ${env.NAMESPACE} 
+                        kubectl apply -f ./ -n ${env.NAMESPACE} 
                     """
                     // archiveArtifacts artifacts: "apply-apps.log", fingerprint: true
                 }
