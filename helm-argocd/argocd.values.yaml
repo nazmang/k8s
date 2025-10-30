@@ -52,11 +52,12 @@ configs:
                     args:
                         - /usr/local/bin/sops -d $VALUES_FILE
                 discover:
-                    find:
-                        command:
-                            - sh
-                            - -c
-                            - find . -maxdepth 1 -type f -name '*.enc.yaml' -print -quit
+                    fileName: ./*.enc.yaml
+                    #     find:
+                    #         command:
+                    #             - sh
+                    #             - -c
+                    #             - find . -maxdepth 1 -type f -name '*.enc.yaml' -print -quit
     secret:
         # my-plugin:
         #   init:
@@ -74,7 +75,7 @@ configs:
         #       command: [sh, -c, find . -name env.yaml]
         # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sensitive-data-and-sso-client-secrets
         # -- Create the argocd-secret
-        createSecret: ENC[AES256_GCM,data:5uPF4Q==,iv:31ZZ5NO42lAMgLMykUG238jrjcGMlHlwPXPalT8IrwM=,tag:2ISc3uzhVrE9eFR3FAm1FA==,type:bool]
+        createSecret: ENC[AES256_GCM,data:79CxPg==,iv:4IBBQFxXmEfWJPLDugMvH/Bq4l+XsV0Le6eIIWQnD0o=,tag:NGHzusCXITDzs39YEQ0fUw==,type:bool]
         # -- Labels to be added to argocd-secret
         labels: {}
         # -- Annotations to be added to argocd-secret
@@ -138,7 +139,7 @@ externalRedis:
     port: 6379
     username: ""
     password: ""
-    existingSecret: ENC[AES256_GCM,data:rTvvp8GBrwIuyA==,iv:ffTjbg6DX4rEjd/6GiZnTn6ipnS0BhRGnXv39uBVnUg=,tag:mmkaiKECoZoQGfvcCSr8TA==,type:str]
+    existingSecret: ENC[AES256_GCM,data:6Srggyadljkg6A==,iv:HG2V8rLpQh5MyTQ8aYiu6svQxQzzlj8tzkZxHxT3mhw=,tag:KvZ6JEHwcmkpSgSYaj9F1g==,type:str]
     secretAnnotations: {}
     # existingSecretPasswordKey: redis-password
     # selector: {}
@@ -213,14 +214,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSByOXg4TDFCcnBHUHBvNEhz
-            ci93ZFdwcVZDRUxZMkdmSGZ3UHdhWTV3a0hZClNXdStnd3ZlQ0czUkhDOTFpNjdn
-            bGt1cDljQ1RmOWVCU21TVEZoMTV2U0kKLS0tIG9hNE1HbHZpdnQ5ZytEQTBxQlhZ
-            MFYvMkwrL2JoSnB1RjFkZFVYcStmTFUKpMFIFB83OvGTile2OpHRT//BIAGyoFxL
-            tciJZ68xlYl2Fg3nhFQmt3QeJGImwknZ0AwkZwf9+9VZvPdeBAqKsA==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA2Um1TLzVPV3hoV2hCSEZv
+            T3I4RnVHNWZEeU9zKytCbUtzNHFvMmY2cFVNCndzRVJqa1BKT1RkUVVnOE5xQ0kr
+            Z01zVDNDMGdVS0ZqTnpiUXRXQXFVckkKLS0tIHFLaDVJYXdGVGMySjdZaXFEcElN
+            Qkg3eXhmaXp1VnZKU2tsZ21iTWYreFEK26Bv75E5xgDTBeAyc8XL5UepR59luSJm
+            T7hMnyGEvYMwEoY018rD0rwv7jbROHxBcxvz805x+8WzISOeZc2EqQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-28T19:02:39Z"
-    mac: ENC[AES256_GCM,data:oA7SSZvx/Y3ebCVEQj6jam0bF9X02ZzF38m/VXr/a56Yo93DpY7PZQjAx6g2EQmm/ePBxwYrYCjwxpPyDATw1FPQiHJ0MdbpeG/5JNHhrX+ADDKf34zSoCb+W98n+hOlMwjzj/JLZ042l8P5PjvqizPfHWiV4gCTjkhOpnuAU9M=,iv:F2FM4fsOSayVeSXTMXfVdxxnon/FwRIyy1i+DWxfOwE=,tag:gQ1lohb7MtzXivw/EdmxrQ==,type:str]
+    lastmodified: "2025-10-30T17:19:48Z"
+    mac: ENC[AES256_GCM,data:oboXEf+gEpAqgsPd1mMEbNbxAhKZLDTMJgqRDWd75xlBSRlK5CNgo1f0t+eha8hSZpB3VpVd++aAMFC/y+4UKgUNaG4LENhcvkjOyKdNoNq0y03GDFrD4Xj3wxWFzi4edLv3txDIxNilGRs+1hXpzi4eCjapfWKsnrhaYxz+3fk=,iv:BDgvnLwWzdYq+GcWBmFkc/2zpj5kCY9n+DxDMnx7LOc=,tag:IqAsjyCzLLJgrlPpxZfIAQ==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
