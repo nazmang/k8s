@@ -75,7 +75,7 @@ configs:
         #       command: [sh, -c, find . -name env.yaml]
         # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sensitive-data-and-sso-client-secrets
         # -- Create the argocd-secret
-        createSecret: ENC[AES256_GCM,data:79CxPg==,iv:4IBBQFxXmEfWJPLDugMvH/Bq4l+XsV0Le6eIIWQnD0o=,tag:NGHzusCXITDzs39YEQ0fUw==,type:bool]
+        createSecret: ENC[AES256_GCM,data:t1NZPw==,iv:bzfsVZGDxRc+Iv++l23ZOhu7cbJoQu6QJPrqlkLWhcE=,tag:n7zZfL+euaSBvfoolG8n0g==,type:bool]
         # -- Labels to be added to argocd-secret
         labels: {}
         # -- Annotations to be added to argocd-secret
@@ -139,7 +139,7 @@ externalRedis:
     port: 6379
     username: ""
     password: ""
-    existingSecret: ENC[AES256_GCM,data:6Srggyadljkg6A==,iv:HG2V8rLpQh5MyTQ8aYiu6svQxQzzlj8tzkZxHxT3mhw=,tag:KvZ6JEHwcmkpSgSYaj9F1g==,type:str]
+    existingSecret: ENC[AES256_GCM,data:HblOsdlCZK3JuQ==,iv:qtGXZeCfh8KgmBICGVbAsNEDB8hr6wRWiewxt045aC8=,tag:LpV/zP4n6abgODnT6XRbjQ==,type:str]
     secretAnnotations: {}
     # existingSecretPasswordKey: redis-password
     # selector: {}
@@ -154,8 +154,8 @@ repoServer:
         - name: argocd-vault-plugin
           command:
             - /var/run/argocd/argocd-cmp-server
-          args:
-            - --loglevel=info
+          # args:
+          #   - --loglevel=info
           image: ubuntu
           securityContext:
             runAsNonRoot: true
@@ -214,14 +214,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA2Um1TLzVPV3hoV2hCSEZv
-            T3I4RnVHNWZEeU9zKytCbUtzNHFvMmY2cFVNCndzRVJqa1BKT1RkUVVnOE5xQ0kr
-            Z01zVDNDMGdVS0ZqTnpiUXRXQXFVckkKLS0tIHFLaDVJYXdGVGMySjdZaXFEcElN
-            Qkg3eXhmaXp1VnZKU2tsZ21iTWYreFEK26Bv75E5xgDTBeAyc8XL5UepR59luSJm
-            T7hMnyGEvYMwEoY018rD0rwv7jbROHxBcxvz805x+8WzISOeZc2EqQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA2QXoycE9PenpQMEU4T2N0
+            RDRFSGpoaTdHUmRscXdPdmtTcWFtbzQ1SDJNCmoycnFKOHBnVytpM0FkN0ZrSmNE
+            UUhESUhqQXl4WDVzanJUTStpY01KMzQKLS0tIE9FUTVhbnE3U2dCcWNTM29FTk1H
+            NlZLd21aS1BLY00xTmp0Q0U5Q2FKZkEKsVttlHFhG0MpQoTDFp4YPmZx1M7Jf5UM
+            2iHrOxjySJz6ifFYNOBuh3LuZRweT9MJGmwiUjajffshMaecoLY5Yw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-30T17:19:48Z"
-    mac: ENC[AES256_GCM,data:oboXEf+gEpAqgsPd1mMEbNbxAhKZLDTMJgqRDWd75xlBSRlK5CNgo1f0t+eha8hSZpB3VpVd++aAMFC/y+4UKgUNaG4LENhcvkjOyKdNoNq0y03GDFrD4Xj3wxWFzi4edLv3txDIxNilGRs+1hXpzi4eCjapfWKsnrhaYxz+3fk=,iv:BDgvnLwWzdYq+GcWBmFkc/2zpj5kCY9n+DxDMnx7LOc=,tag:IqAsjyCzLLJgrlPpxZfIAQ==,type:str]
+    lastmodified: "2025-10-30T17:37:59Z"
+    mac: ENC[AES256_GCM,data:zv9kVnTeliB/+cdeo/a+5l4iUn0RuCHAax0MG+4h0GC4kXNpGS8tzE1UFd1tFiSoq/LIU4xmpLoWpV4VBxOWLmba/5pNzVupUJK/mOMtvszKJBxJrqgoGBVHfmfjC2J3vcj1OW9sw9NFys//l/Gl+sE9GrSNtNSTDgczCifWyFo=,iv:wDB7TlPi5UJ1a4NEyE4EfRB8OEaVqyaUd9Q70/YDHuE=,tag:lC45wMDHMQUdGuf3g9lJFQ==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
