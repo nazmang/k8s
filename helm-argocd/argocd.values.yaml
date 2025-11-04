@@ -76,7 +76,7 @@ configs:
         #       command: [sh, -c, find . -name env.yaml]
         # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sensitive-data-and-sso-client-secrets
         # -- Create the argocd-secret
-        createSecret: ENC[AES256_GCM,data:KdYZSQ==,iv:vypJgesznNScWITKKvrbBQAmtXgAwTqQbn9qngtOSw4=,tag:yBO936Yo6NGxdyYybx6+nQ==,type:bool]
+        createSecret: ENC[AES256_GCM,data:B98V6Q==,iv:hKQKgYDAdzETloq3i/HSLWcOxV8cD6Fm2gUvWEJ5v4o=,tag:zv6/H3va1OuY/UDwIgVe3Q==,type:bool]
         # -- Labels to be added to argocd-secret
         labels: {}
         # -- Annotations to be added to argocd-secret
@@ -140,7 +140,7 @@ externalRedis:
     port: 6379
     username: ""
     password: ""
-    existingSecret: ENC[AES256_GCM,data:nk26Q6eSvJ0OHg==,iv:V4nISPQyiVrAyMcz5YcekIczrTmkG3NrX5vk/O8j4BM=,tag:Ebw5vKmftYSsj734/t/wwQ==,type:str]
+    existingSecret: ENC[AES256_GCM,data:cir/osxYa61oZQ==,iv:6M5IqRhJTOOuHjdG0NJ3jgiDeRwTHXu4Tep+3HfHEEY=,tag:XuciEqGWNiGjESUiiwZy2Q==,type:str]
     secretAnnotations: {}
     # existingSecretPasswordKey: redis-password
     # selector: {}
@@ -166,6 +166,12 @@ repoServer:
           value: /custom-tools/kubectl
         - name: HELM_SECRETS_BACKEND
           value: sops
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         - name: HELM_SECRETS_VALUES_ALLOW_SYMLINKS
@@ -293,6 +299,7 @@ repoServer:
           name: custom-tools
           subPath: sops
         - mountPath: /usr/local/sbin/helm
+          name: custom-tools
           subPath: helm
     envFrom:
         - secretRef:
@@ -306,14 +313,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSArazJvVEFVSWJ0dWw1UWdD
-            Mk5wdkxpMVdGRWI5MGN6YmZwWnZJQVpLSFY0CmF2S0RxZmdnb3ZUSitad0QrZmk1
-            WHN6UnprNWV6dStvK2FSYU9UNHJVRHMKLS0tIGM5TUVVQllPSUpHYXpQeXd6UHNG
-            aDlrWGtTaHkyZnFZTHBZYmN3Q3VobDgKMUxfUo/pj7h/1OG8svw/TLjaa+Dd/qob
-            V1pUABasVFfidj8k/CO8UXrUHT47/1yrsK4Hphh9QrBPw3k2K9v7Fw==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBIR2NMS05DTlJHZVBwa0JD
+            L0RmNDZZNDlEL1QvbVRwbSs2bHpSTGJERGx3CjdQTGc1bXM5ei9CeGJNaC9CT3U5
+            K3llcUNyL1Vzb2pnMEpPK24wdGpTa2MKLS0tIE1KajU5T1JJTHZoUXh1dFc4dlBi
+            QWp1Y3dxMVA3MjlNVXFURnlnRzVZT0UKG2+DtAZMG0zxorDUiWGnBHocrQAzjEcr
+            fJ+bquHQJJSP3P2gRghyRWnoG1AMfXYt/Veh/A5HBY0H4kpglv5pFQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-11-04T17:12:35Z"
-    mac: ENC[AES256_GCM,data:FTN8S8/tTnHx3wPQs/aLxfqC3Hj7nt1M7P+V9LhhAdFC1+R6rCOAHWhOxt7Yv1S2844W2TGCuhxG7cPMWJzMriGe4ARp95QTAlAm6/bSL96FpDbw4wvhU+g3CQ1pKskZcJud6knQ29ETJ9dKWYgxr2cyKkj+UOI5KP6KndaEW/8=,iv:mB4D/WcLNyb4SfwXNCeRMvqeZBi8D8iNpeHzDN96N5A=,tag:OA5KfzqkeDcAfy4ESXITlQ==,type:str]
+    lastmodified: "2025-11-04T17:21:39Z"
+    mac: ENC[AES256_GCM,data:ylN7Krb8Bv9Op1KwbeoYxpvgCuIDSo1ZzuKWkvp0H09RSY38xr/gBbCsJiz+bWB+OKZ6d7Qr1gOvZ0BMPo2bVQF3Jro6PpoKURUmL1pGdC/98ZSptILBgkpsmQaMoiCZMYgXpgYNp76FEIg+Q6dUl5OccPGc6AJ4cQIsw8edexM=,iv:z/EhgZEUIXxd4iIXklfYougviL5MU6TzIZD5Jra6nTQ=,tag:dhJtDLnjXWEf05UT36LtzA==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
