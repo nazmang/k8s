@@ -15,26 +15,12 @@ spec:
     syncOptions:
       - CreateNamespace=true
   source:
-    repoURL: https://github.com/nazmang/k8s.git
-    path: helm-ansible-semaphore/
-    targetRevision: main
-    ref: values
-    plugin: 
-      env: 
-        - name: VALUES_FILE
-          value: semaphore.values.enc.yaml
-  # sources:
-  #   - repoURL: "https://cloudhippie.github.io/charts"
-  #     chart: ansible-semaphore
-  #     targetRevision: "14.0.0"
-  #     plugin:
-  #       # name: argocd-vault-plugin
-  #       env:
-  #         - name: VALUES_FILE
-  #           value: $values/helm-ansible-semaphore/semaphore.values.enc.yaml        
-  #   - repoURL: https://github.com/nazmang/k8s.git
-  #     targetRevision: main
-  #     ref: values 
-  # info:
-  #   - name: artifacthub
-  #     value: "https://artifacthub.io/packages/helm/cloudhippie/ansible-semaphore"
+    helm:
+      valueFiles:
+        - secrets+age-import://https://raw.githubusercontent.com/nazmang/k8s/refs/heads/main/helm-ansible-semaphore/semaphore.values.enc.yaml
+    repoURL: "https://cloudhippie.github.io/charts"
+    chart: ansible-semaphore
+    targetRevision: "14.0.0"
+  info:
+    - name: artifacthub
+      value: "https://artifacthub.io/packages/helm/cloudhippie/ansible-semaphore"
