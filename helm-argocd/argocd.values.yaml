@@ -76,7 +76,7 @@ configs:
         #       command: [sh, -c, find . -name env.yaml]
         # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sensitive-data-and-sso-client-secrets
         # -- Create the argocd-secret
-        createSecret: ENC[AES256_GCM,data:B98V6Q==,iv:hKQKgYDAdzETloq3i/HSLWcOxV8cD6Fm2gUvWEJ5v4o=,tag:zv6/H3va1OuY/UDwIgVe3Q==,type:bool]
+        createSecret: ENC[AES256_GCM,data:HrttRQ==,iv:R0Zin/pxwj1YXlYtXmmcXeSlEaV0XwPl6UjU82u2h9Q=,tag:s/gS+JagcFX0VSzEjaBojA==,type:bool]
         # -- Labels to be added to argocd-secret
         labels: {}
         # -- Annotations to be added to argocd-secret
@@ -140,7 +140,7 @@ externalRedis:
     port: 6379
     username: ""
     password: ""
-    existingSecret: ENC[AES256_GCM,data:cir/osxYa61oZQ==,iv:6M5IqRhJTOOuHjdG0NJ3jgiDeRwTHXu4Tep+3HfHEEY=,tag:XuciEqGWNiGjESUiiwZy2Q==,type:str]
+    existingSecret: ENC[AES256_GCM,data:ctYJMnDWBbl70w==,iv:XGRPsitEckfkumgG8g8SlL9OUOQ+cUtfdC1UufTmQAQ=,tag:YigQfr4xjacP9KIh9eo7cA==,type:str]
     secretAnnotations: {}
     # existingSecretPasswordKey: redis-password
     # selector: {}
@@ -166,6 +166,30 @@ repoServer:
           value: /custom-tools/kubectl
         - name: HELM_SECRETS_BACKEND
           value: sops
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
@@ -289,6 +313,8 @@ repoServer:
             - mountPath: /custom-tools
               name: custom-tools
     volumeMounts:
+        - mountPath: /custom-tools
+          name: custom-tools
         - mountPath: /usr/local/bin/kustomize
           name: custom-tools
           subPath: kustomize
@@ -313,14 +339,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBIR2NMS05DTlJHZVBwa0JD
-            L0RmNDZZNDlEL1QvbVRwbSs2bHpSTGJERGx3CjdQTGc1bXM5ei9CeGJNaC9CT3U5
-            K3llcUNyL1Vzb2pnMEpPK24wdGpTa2MKLS0tIE1KajU5T1JJTHZoUXh1dFc4dlBi
-            QWp1Y3dxMVA3MjlNVXFURnlnRzVZT0UKG2+DtAZMG0zxorDUiWGnBHocrQAzjEcr
-            fJ+bquHQJJSP3P2gRghyRWnoG1AMfXYt/Veh/A5HBY0H4kpglv5pFQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBDYmFUdUtvSUtNVk5wc2pY
+            RElKOW5WbkR3U1U0Q2tTMG4rNXR1THN5VlVjCmJieHRweVVCUTYwc2Z1UHVLaits
+            UjM2dnhhS1VSeTNJSE5kejM5SXdXL28KLS0tIDBRL3QweDI1V1lnc0lSV08zRkZS
+            QUhkYmZpYXRyT2dVTW02Z0VUMGpHdWcKfmagz8ibtctfpC2IWZiPzbA3D5w/AZ4x
+            MfxmCVtJWuj7Fd0rvUM3H38+avkIUollmy/hCFVaAC3T3e+1pWaJSg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-11-04T17:21:39Z"
-    mac: ENC[AES256_GCM,data:ylN7Krb8Bv9Op1KwbeoYxpvgCuIDSo1ZzuKWkvp0H09RSY38xr/gBbCsJiz+bWB+OKZ6d7Qr1gOvZ0BMPo2bVQF3Jro6PpoKURUmL1pGdC/98ZSptILBgkpsmQaMoiCZMYgXpgYNp76FEIg+Q6dUl5OccPGc6AJ4cQIsw8edexM=,iv:z/EhgZEUIXxd4iIXklfYougviL5MU6TzIZD5Jra6nTQ=,tag:dhJtDLnjXWEf05UT36LtzA==,type:str]
+    lastmodified: "2025-11-05T17:48:01Z"
+    mac: ENC[AES256_GCM,data:PdgBZhhNRbHGfjGemKAAtgVtyLdECONgp30kHkw64nUCft2uwUvFuRX6pe0MAq6gsYyCQRqND6MMnacYdtMwA7ADPqtmAKtROZ3Gye9iU0rb2C8wakxFYjjIeeqysXhHd5kDsRNG73J18AUsjUw1CDy356YJCcxPchcO4fwbmdY=,iv:ahvpXsaYplkbWb2AC/eljKSbq9ZS0kc7v/lYK0x5gr0=,tag:Ayz2Z0DHbB2xbfpJQTlwRQ==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
