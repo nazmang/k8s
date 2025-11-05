@@ -76,7 +76,7 @@ configs:
         #       command: [sh, -c, find . -name env.yaml]
         # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sensitive-data-and-sso-client-secrets
         # -- Create the argocd-secret
-        createSecret: ENC[AES256_GCM,data:HrttRQ==,iv:R0Zin/pxwj1YXlYtXmmcXeSlEaV0XwPl6UjU82u2h9Q=,tag:s/gS+JagcFX0VSzEjaBojA==,type:bool]
+        createSecret: ENC[AES256_GCM,data:UOkyZg==,iv:OQM6BjdOVvMWc+WKCl4GkxR1tI7c0uRc0VajAGHvk7o=,tag:5QTg4WbnQjwaRoWTZZJEhg==,type:bool]
         # -- Labels to be added to argocd-secret
         labels: {}
         # -- Annotations to be added to argocd-secret
@@ -140,7 +140,7 @@ externalRedis:
     port: 6379
     username: ""
     password: ""
-    existingSecret: ENC[AES256_GCM,data:ctYJMnDWBbl70w==,iv:XGRPsitEckfkumgG8g8SlL9OUOQ+cUtfdC1UufTmQAQ=,tag:YigQfr4xjacP9KIh9eo7cA==,type:str]
+    existingSecret: ENC[AES256_GCM,data:szpVljJ4OYUotw==,iv:64uszV05nGbfALyUX4DabjDcXfizeqkMzaRBCyQm3lg=,tag:acjsm0Eat+Hp84mYDfqMyQ==,type:str]
     secretAnnotations: {}
     # existingSecretPasswordKey: redis-password
     # selector: {}
@@ -153,7 +153,7 @@ repoServer:
         targetMemoryUtilizationPercentage: 50
     env:
         - name: HELM_PLUGINS
-          value: /custom-toolshelm-plugins/
+          value: /custom-tools/helm-plugins/
         - name: HELM_SECRETS_CURL_PATH
           value: /custom-tools/curl
         - name: HELM_SECRETS_SOPS_PATH
@@ -166,36 +166,6 @@ repoServer:
           value: /custom-tools/kubectl
         - name: HELM_SECRETS_BACKEND
           value: sops
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
-        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         - name: HELM_SECRETS_VALUES_ALLOW_SYMLINKS
@@ -339,14 +309,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBDYmFUdUtvSUtNVk5wc2pY
-            RElKOW5WbkR3U1U0Q2tTMG4rNXR1THN5VlVjCmJieHRweVVCUTYwc2Z1UHVLaits
-            UjM2dnhhS1VSeTNJSE5kejM5SXdXL28KLS0tIDBRL3QweDI1V1lnc0lSV08zRkZS
-            QUhkYmZpYXRyT2dVTW02Z0VUMGpHdWcKfmagz8ibtctfpC2IWZiPzbA3D5w/AZ4x
-            MfxmCVtJWuj7Fd0rvUM3H38+avkIUollmy/hCFVaAC3T3e+1pWaJSg==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBFd3VqRnBwenl6dGs3ZFN2
+            UkhEYmRLaHRTbUZwcVBNSVdsS0NxMVZJV0c4CngzTFpMbFNtUURTajJwUlhuNWNF
+            UmRRdWJoS0lDQkdQeWRCekZZYmdONzgKLS0tIENhWXlSQWpHaXU4blZGR3kybUd1
+            dmZQSnlLNlI2L2E5UDljV2tjV3hiT0UKLxcfmOWkkOCw68Bsmh6PBWTaoWDFMw6e
+            ieUpXdOROeUcXWpCShfjo2mGQ3Q0jkbAmWiFJzInHvDPHTHC+YrZIQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-11-05T17:48:01Z"
-    mac: ENC[AES256_GCM,data:PdgBZhhNRbHGfjGemKAAtgVtyLdECONgp30kHkw64nUCft2uwUvFuRX6pe0MAq6gsYyCQRqND6MMnacYdtMwA7ADPqtmAKtROZ3Gye9iU0rb2C8wakxFYjjIeeqysXhHd5kDsRNG73J18AUsjUw1CDy356YJCcxPchcO4fwbmdY=,iv:ahvpXsaYplkbWb2AC/eljKSbq9ZS0kc7v/lYK0x5gr0=,tag:Ayz2Z0DHbB2xbfpJQTlwRQ==,type:str]
+    lastmodified: "2025-11-05T18:03:19Z"
+    mac: ENC[AES256_GCM,data:5dm2qoGFhSPgEJExFGCWlzbIwBOZDhBjiM8p1NlUtwKHahY9IqsidVRnYLCA7cwTa+uO86mn2RIul4HVa902t23MdyA+iUbPxWQoodTSMzZis11PRck+DgJnMBInuEOKWl57eN274CJpLjOTnJm8KjVhuji+wB/2yVqaW5TjY+s=,iv:oCzSTN2h9ezK1DDHfXzOWdradRsz0xBpWO9iaFUO9zg=,tag:p2BUb72puieaS1kpBJaNVQ==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
