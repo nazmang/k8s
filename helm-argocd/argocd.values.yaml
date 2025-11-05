@@ -76,7 +76,7 @@ configs:
         #       command: [sh, -c, find . -name env.yaml]
         # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sensitive-data-and-sso-client-secrets
         # -- Create the argocd-secret
-        createSecret: ENC[AES256_GCM,data:UOkyZg==,iv:OQM6BjdOVvMWc+WKCl4GkxR1tI7c0uRc0VajAGHvk7o=,tag:5QTg4WbnQjwaRoWTZZJEhg==,type:bool]
+        createSecret: ENC[AES256_GCM,data:hZQn+Q==,iv:JMQCqemCPSvtzHlkCxLcQ7lotpbvHcay5ux58qXYb2I=,tag:2DxXwDL/tgCCGS9Jaby8Xg==,type:bool]
         # -- Labels to be added to argocd-secret
         labels: {}
         # -- Annotations to be added to argocd-secret
@@ -140,7 +140,7 @@ externalRedis:
     port: 6379
     username: ""
     password: ""
-    existingSecret: ENC[AES256_GCM,data:szpVljJ4OYUotw==,iv:64uszV05nGbfALyUX4DabjDcXfizeqkMzaRBCyQm3lg=,tag:acjsm0Eat+Hp84mYDfqMyQ==,type:str]
+    existingSecret: ENC[AES256_GCM,data:6bOArcdwwpiIzA==,iv:cF9yc1ncCSkofCYc+RTDzQ3YTXvnRnXP/f5p9DC6srA=,tag:E8KR268kZUTbmJF7jX6QVg==,type:str]
     secretAnnotations: {}
     # existingSecretPasswordKey: redis-password
     # selector: {}
@@ -166,6 +166,12 @@ repoServer:
           value: /custom-tools/kubectl
         - name: HELM_SECRETS_BACKEND
           value: sops
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         - name: HELM_SECRETS_VALUES_ALLOW_SYMLINKS
@@ -309,14 +315,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBFd3VqRnBwenl6dGs3ZFN2
-            UkhEYmRLaHRTbUZwcVBNSVdsS0NxMVZJV0c4CngzTFpMbFNtUURTajJwUlhuNWNF
-            UmRRdWJoS0lDQkdQeWRCekZZYmdONzgKLS0tIENhWXlSQWpHaXU4blZGR3kybUd1
-            dmZQSnlLNlI2L2E5UDljV2tjV3hiT0UKLxcfmOWkkOCw68Bsmh6PBWTaoWDFMw6e
-            ieUpXdOROeUcXWpCShfjo2mGQ3Q0jkbAmWiFJzInHvDPHTHC+YrZIQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBkbWlTQnZRNHJmQlJXNjZp
+            eG1EMzBFWnB4Y0IvMG5LUWFEZ2NzVjFhd240CmN4NXZ0S3hCUFdQVVpOd0pDSzVp
+            YUNsaExiYUE1UXEyS3JPbEQ1S3pFWlUKLS0tIFRsRktFTXBWbHVWZXRhMnNNNzBH
+            ZEJVQ0tUR3IvWWNhdFBmWWtObzNQSWsKz5RWcufzTGOKsDI5xDgvxq9uFzYhUdjf
+            ikIXfJdyspTtyfC9z6Ev+bEqJAF4JKj6jGhLbTl29RIE2Ej7alzoKA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-11-05T18:03:19Z"
-    mac: ENC[AES256_GCM,data:5dm2qoGFhSPgEJExFGCWlzbIwBOZDhBjiM8p1NlUtwKHahY9IqsidVRnYLCA7cwTa+uO86mn2RIul4HVa902t23MdyA+iUbPxWQoodTSMzZis11PRck+DgJnMBInuEOKWl57eN274CJpLjOTnJm8KjVhuji+wB/2yVqaW5TjY+s=,iv:oCzSTN2h9ezK1DDHfXzOWdradRsz0xBpWO9iaFUO9zg=,tag:p2BUb72puieaS1kpBJaNVQ==,type:str]
+    lastmodified: "2025-11-05T18:34:48Z"
+    mac: ENC[AES256_GCM,data:n+n+4pajesWaWZ6KhseyQoKqaajNncPzW/x0sCiAISxxIjzd+tQx3O14nJWBznbuoUei99jD4G2Hciq+vTA/yh6Rkzxp2Xv5cmZco7g4mcYSnNlWrLsyKmApJKzTUc1NQOx1mW4ZPh7v5+Cx3qeg7E17k5sI8XV+44VFxk6TX+s=,iv:b8AMNv2ij7ozKOH/e3LQUjYFrITovH+dO6Fu6sX+dog=,tag:PH54G1ETaHB6MNoDaSdWaw==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
