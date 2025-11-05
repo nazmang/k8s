@@ -77,7 +77,7 @@ general:
     # -- Maximum parallel tasks
     maxParallelTasks: 0
     # -- Disable password login
-    passwordLoginDisable: ENC[AES256_GCM,data:D4dffHU=,iv:HMVx3Sz6/WhaCI3qmw4R7ETN8bESZ6PAuGMl6YGVVOM=,tag:MdCTBeU/+xjpGWXbSTUaHA==,type:bool]
+    passwordLoginDisable: ENC[AES256_GCM,data:NLQiWtI=,iv:tRzpFeXjvrA1T6l5wOgVuwwf3kY2ZOCWuwDEQeKZZAU=,tag:Ck1DXp6Yvj+YrZCzxOHtoQ==,type:bool]
     # -- Allow non-admins to create projects
     nonAdminCanCreateProject: false
     # -- Enable usage of remote runners
@@ -90,15 +90,15 @@ database:
     # -- Type of database backend
     type: bolt
     # -- Read username from secret
-    usernameFromSecret: ENC[AES256_GCM,data:dU5vpQ==,iv:4uoJPWA34Vuz++mWp4Yk08+/tGlQ6Du+/oHy3042jaI=,tag:u4WPh/UPlKM/mHLaRENBGQ==,type:bool]
+    usernameFromSecret: ENC[AES256_GCM,data:V/dkcQ8=,iv:+LVOLeQbl2SP39y+E0b62umVxtRQw8Rjp4rCIkBffLI=,tag:CMgB/Q9nYjMqkb3pR/Pqiw==,type:bool]
     # -- Username for database
     username: semaphore
     # -- Key used within secret for username
     usernameKey: username
     # -- Password for database
-    password: ENC[AES256_GCM,data:gEZ8n6/AKnCa0jEki24Tw1uw,iv:7A/Au1HFwUGiN2MqilUYi7nCnBQrgnAwax0ABKD2u34=,tag:I/n5cdwqwFh5Su0FpMjPSw==,type:str]
+    password: ENC[AES256_GCM,data:QBgIknMqt6lk8k+kcYXNhRfF,iv:BGoP6W6EfsJTw+n2kwkE0cPKpB/WHLmYz8z6j+riINc=,tag:Jft6rp1U4WBoB1e6vi9KFQ==,type:str]
     # -- Key used within secret for password
-    passwordKey: ENC[AES256_GCM,data:TJ93M7FdCE0=,iv:4j8CKslxzQfciTE8cddoU/CFqdn3n+eBWYw/2ZUbOrc=,tag:VS66+UlpXbsxVHgUdtXHpg==,type:str]
+    passwordKey: ENC[AES256_GCM,data:yPG7xynuBWY=,iv:nmRs85OfAO69JoDmsAGvodmLZeIzWibEMqy6ZmEGfnY=,tag:GgGziDl2VZiLEWDp1qzieQ==,type:str]
     # -- Existing secret to use for credentials
     existingSecret: null
     # -- Host for database connection
@@ -141,7 +141,7 @@ ldap:
     # -- Password for LDAP authentication
     password: null
     # -- Key used within secret for username
-    passwordKey: ENC[AES256_GCM,data:EaD889bIsgw=,iv:49I6R3BZG5tfeF+44tJWNdIPmcyK93pReXVWdOi6Hb8=,tag:sD+DD5+XW1XjJgbQ2Qyc8A==,type:str]
+    passwordKey: ENC[AES256_GCM,data:OSPSzOBHFow=,iv:LeE11rfyKBZ0YUZXnkqGjOaARmP7T0zeqfWUoQVc7aU=,tag:RwzhyBAZY2m200JSWzsy0A==,type:str]
     # -- Existing secret to use for ldap
     existingSecret: null
     # -- Mapping for LDAP attributes
@@ -156,25 +156,25 @@ oidc:
     # -- Dictionary of oidc providers
     providers: {}
 email:
-    #ENC[AES256_GCM,data:QgfuTiTGUtxLdBg2IV7LdeI+OxURzLbo9Q==,iv:ssqU1B+omuFsMRMItOu4jzevvqsJKBdBhhem5AfYW3A=,tag:29MOOZppznFZyw5EbVmHvw==,type:comment]
-    alert: ENC[AES256_GCM,data:PJEyB/w=,iv:vJEiTr0OX+q7J5jx6WRUiikHweIWg1ZanVt88yd/zcE=,tag:KafT6KoeGLDthBFwVsDsGA==,type:bool]
-    #ENC[AES256_GCM,data:5b7BIe9C1Kj8RfWh9ErN23CoKZhTXBnZLx9upUs=,iv:LVobkEJqJiqJMUzW44XpS8/6pGCykhZJYby/WWeOZxc=,tag:FBARZJcpDm4d8Swvny0Atw==,type:comment]
+    #ENC[AES256_GCM,data:SPp3Wwt3CzVv15+UIXw2xWasylHOb8PtNw==,iv:DLc9ZCh/8CV8Lgx3IHpQrOd3RXnuRmVvVs8j2C9tyac=,tag:j/xEvnNYd4VbKu9xsgGbRw==,type:comment]
+    alert: ENC[AES256_GCM,data:YrdFIDc=,iv:3KU8w4pjupB2EAu8i2FJqga9nAuJBmgv7IXh/vdgA1g=,tag:ka2wC0exf2hMKLurg2Tm9A==,type:bool]
+    #ENC[AES256_GCM,data:KZECfZy09od+piAZmmpOpzv/x2Fh+MRpZA2Ivr0=,iv:JpjHpPpu6VEMV7E65uN8x2mHiNhHWm/evu5awbG9pfk=,tag:94zEFXnbg7fugygriiEONw==,type:comment]
     sender: null
-    #ENC[AES256_GCM,data:fEcqmRSlFKQf4DJ0AFJq6b01GL2EenQxYCTE,iv:ZbjdxK/EKKjZH2geKrNPCccFsWK8oZyDYVVZPAirT3o=,tag:C+O1ihiErYsb5FUXzxl7eA==,type:comment]
+    #ENC[AES256_GCM,data:9k3BbKfAwRlWgX+J8A3IIqpr230b7e/ojDAL,iv:blIoYxOQUTDRUtpzH1eK2zOLWqaG3jazZfdMNVx+TZw=,tag:mnmfa+PftAkaDLe0w/MMBQ==,type:comment]
     host: null
-    #ENC[AES256_GCM,data:Wir0d13xolTRyWwxyXn0kcYL1wc7qdFtmV63,iv:t8G2B6LmIzcGfn6Bfi9BF/6d9/pryqhqaMYBYMAEvIQ=,tag:i9Z5hoqhrTsa6JyKBHcJWQ==,type:comment]
+    #ENC[AES256_GCM,data:BO/lV6VfTWkVaPd8dTiTy+hIlo4bejdd+Gn0,iv:EKhvFEUUNnMYZAqp4L19+0saEX0yhyOQl11s/XVvr2o=,tag:CTLQfAHNLnQUTxlX+xr46g==,type:comment]
     port: null
-    #ENC[AES256_GCM,data:3pxELY4eYnElwnUiTVjAdzl21TWaqXKOfxcK9n9/,iv:G7HZSmr4nIi2a8tChMCu7TaQm25WLG7Izh1u4xMLwlM=,tag:30ZkVT3O7aGeWv151amREA==,type:comment]
-    secure: ENC[AES256_GCM,data:3BRSbSg=,iv:wwszywz+3jabFV0QGiXLzf/2kth8U39BpFmZDPl+frg=,tag:GGl2d2h4KZOu+3rrCUyx8Q==,type:bool]
-    #ENC[AES256_GCM,data:A3uKTyS/wvLQUHdqzrh4pDbPt1wgQcoK0EA3CA==,iv:Yy+4YUnEmz23CV6a9jEUKUBDOQAyc6MDbR+CgR5l6Cs=,tag:pfm0lhmDJsg6xshj+2M+Xg==,type:comment]
+    #ENC[AES256_GCM,data:TRY2vFdrxn3WOhp5vhiVkGLjpbtxlG3whEVmIxLB,iv:/KP+4QunL3dVoujNUi+FQkTuTZOBHPy61lN/sPdP1aE=,tag:OL5Z8rfqkG+AydXm7j2Eiw==,type:comment]
+    secure: ENC[AES256_GCM,data:NY5L8jY=,iv:G0ZGDvD8/NlRe06uZ3591W3tXgis6HJ7lEPtgnMwfmU=,tag:K5/CvqDLVTRxl/b5DgOP9Q==,type:bool]
+    #ENC[AES256_GCM,data:Xg8XKmw0GriirvUn/pLbUu6c6pNqz3BxoezluA==,iv:slWs67skEAkvnquYtB+kLjwV7+nTF+/REUD6BxOCWHw=,tag:J09ZPePSuo9HC8qSAbe7eg==,type:comment]
     username: null
-    #ENC[AES256_GCM,data:NBZhu8/P4DlzVCMUeKDqjsdbY+xB5kresJ0rNK6DWms7fzSQ7Qm1,iv:BSGKQVz5cT7Kat1dvxQqLH6vkgQtBKMolwXcQYUH4vU=,tag:ZZyMzO8AoG87Wti944dm5w==,type:comment]
-    usernameKey: ENC[AES256_GCM,data:FcpkHs3VAFc=,iv:M7ZKmTKC7h4/XadasJcqEgK8Cj16oJ18g7SD+Tftomo=,tag:2cBTY2/+Abp8IqmEri8pvQ==,type:str]
-    #ENC[AES256_GCM,data:WFlG6gItG+mQYjG49Ftaxo0ycgn+ysJsPYVOFA==,iv:Uw6jG/z6F1TxWziTMpM7RA1+bgd1Z6JiY1WRlCsSLUc=,tag:aJ/7yJ0VuEYUD7/TlplP0Q==,type:comment]
+    #ENC[AES256_GCM,data:2seD0V7aG2oFsUmFMsUCxPKiUNSVd8EUivKI2TvlLyTSUrJcr8ZH,iv:IVYnlNg3shgf1KawJab+7E+iKolVbL+jphjWfnzPoKg=,tag:djGoSZ1uXWYeBVVngmNh6A==,type:comment]
+    usernameKey: ENC[AES256_GCM,data:rLw//PUGydI=,iv:Aeeini5/+ryLFa7yKqNW6rvWYn9hp3m+gnX5UhFO34o=,tag:YIXg50/bZxDt5eL/jL8fNg==,type:str]
+    #ENC[AES256_GCM,data:RBPHl7db3L5ycUqD58ErfUHgpLQnC3h+8isPKQ==,iv:QSOiSaN19fxU8Vir0DRJzwQfyZcoV4le4EJeZo9/pFE=,tag:WbbNJy2uSPv0uSxrcquYFA==,type:comment]
     password: null
-    #ENC[AES256_GCM,data:oI9TZYmO6VIEJ1eYa+YLNk/0j4ApBIGlBTPkLkbvsgrdn3FYty+a,iv:Ose32kTZ8LbLERZWus67KhyHR61ZfZslWOZsAKiyPho=,tag:nCZ3RfgrTrNCXmp0sVp8lA==,type:comment]
-    passwordKey: ENC[AES256_GCM,data:411+i9zTsN4=,iv:NiesMG1mw3sE2f7+dPq1vf/pzkhghLU7hEtUFtolbgQ=,tag:Xfu6Ua+2QpfbrwafZFa3kQ==,type:str]
-    #ENC[AES256_GCM,data:G6ej6E8yw+EfSUKs3JdEoZFWXzHnn8eVD1loxyoyHYZ9oLte,iv:itEO7GAo5+7X731SLXIJ0AsWE5c/+4V0xDqUhqlC5W4=,tag:+Pw1SpVhTYvWrhirsEnNzw==,type:comment]
+    #ENC[AES256_GCM,data:acExSmtBL9b9DXtWi3CUxPXTrGNNucrbJJ41Te1E0wM8XCmakVfm,iv:CTKgZrvW6Il66DWpkqXOlTGPhgyiZMAbQS6oSbfCTf0=,tag:/EDVjpA7lsT6xVAuTab8Xw==,type:comment]
+    passwordKey: ENC[AES256_GCM,data:GefXono88Co=,iv:TCeAs6Uaes4sWU+6r0V8OA2CPX/Db89+gKCzLGPPz5U=,tag:NoCnHMPQZCjyO8fKMIR7YQ==,type:str]
+    #ENC[AES256_GCM,data:6aU5usPm6a6hBPfpFgme+mjr9HuzBTET+Fh+XfNsHebnlgvE,iv:x4t4Qp3iGp4QwPEng01PFMIz0wOO2bdsdlVdSkXPUao=,tag:xbRpdpiBu7GGr0V430Pl3A==,type:comment]
     existingSecret: null
 telegram:
     # -- Enable telegram alerting
@@ -220,11 +220,11 @@ admin:
     # -- Key used within secret for username
     usernameKey: username
     # -- Password for local admin
-    password: ENC[AES256_GCM,data:wcf+Eec=,iv:R6H9XP29VjEefuDfs0etO0GlSEMF6a7B4MWkEBoh4pg=,tag:15sLUHgf2SIExEkjp+el8A==,type:str]
+    password: ENC[AES256_GCM,data:Xj/o6kQ=,iv:7/AgMJjbvGRam5nqNEUwel3maMmeC7Q41Jh7KoLSHgA=,tag:yiBL8+Ww9FdsUcv9+f4yeQ==,type:str]
     # -- Key used within secret for password
-    passwordKey: ENC[AES256_GCM,data:KjAIiw5nyWg=,iv:hxG/Trsp4oU+YR9i5mZ+jbkRnUsFvxWq6YfgssJfJPM=,tag:KOkgzPUY0sUdQGMhtk35ug==,type:str]
+    passwordKey: ENC[AES256_GCM,data:S5bQ8aijfAc=,iv:EBMSsSgzO8TK9mOEhmBWH/SMo7is9w0P4UOEs+2IcD0=,tag:Yiv+O8PhQGf1O7+3AUBhvg==,type:str]
     # -- Email for local admin
-    email: ENC[AES256_GCM,data:ZSQl06Pi8WwzlaH7j1Qiuou8087Z,iv:LYRckFtrPZZaJfTOTriLsT+gL6qtmY7LZaqYMGd8rH8=,tag:zYRhzVxxLYY/LQTKcBW9og==,type:str]
+    email: ENC[AES256_GCM,data:qJq4MD2xd2sWHG2WBN/d2FcVA23e,iv:2scA/evV3UxVOPmAoAenQXCTprZ7yEmOm7KhUFhDDoc=,tag:2HRTjoyyKm2RrecnkZJ2mw==,type:str]
     # -- Key used within secret for email
     emailKey: email
     # -- Existing secret to use for admin
@@ -286,14 +286,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAzb08zOUNQVXlGci9xaFNv
-            YU0vRmNpMkxxd0MzWGlkTlFyaEhDVlg5T0VRCmRpR3pSMVBIRjlZMW4vTjI5MXZY
-            b1BBeUxhUzVSZENGUlZweC9Yek1OdTQKLS0tIEh0NkdPVlJXeklnT2ZhaGZadEJH
-            cEwyV3ZISWUwdkZOMGFuazlHYzJPajgK5viyq12gCEV6/6fEZHNHpld9wHK4OW58
-            1Jaw10gNxlkV5jNg/+FgJQHAoP3EQiwWvyDLxs2FO8vmiWAZklhOpQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBhaEJPR3ZseFdGZldCZzZn
+            TWRKU1V6Z1pORG94cjBSaTRTOGptUmVBVG1BCmxFOFl4YjVCVCtBMEJiVWRINjdT
+            UDBYTUM1aUUzTXVLdHcvOUZvMXYxdlUKLS0tIHhSMU5LNVZWWWN0TEpvWHptTXhs
+            NnBmam1qbkF3a1kxK290ZnJxbzRHeVUKsBbm5LY3lAeMZJ1wv2RIPpFVKkrms+NY
+            eRPHz5D8ei/EH98nhJOdedpv12Q3n1PKuAq48D/NfNiKbhfNb9LMBw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-10-24T17:11:38Z"
-    mac: ENC[AES256_GCM,data:K8KpHgG5kDlJ233R6EwZb9z0xym23m0RzwVKw3W1fdJbUQ1p3UnAP6h+ptvqNzr+/NH3HA861uo1PhRvgvaeIcW5B7KJc2/o+xfK9T+A8iSZXsk0hvH2cWC+38y8G7RNDy3i2ScbU7SYGODar2Pp4eYmWG2PNTPU64Zhdr5sZCc=,iv:wSGXl8P8KZZrU6XVJ2jG+PnEClW3JhBr9T9jYExk0E0=,tag:5bR5hcZpp4zNK0PC06AjBg==,type:str]
+    lastmodified: "2025-11-05T18:45:27Z"
+    mac: ENC[AES256_GCM,data:wA47xmHST/+W2bBZEIbl76Q1RXeWbPdiUp9PCP4wLgEktiNhk70iHShVq6wpbKD5McyaYCwO8+vDpd4pROAu2lqRfpOEA8kI4dl4G3Q3AFKVAvxlMTHffhWexLIq5njvCpuPQ4AkhgsHdIvUxVOX3AX03/pCi+yetoXjSoH01YA=,iv:4V4K+PWAODCG8Pu7mzBwLJXyRBF/poZb70/2EILEaBU=,tag:bxFIF1e9L7rOdCxacCa8Ww==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
     version: 3.7.1
