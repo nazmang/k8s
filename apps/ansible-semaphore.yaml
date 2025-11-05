@@ -17,7 +17,7 @@ spec:
   source:
     helm:
       valueFiles:
-        - secrets+age-import://https://raw.githubusercontent.com/nazmang/k8s/refs/heads/main/helm-ansible-semaphore/semaphore.values.enc.yaml
+        - secrets://https://raw.githubusercontent.com/nazmang/k8s/refs/heads/main/helm-ansible-semaphore/semaphore.values.enc.yaml
     repoURL: "https://cloudhippie.github.io/charts"
     chart: ansible-semaphore
     targetRevision: "14.0.0"
