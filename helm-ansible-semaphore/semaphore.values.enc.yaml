@@ -77,7 +77,7 @@ general:
     # -- Maximum parallel tasks
     maxParallelTasks: 0
     # -- Disable password login
-    passwordLoginDisable: ENC[AES256_GCM,data:LPqqpko=,iv:jN5KWcYg7RKMOxKETSnvD2rrUcCxuO70ihs/37eEemk=,tag:4A88lSfncKYbgAsyAk7OUg==,type:bool]
+    passwordLoginDisable: false
     # -- Allow non-admins to create projects
     nonAdminCanCreateProject: false
     # -- Enable usage of remote runners
@@ -90,15 +90,15 @@ database:
     # -- Type of database backend
     type: bolt
     # -- Read username from secret
-    usernameFromSecret: ENC[AES256_GCM,data:fppRPH4=,iv:KWAn6FQ+pVbXSYWEmLCoPAKQAmlXuwJgDH0SANkNPXY=,tag:GP7HIb8qo5nHwdPXALNa6A==,type:bool]
+    usernameFromSecret: false
     # -- Username for database
     username: semaphore
     # -- Key used within secret for username
     usernameKey: username
     # -- Password for database
-    password: ENC[AES256_GCM,data:CbptdxT9+1NCF9F89jO42ugR,iv:0216PpvKzebv/NUiD1WbKiKKQTRFWZgOP4yJFEv3E98=,tag:VQTNsgoUTfrhrZcNeOrtdg==,type:str]
+    password: SecurePassword123!
     # -- Key used within secret for password
-    passwordKey: ENC[AES256_GCM,data:OSF86cmYwBU=,iv:HPM5rK86kICOh36fj40PNiLqX9l4hjdMm5RYQc8hHvs=,tag:aT3KKHRGpZhkLD5B3kO09Q==,type:str]
+    passwordKey: password
     # -- Existing secret to use for credentials
     existingSecret: null
     # -- Host for database connection
@@ -141,7 +141,7 @@ ldap:
     # -- Password for LDAP authentication
     password: null
     # -- Key used within secret for username
-    passwordKey: ENC[AES256_GCM,data:znoVuoPq/LY=,iv:2NpCncc/Q2qL9FK3nAJQ/nq8KWGAL9tT8zEqSftqudo=,tag:M5NnjzaQJDxYCxtXAcW14A==,type:str]
+    passwordKey: password
     # -- Existing secret to use for ldap
     existingSecret: null
     # -- Mapping for LDAP attributes
@@ -156,25 +156,25 @@ oidc:
     # -- Dictionary of oidc providers
     providers: {}
 email:
-    #ENC[AES256_GCM,data:vuSKhG0C8rPSd+1eKevqXS2PU/TKYIinjA==,iv:Q7zWQoFh6ODvyCMoSzkN2yZiSbxPNfqk1QdbLcDb7pk=,tag:ojsUMZqjrofsQMT2bmMqhw==,type:comment]
-    alert: ENC[AES256_GCM,data:JuGkofU=,iv:vsr4I8iLnbzIHZk1kxVyyyHUokZlI1kUYEkd7Q/H3ug=,tag:7RUmzjSPSLT9sM/PV8zqEw==,type:bool]
-    #ENC[AES256_GCM,data:4x9UoOd737NQxmFiusfEOj2G8H6FYGtCWNOoxTk=,iv:bHHoaezPyadRTe9sDjxw1c84JmnL5RtJmcE36w0xl3M=,tag:CH9CURWNDm82LHI69Kk3ZQ==,type:comment]
+    # -- Enable email alerting
+    alert: false
+    # -- Sender for email alerting
     sender: null
-    #ENC[AES256_GCM,data:rphfQo95bSM1mqWX45PWWXKdBFUX8YmQ8cCF,iv:FuD4zCVXWLyWcLQfHPed5Dj5RI3JLNH6CNsOV/13c64=,tag:re3b7HON8p9so2qZK5nUGA==,type:comment]
+    # -- Host of the SMTP server
     host: null
-    #ENC[AES256_GCM,data:46fuOiTrBq6AdTBtirLkx50GqkSxGl7/wEBI,iv:Tj0YyT1d/dcJkia7n7nvjmcV511dv2otu8LzuuC9VCU=,tag:ieeO36YCwFLRNlK0Rl9ipg==,type:comment]
+    # -- Port of the SMTP server
     port: null
-    #ENC[AES256_GCM,data:wZdxF7wCgd10YZ6B0oAu+4F+PYvyzJXporDlOnp9,iv:ID4H7csGNVNjbMlFTaNqrAq8tvb1iPxcBx6RzJL+57s=,tag:u+t+5BasP4rKhdvgufEgXw==,type:comment]
-    secure: ENC[AES256_GCM,data:/8SiRVg=,iv:TgbK1CE8KdC5YnnTuzwQA4i9RGQDJQgFEDbPI4xIjmk=,tag:MLTQ/klRS5QfxPnIlV6cEw==,type:bool]
-    #ENC[AES256_GCM,data:aNFXjn/x7sf4rcTXX0hsH/VGfJbI1C4OgbCq9g==,iv:BgoYKD8VBEBYRlsW72KPUqa4ylhOelmpMKszEX2PKh4=,tag:3vrBn7E1yzVF+cjPXB98ww==,type:comment]
+    # -- Enable a secure connection
+    secure: false
+    # -- Username for SMTP server
     username: null
-    #ENC[AES256_GCM,data:p7tvLqxRL41tmoCMtn1VfUpPInfZmMaKJj3/aRRoKwbY7mdi/WxB,iv:XuouJmfNIqJ37QQKzeE/nIzaR1GQzDhtfwAQh9jrdAg=,tag:YPodC6X8ZGJmXKd8Tze0Jw==,type:comment]
-    usernameKey: ENC[AES256_GCM,data:uWBNwjnZBgI=,iv:QJk3MeJkDnAnmWCBhFHzklGstgUWloBb4U5rtgnMz+4=,tag:CvVS/m8Jd3nQTgwvTqPBPw==,type:str]
-    #ENC[AES256_GCM,data:RwQocLrdVYIdIuLuLczql7yKVPl1qB7fOcmYBQ==,iv:C3bcXcRxnYfKAhiFWsVtDlVh2dT3BPzw8z8FPokyt2U=,tag:17X3xrz80Sy3YQ0rfFaH7g==,type:comment]
+    # -- Key used within secret for username
+    usernameKey: username
+    # -- Password for SMTP server
     password: null
-    #ENC[AES256_GCM,data:LLHSV2fSgNUkNsd/+JBkUi8pkoX/IBNkaffaaNU01JEtNUdjbQkr,iv:sRdDj31ujgPoxvVks/kUTGXPY4pXcmIiUYt7vJFgEco=,tag:rUTdxonyF0AzQEltK40wdQ==,type:comment]
-    passwordKey: ENC[AES256_GCM,data:jjzVm671MsU=,iv:W7Ig+r8d0rQcuIVrZHdkzaawOxH8Jp+P0DUCUoJzU+U=,tag:Em0VOR6SoXlP4LRwjyMDQQ==,type:str]
-    #ENC[AES256_GCM,data:1MDw7VLLWIAY/dDwb9xdwbRK8ZnVTsjO0MLhoxxE8c5Ad3fJ,iv:l0q93OkAIDkj3FB5SjqWgWljAX3GDplIpxfSj5Zbvfs=,tag:KE4xIqC+oU1AVwiWNSUyoQ==,type:comment]
+    # -- Key used within secret for password
+    passwordKey: password
+    # -- Existing secret to use for email
     existingSecret: null
 telegram:
     # -- Enable telegram alerting
@@ -212,23 +212,23 @@ admin:
     # -- Create an local admin user
     create: true
     # -- Fullname for local admin
-    fullname: Admin
-    # -- Key used within secret for fullname
+    # fullname: Admin
+    # # -- Key used within secret for fullname
     fullnameKey: fullname
-    # -- Username for local admin
-    username: admin
-    # -- Key used within secret for username
+    # # -- Username for local admin
+    # username: admin
+    # # -- Key used within secret for username
     usernameKey: username
     # -- Password for local admin
-    password: ENC[AES256_GCM,data:ThQ5Tr8=,iv:AA73D5v/V9lNltuJZNpt54IBp3NJC/VDITDdktPAJMk=,tag:LaztJQS6UI8V4GSw36OS+g==,type:str]
-    # -- Key used within secret for password
-    passwordKey: ENC[AES256_GCM,data:UqZUUObZqMU=,iv:olOi1QgJVKvJnsoSu+f09HkNhn7ixIPc8RL+RL5GdvQ=,tag:N9KbMW18ZlQOmgyq7uZnCA==,type:str]
-    # -- Email for local admin
-    email: ENC[AES256_GCM,data:eSHd+OoGwYtIr6Yn3gcsj2ZijzaQ,iv:OOW1Mx08XMd0tLuCySVqS2muYUoDJiLZJKES3X75esQ=,tag:z9m6f3rhri+6UAwSH97+GA==,type:str]
+    # password: admin
+    # # -- Key used within secret for password
+    passwordKey: password
+    # # -- Email for local admin
+    # email: admin@comintern.local
     # -- Key used within secret for email
     emailKey: email
     # -- Existing secret to use for admin
-    existingSecret: null
+    existingSecret: semaphore-admin
 # -- Resources for the deployment
 resources:
     limits: {}
@@ -277,23 +277,3 @@ postgres:
         password: null
         # -- Password for postgres admin user
         postgresPassword: null
-sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age:
-        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
-          enc: |
-            -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBTaGVRY1NRaGhORGtxSS8y
-            SlBxY2hpenZTZ20vUUc5Y1pkMk9OWU4rZWdFCnpZWkU4UzllNGNweDZWc0xhV0RW
-            Vk9pT3MvRmVFdUl4c0NxSnJITVNmUEkKLS0tIDdmYXRxUXg0cEJiWmxHRVVHYisx
-            YnBocWh2ejhkUTdoaEJ4QWRJL2kvc2cKqG/YW/be96VJVC8mSZTIZtXTPNhPpFmA
-            WpepbjAxDf36Uf6Q10OfHsSngyGUsbhu+WVmLqHAFfl2jRp5/pR8ew==
-            -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-11-05T18:55:01Z"
-    mac: ENC[AES256_GCM,data:Q1r/Yi75PxJuWe6EMGquwoy4/FM7nm9eL9cdm/W4dAgr2BW4SuSb1aBoCTOU1rIqIuBeUlY5zpmjD67rqD5bGQaTo/1AARqGQSr+MHqwp4VqdjGhxlPw+21CQfy2NPANrqmclYolV4JSw2d6RlqfoTlkSPgALLjcqYKS+ZLSspk=,iv:hlNUWnveYnh5oExgdJqfp1pCYdw8fMEc7PHhLuKXjkU=,tag:6TKatKo2KEf5ONUDa/IJ2g==,type:str]
-    pgp: []
-    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml)$
-    version: 3.7.1
