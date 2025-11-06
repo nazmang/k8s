@@ -14,13 +14,21 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-  source:
-    helm:
-      valueFiles:
-        - secrets://https://raw.githubusercontent.com/nazmang/k8s/refs/heads/main/helm-ansible-semaphore/semaphore.values.enc.yaml
-    repoURL: "https://cloudhippie.github.io/charts"
-    chart: ansible-semaphore
-    targetRevision: "14.0.0"
+  sources:
+    - repoURL: "https://cloudhippie.github.io/charts"
+      chart: ansible-semaphore
+      targetRevision: "14.0.0"
+      helm:
+        releaseName: minio-tenant
+        valueFiles:
+          - $values/helm-ansible-semaphore/semaphore.values.yaml
+    - repoURL: https://github.com/nazmang/k8s.git
+      targetRevision: main
+      ref: values
+    - repoURL: https://github.com/nazmang/k8s.git
+      targetRevision: main
+      path: helm-external-helm-ansible-semaphore/semaphore
+      kustomize: {}
   info:
     - name: artifacthub
       value: "https://artifacthub.io/packages/helm/cloudhippie/ansible-semaphore"
