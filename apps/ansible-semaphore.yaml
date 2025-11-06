@@ -27,7 +27,7 @@ spec:
       ref: values
     - repoURL: https://github.com/nazmang/k8s.git
       targetRevision: main
-      path: helm-external-helm-ansible-semaphore/semaphore
+      path: helm-ansible-semaphore/semaphore
       kustomize: {}
   info:
     - name: artifacthub
