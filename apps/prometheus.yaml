@@ -2,7 +2,9 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: prometheus
-  namespace: argocd   
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
 spec:
   project: default
   sources:
@@ -15,6 +17,10 @@ spec:
     - repoURL: https://github.com/nazmang/k8s.git
       targetRevision: main
       ref: values
+    - repoURL: https://github.com/nazmang/k8s.git
+      targetRevision: main
+      path: helm-prometheus/prometheus
+      kustomize: {}
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring

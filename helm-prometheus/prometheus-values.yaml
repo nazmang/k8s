@@ -27,6 +27,71 @@ prometheus:
   service:
     type: LoadBalancer
     loadBalancerIP: "10.0.55.2"
+  thanosService:
+    enabled: true
+  thanos: 
+      # secretProviderClass:
+      #   provider: gcp
+      #   parameters:
+      #     secrets: |
+      #       - resourceName: "projects/$PROJECT_ID/secrets/testsecret/versions/latest"
+      #         fileName: "objstore.yaml"
+      # ObjectStorageConfig configures object storage in Thanos.
+      objectStorageConfig:
+        # use existing secret, if configured, objectStorageConfig.secret will not be used
+        existingSecret: 
+          name: "thanos-storage-config"
+          key: "object-storage-configs.yaml"
+        # will render objectStorageConfig secret data and configure it to be used by Thanos custom resource,
+        # ignored when prometheusspec.thanos.objectStorageConfig.existingSecret is set
+        # https://thanos.io/tip/thanos/storage.md/#s3
+        # secret: 
+        #   type: S3
+        #   config:
+        #     bucket: "thanos"
+        #     endpoint: "https://minio.comintern.local"
+        #     region: "us-east-1"
+        #     access_key: ""
+        #     secret_key: ""
+  # Ingress exposes thanos sidecar outside the cluster
+  thanosIngress:
+    enabled: true
+
+    # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
+    # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
+    ingressClassName: nginx
+
+    annotations: {}
+    labels: {}
+    servicePort: 10901
+
+    ## Port to expose on each node
+    ## Only used if service.type is 'NodePort'
+    ##
+    nodePort: 30901
+
+    ## Hosts must be provided if Ingress is enabled.
+    ##
+    hosts:
+       - thanos-gateway.comintern.local
+
+    ## Paths to use for ingress rules
+    ##
+    paths: 
+      - /
+
+    ## For Kubernetes >= 1.18 you should specify the pathType (determines how Ingress paths should be matched)
+    ## See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types
+    # pathType: ImplementationSpecific
+
+    ## TLS configuration for Thanos Ingress
+    ## Secret must be manually created in the namespace
+    ##
+    tls: 
+    - secretName: thanos-gateway-tls
+      hosts:
+      - thanos-gateway.comintern.local
+       
   ingress:
     enabled: true
     ingressClassName: nginx
