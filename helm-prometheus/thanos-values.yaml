@@ -1,0 +1,30 @@
+global:
+  imageRegistry: ""
+  ## e.g:
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  imagePullSecrets: []
+  defaultStorageClass: "nfs-client"
+  ## Security parameters
+  ##
+  security:
+    ## @param global.security.allowInsecureImages Allows skipping image verification
+    allowInsecureImages: true
+
+image:
+  registry: docker.io
+  repository: thanosio/thanos
+  tag: v0.40.1
+
+existingObjstoreSecret: thanos-storage-config
+existingObjstoreSecretItems:
+  - key: object-storage-configs.yaml
+    path: objstore.yml
+
+storegateway:
+  enabled: true
+
+compactor:
+  enabled: true
+
