@@ -1,3 +1,59 @@
+---
+# -- Override the name
+nameOverride: ""
+
+# -- Override the fullname
+fullnameOverride: ""
+
+# -- Replicas for the deployment
+replicaCount: 1
+
+image:
+  # -- Image repository used by deployment
+  repository: semaphoreui/semaphore
+
+  # -- Optional tag for the repository, defaults to app version
+  tag: "v2.16.45"
+
+  # -- Image pull policy
+  pullPolicy: IfNotPresent
+
+  # -- Optional name of pull secret if using a private registry
+  pullSecrets: []
+
+serviceAccount:
+  # -- Create a new service account
+  create: true
+
+  # -- Optional name for an existing service account
+  name: ""
+
+  # -- Define annotations for the service account
+  annotations: {}
+
+# -- Updaqte strategy for deployment
+updateStrategy:
+  type: Recreate
+
+# -- Define additional labels
+labels: {}
+
+# -- Define additional annotations
+annotations: {}
+
+# -- Security context for the deployment
+securityContext:
+  fsGroup: 1001
+
+# -- Security context for the pod
+podSecurityContext: {}
+
+# -- List of extra init containers
+extraInitContainers: []
+
+# -- List of extra sidecar containers
+extraSidecarContainers: []
+
 # -- List of extra volumes
 extraVolumes: []
 # - name: extra
