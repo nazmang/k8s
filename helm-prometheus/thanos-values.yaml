@@ -24,7 +24,17 @@ existingObjstoreSecretItems:
 
 storegateway:
   enabled: true
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClass: "nfs-client"
 
 compactor:
   enabled: true
+  persistence:
+    enabled: true
+    ephemeral: false
+    defaultEmptyDir: true
+    storageClass: "nfs-client"
+    size: 10Gi
 

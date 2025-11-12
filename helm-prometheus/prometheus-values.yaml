@@ -24,12 +24,8 @@ prometheus:
   prometheusSpec:
     scrapeInterval: 1m
     evaluationInterval: 1m
-  service:
-    type: LoadBalancer
-    loadBalancerIP: "10.0.55.2"
-  thanosService:
-    enabled: true
-  thanos: 
+    thanos:
+      image: thanosio/thanos:v0.40.1
       # secretProviderClass:
       #   provider: gcp
       #   parameters:
@@ -42,17 +38,13 @@ prometheus:
         existingSecret: 
           name: "thanos-storage-config"
           key: "object-storage-configs.yaml"
-        # will render objectStorageConfig secret data and configure it to be used by Thanos custom resource,
-        # ignored when prometheusspec.thanos.objectStorageConfig.existingSecret is set
-        # https://thanos.io/tip/thanos/storage.md/#s3
-        # secret: 
-        #   type: S3
-        #   config:
-        #     bucket: "thanos"
-        #     endpoint: "https://minio.comintern.local"
-        #     region: "us-east-1"
-        #     access_key: ""
-        #     secret_key: ""
+  service:
+    type: LoadBalancer
+    loadBalancerIP: "10.0.55.2"
+  thanosService:
+    enabled: true
+  thanosServiceMonitor:
+    enabled: true   
   # Ingress exposes thanos sidecar outside the cluster
   thanosIngress:
     enabled: true
