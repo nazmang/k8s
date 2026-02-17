@@ -18,6 +18,11 @@ spec:
         }
     }
 
+    options {
+        skipDefaultCheckout(true)
+    }
+
+
     parameters {
         booleanParam(
             name: 'FORCE_DEPLOY',
