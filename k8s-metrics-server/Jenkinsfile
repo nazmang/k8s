@@ -7,7 +7,7 @@ pipeline {
 apiVersion: v1
 kind: Pod
 spec:
-  serviceAccountName: jenkins-deployer
+  serviceAccountName: jenkins
   containers:
   - name: deploy
     image: nazman/k8s-deployer:latest
