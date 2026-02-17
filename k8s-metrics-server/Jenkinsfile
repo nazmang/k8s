@@ -44,7 +44,7 @@ spec:
     }
 
     environment {
-        DEPLOYMENT_DIR = "k8s/metrics-server"
+        DEPLOYMENT_DIR = "k8s-metrics-server"
     }
 
     stages {
