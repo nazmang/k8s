@@ -8,6 +8,8 @@ apiVersion: v1
 kind: Pod
 spec:
   serviceAccountName: jenkins
+  nodeSelector:
+    node-role.kubernetes.io/control-plane: ""
   containers:
   - name: deploy
     image: nazman/k8s-deployer:latest
