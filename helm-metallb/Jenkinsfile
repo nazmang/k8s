@@ -80,7 +80,7 @@ spec:
 
                     def clusterMap = [
                         "cloud": [
-                            credential: "kubeconfig-cloud",
+                            credential: "kubeconfig-hetzner",
                             envDir: "environments/cloud",
                             critical: true
                         ],
