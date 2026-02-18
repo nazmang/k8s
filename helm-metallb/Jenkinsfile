@@ -1,108 +1,161 @@
 pipeline {
-    agent { label 'k8s'}
-    parameters {
-        booleanParam(name: 'FORCE_DEPLOY', defaultValue: false, description: 'Force deployment ignoring changeset')       
-    }
-    environment {
-        VALUES_URL = "metallb-values.yaml"
-        API_SERVER = "https://${params.K8S_API_HOST}:${params.K8S_API_PORT}"
-        CLUSTER_NAME = "${params.K8S_CLUSTER}"
-        CONTEXT_NAME = "${params.K8S_CONTEXT}"
-        METALLB_VERSION = "${params.HELM_CHART_VERSION}"
-        METALLB_CONFIG = "${params.METALLB_CONFIG}"
-        CHART_DIR = "${params.HELM_CHART_DIR}"
-        HELM_VERSION="v3.13.2"
-        HELM_URL="https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz"
-    }
-    stages {
-        stage('Install Helm') {
-            when {
-                anyOf {
-                    changeset "**/${env.CHART_DIR}/**"
-                    expression { return params.FORCE_DEPLOY }
-                }
-            }
-            steps {
-                sh """
-                if ! command -v helm &> /dev/null; then
-                    echo "Helm not found, installing..."
-                    mkdir -p $HOME/.local/bin
-                    curl -fsSL $HELM_URL | tar -xz --strip-components=1 -C $HOME/.local/bin linux-amd64/helm
-                    chmod +x $HOME/.local/bin/helm
-                    echo "Helm installed in $HOME/.local/bin"
-                else
-                    echo "Helm already installed."
-                fi
-                
-                export PATH="$HOME/.local/bin:$PATH"
-                helm version
-                """
-            }
+    agent {
+        kubernetes {
+            label 'k8s-deployer'
+            defaultContainer 'deploy'
+            yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  serviceAccountName: jenkins-deployer
+  containers:
+  - name: deploy
+    image: nazman/k8s-deployer:latest
+    command:
+    - cat
+    tty: true
+"""
         }
-        stage('Prepare Kubernetes') {
-            when {
-                anyOf {
-                    changeset "**/${env.CHART_DIR}/**"
-                    expression { return params.FORCE_DEPLOY }
-                }
-            }
-            steps {                
-                withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
-                    sh """
-                        kubectl config set-cluster ${CLUSTER_NAME} --server=${API_SERVER} --insecure-skip-tls-verify=true
-                        kubectl config set-credentials jenkins --token=${K8S_TOKEN}
-                        kubectl config set-context ${CONTEXT_NAME} --cluster=${CLUSTER_NAME} --user=jenkins
-                        kubectl config use-context ${CONTEXT_NAME}
+    }
 
-                        echo "Checking kube-proxy strictARP setting..."
-                        if ! kubectl get configmap kube-proxy -n kube-system -o yaml | grep -q "strictARP: true"; then
-                            echo "Applying kube-proxy strictARP change..."
-                            kubectl get configmap kube-proxy -n kube-system -o yaml | \
-                            sed 's/strictARP: false/strictARP: true/' | \
-                            kubectl apply -f - -n kube-system
-                        else
-                            echo "No changes needed in kube-proxy."
-                        fi
-                        
-                    """
+    options {
+        skipDefaultCheckout(true)
+    }
+
+    parameters {
+
+        choice(
+            name: 'DEPLOY_TARGET',
+            choices: ['single', 'all'],
+            description: 'Deploy to one cluster or all clusters'
+        )
+
+        choice(
+            name: 'CLUSTER',
+            choices: ['cloud', 'onprem'],
+            description: 'Cluster to deploy (used if single selected)'
+        )
+
+        string(
+            name: 'HELM_CHART_VERSION',
+            defaultValue: '0.14.8',
+            description: 'MetalLB Helm chart version'
+        )
+
+        booleanParam(
+            name: 'FORCE_DEPLOY',
+            defaultValue: false,
+            description: 'Force deployment'
+        )
+    }
+
+    environment {
+        APP_DIR = "${params.HELM_CHART_DIR} "
+        VALUES_FILE = "values.yaml"
+        METALLB_CONFIG = "metallb-config.yaml"
+        NAMESPACE = "metallb-system"
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                container('deploy') {
+                    git branch: 'main',
+                        url: 'https://github.com/nazmang/k8s.git'
                 }
             }
         }
-        stage('Deploy MetalLB') {
-            when {
-                anyOf {
-                    changeset "**/${env.CHART_DIR}/**"
-                    expression { return params.FORCE_DEPLOY }
-                }
-            }
-            steps {                
-                withCredentials([string(credentialsId: 'K8S_JENKINS_TOKEN', variable: 'K8S_TOKEN')]) {
-                    dir("${env.CHART_DIR}") {
-                        sh """
-                        helm repo add metallb https://metallb.github.io/metallb
-                        helm repo update
-                        helm upgrade --install metallb metallb/metallb \
-                            --namespace metallb-system --create-namespace \
-                            --version ${METALLB_VERSION} \
-                            -f ${VALUES_URL}
-                        """
+
+        stage('Deploy') {
+            steps {
+                when {
+                    anyOf {
+                        changeset "**/${env.DEPLOYMENT_DIR}/**"
+                        expression { return params.FORCE_DEPLOY }
                     }
                 }
-            }
-        }
-        stage('Apply MetalLB Config') {
-            when {
-                anyOf {
-                    changeset "**/${env.CHART_DIR}/**"
-                    expression { return params.FORCE_DEPLOY }
-                }
-            }
-            steps {                
-                dir("${env.CHART_DIR}") {
-                    sh """
-                    export PATH="$HOME/.local/bin:$PATH"
-                    kubectl apply -f ${METALLB_CONFIG} -n metallb-system
-                    """
+                script {
+
+                    def clusterMap = [
+                        "cloud": [
+                            credential: "kubeconfig-cloud",
+                            envDir: "environments/cloud",
+                            critical: true
+                        ],
+                        "onprem": [
+                            credential: "kubeconfig-onprem",
+                            envDir: "environments/onprem",
+                            critical: false
+                        ]
+                    ]
+
+                    def targets = params.DEPLOY_TARGET == "all" ?
+                                  clusterMap.keySet() :
+                                  [params.CLUSTER]
+
+                    parallel targets.collectEntries { c ->
+
+                        ["Deploy to ${c}": {
+
+                            container('deploy') {
+
+                                def cfg = clusterMap[c]
+
+                                withCredentials([
+                                    file(credentialsId: cfg.credential, variable: 'KUBECONFIG')
+                                ]) {
+
+                                    try {
+
+                                        echo "Checking connectivity to ${c}"
+                                        sh "kubectl cluster-info"
+
+                                        // ===== kube-proxy strictARP fix =====
+                                        echo "Ensuring strictARP=true"
+
+                                        sh """
+                                            if ! kubectl get configmap kube-proxy -n kube-system -o yaml | grep -q "strictARP: true"; then
+                                                kubectl get configmap kube-proxy -n kube-system -o yaml | \
+                                                sed 's/strictARP: false/strictARP: true/' | \
+                                                kubectl apply -f -
+                                            fi
+                                        """
+
+                                        // ===== Helm deploy =====
+                                        dir("${APP_DIR}/${cfg.envDir}") {
+
+                                            sh """
+                                                helm repo add metallb https://metallb.github.io/metallb || true
+                                                helm repo update
+
+                                                helm upgrade --install metallb metallb/metallb \
+                                                --namespace ${NAMESPACE} \
+                                                --create-namespace \
+                                                --version ${params.HELM_CHART_VERSION} \
+                                                -f ${VALUES_FILE}
+                                            """
+
+                                            sh """
+                                                kubectl apply -f ${METALLB_CONFIG} -n ${NAMESPACE}
+                                            """
+                                        }
+
+
+                                        echo "Deployment to ${c} completed."
+
+                                    } catch (err) {
+
+                                        if (cfg.critical) {
+                                            error("Critical cluster ${c} failed. Stopping pipeline.")
+                                        } else {
+                                            echo "Non-critical cluster ${c} failed. Skipping."
+                                        }
+                                    }
+                                }
+                            }
+                        }]
+                    }
                 }
             }
         }

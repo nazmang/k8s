@@ -1,0 +1,42 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: first-pool
+  namespace: metallb-system
+spec:
+  addresses:
+    - 10.0.55.1-10.0.55.100
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: local
+  namespace: metallb-system
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: kube-apiserver
+  namespace: metallb-system
+spec:
+  addresses:
+    - 10.0.100.100-10.0.100.150
+---
+apiVersion: metallb.io/v1beta2
+kind: BGPPeer
+metadata:
+  name: sample
+  namespace: metallb-system
+spec:
+  myASN: 64512
+  peerASN: 65530
+  peerAddress: 192.168.150.10
+---
+apiVersion: metallb.io/v1beta1
+kind: BGPAdvertisement
+metadata:
+  name: example
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - first-pool
