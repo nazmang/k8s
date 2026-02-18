@@ -15,6 +15,10 @@ rules:
     - coordination.k8s.io
     - apiextensions.k8s.io
     - apiregistration.k8s.io
+    - admissionregistration.k8s.io
+    - metallb.io
+    - monitoring.coreos.com
+    - cert-manager.io
   resources: ["*"]
   verbs: ["*"]
 
@@ -32,3 +36,16 @@ roleRef:
   name: jenkins-deployer
   apiGroup: rbac.authorization.k8s.io
 
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jenkins-deployer
+subjects:
+  - kind: ServiceAccount
+    name: jenkins
+    namespace: jenkins
+roleRef:
+  kind: ClusterRole
+  name: jenkins-deployer
+  apiGroup: rbac.authorization.k8s.io

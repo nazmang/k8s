@@ -1,0 +1,106 @@
+grafana:
+  enabled: false
+  
+alertmanager:
+  enabled: true
+  ingress:
+    enabled: true
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: alertmanager.srvx.cc
+      external-dns.alpha.kubernetes.io/target: b16e4df1-2f22-4512-a7bc-29b1ed11d754.cfargotunnel.com
+      external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    labels: {}
+    ingressClassName: nginx
+    hosts:
+      - alertmanager.srvx.cc
+    paths: []
+    # - /
+
+    ## For Kubernetes >= 1.18 you should specify the pathType (determines how Ingress paths should be matched)
+    ## See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types
+    # pathType: ImplementationSpecific
+
+    ## TLS configuration for Alertmanager Ingress
+    ## Secret must be manually created in the namespace
+    ##
+    # tls: 
+    # - secretName: srvxapp-com-tls
+    #   hosts:
+    #   - alertmanager.srvx.cc
+prometheus:
+  prometheusSpec:
+    scrapeInterval: 1m
+    evaluationInterval: 1m
+    thanos:
+      image: thanosio/thanos:v0.40.1
+      # secretProviderClass:
+      #   provider: gcp
+      #   parameters:
+      #     secrets: |
+      #       - resourceName: "projects/$PROJECT_ID/secrets/testsecret/versions/latest"
+      #         fileName: "objstore.yaml"
+      # ObjectStorageConfig configures object storage in Thanos.
+      objectStorageConfig:
+        # use existing secret, if configured, objectStorageConfig.secret will not be used
+        # existingSecret: 
+        #   name: "thanos-storage-config"
+        #   key: "object-storage-configs.yaml"
+  # service:
+  #   type: LoadBalancer
+  #   loadBalancerIP: "10.0.55.2"
+  thanosService:
+    enabled: true
+  thanosServiceMonitor:
+    enabled: true   
+  # Ingress exposes thanos sidecar outside the cluster
+  thanosIngress:
+    enabled: false
+
+    # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
+    # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
+    ingressClassName: nginx
+
+    annotations: {}
+    labels: {}
+    servicePort: 10901
+
+    ## Port to expose on each node
+    ## Only used if service.type is 'NodePort'
+    ##
+    nodePort: 30901
+
+    ## Hosts must be provided if Ingress is enabled.
+    ##
+    hosts:
+       - thanos-gateway.comintern.local
+
+    ## Paths to use for ingress rules
+    ##
+    paths: 
+      - /
+
+    ## For Kubernetes >= 1.18 you should specify the pathType (determines how Ingress paths should be matched)
+    ## See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types
+    pathType: ImplementationSpecific
+
+    ## TLS configuration for Thanos Ingress
+    ## Secret must be manually created in the namespace
+    ##
+    # tls: 
+    # - secretName: thanos-gateway-tls
+    #   hosts:
+    #   - thanos-gateway.comintern.local
+       
+  ingress:
+    enabled: true
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: prom-k8s.srvx.cc
+      external-dns.alpha.kubernetes.io/target: b16e4df1-2f22-4512-a7bc-29b1ed11d754.cfargotunnel.com
+      external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    ingressClassName: nginx
+    hosts:
+      - prom-k8s.srvx.cc
+    paths: []
+    tls: []

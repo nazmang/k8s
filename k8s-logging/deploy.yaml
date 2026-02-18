@@ -1,0 +1,18 @@
+steps:
+  - type: decrypt-sops
+    environments:
+      cloud:
+        config:
+          keyParameter: SOPS_AGE_KEY
+          files:
+            - .env
+  - type: shell
+    environments:
+      cloud:
+        config:
+          command: set -a && source .env && set +a && envsubst < base/config/fluent.conf.template > base/config/fluent.conf
+  - type: kustomize
+    environments:
+      cloud:
+        config:
+          overlay: overlays/cloud

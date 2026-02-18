@@ -1,0 +1,42 @@
+depends:
+  - helm-redis
+
+steps:
+  - type: decrypt-sops
+    environments:
+      cloud:
+        config:
+          keyParameter: SOPS_AGE_KEY
+          files:
+            - environments/cloud/argocd.values.yaml
+            - environments/cloud/main.yaml
+  - type: helm
+    environments:
+      cloud:
+        config:
+          repoName: argo
+          repoUrl: https://argoproj.github.io/argo-helm
+          chartName: argo/argo-cd
+          version: 7.7.16
+          releaseName: argocd
+          namespace: argocd
+          values:
+            - environments/cloud/argocd.values.yaml
+  - type: wait
+    config:
+      kind: CustomResourceDefinition
+      name: applications.argoproj.io
+      timeout: 120
+
+  - type: wait
+    config:
+      kind: CustomResourceDefinition
+      name: appprojects.argoproj.io
+      timeout: 120
+
+  - type: manifest
+    environments:
+      cloud:
+        config:
+          file:
+            - environments/cloud/main.yaml

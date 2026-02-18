@@ -1,2 +1,2 @@
 base/config/fluent.conf
-.env*
+.env.*

@@ -1,0 +1,30 @@
+steps:
+
+  - type: helm
+    environments:
+
+      cloud:
+        config:
+          repoName: cloudflare
+          repoUrl: https://cloudflare.github.io/helm-charts
+          chartName: cloudflare/cloudflare-tunnel
+          version: 0.3.2
+          releaseName: cloudflared
+          namespace: cloudflare
+          values:
+            - environments/cloud/cloudflared.values.yaml
+
+  - type: decrypt-sops
+    environments:
+      cloud:
+        config:
+          keyParameter: SOPS_AGE_KEY
+          files:
+            - overlays/cloud/secret.yaml
+
+  - type: manifest
+    environments:
+      cloud:
+        config:
+          file:
+            - overlays/cloud/secret.yaml

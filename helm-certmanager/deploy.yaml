@@ -1,0 +1,26 @@
+steps:
+  - type: helm
+    environments:
+      cloud:
+        config:
+          repoName: jetstack
+          repoUrl: https://charts.jetstack.io
+          chartName: jetstack/cert-manager
+          version: v1.20.0
+          releaseName: cert-manager
+          namespace: cert-manager
+          values:
+            - environments/cloud/cert-manager.values.yaml
+  - type: decrypt-sops
+    environments:
+      cloud:
+        config:
+          keyParameter: SOPS_AGE_KEY
+          files:
+            - environments/overlays/cloud/certmanager-config.yaml
+  - type: manifest
+    environments:
+      cloud:
+        config:
+          file:
+            - environments/overlays/cloud/certmanager-config.yaml
