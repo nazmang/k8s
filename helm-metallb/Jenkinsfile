@@ -50,7 +50,7 @@ spec:
     }
 
     environment {
-        APP_DIR = "${params.HELM_CHART_DIR} "
+        APP_DIR = "${params.HELM_CHART_DIR}"
         VALUES_FILE = "values.yaml"
         METALLB_CONFIG = "metallb-config.yaml"
         NAMESPACE = "metallb-system"
