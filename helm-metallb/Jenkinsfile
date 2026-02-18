@@ -71,7 +71,7 @@ spec:
             steps {
                 when {
                     anyOf {
-                        changeset "**/${env.DEPLOYMENT_DIR}/**"
+                        changeset "**/${env.APP_DIR}/**"
                         expression { return params.FORCE_DEPLOY }
                     }
                 }
