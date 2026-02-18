@@ -21,3 +21,13 @@ metadata:
 spec:
   ipAddressPools:
     - first-pool
+---
+apiVersion: metallb.io/v1beta2
+kind: BGPPeer
+metadata:
+  name: sample
+  namespace: metallb-system
+spec:
+  myASN: 64511
+  peerASN: 65540
+  peerAddress: 10.163.11.25
