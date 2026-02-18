@@ -137,6 +137,13 @@ spec:
                                                 -f ${VALUES_FILE}
                                             """
 
+                                            // wait for CRDs
+                                            sh """
+                                            kubectl wait --for=condition=Established crd/ipaddresspools.metallb.io --timeout=60s
+                                            kubectl wait --for=condition=Established crd/l2advertisements.metallb.io --timeout=60s
+                                            kubectl wait --for=condition=Established crd/bgpadvertisements.metallb.io --timeout=60s
+                                            """
+
                                             sh """
                                                 kubectl apply -f ${METALLB_CONFIG} -n ${NAMESPACE}
                                             """
