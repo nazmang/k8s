@@ -10,6 +10,10 @@ spec:
   serviceAccountName: jenkins
   nodeSelector:
     node-role.kubernetes.io/control-plane: ""
+  tolerations:
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Exists"
+    effect: "NoSchedule"  
   containers:
   - name: deploy
     image: nazman/k8s-deployer:latest
@@ -46,7 +50,7 @@ spec:
     }
 
     environment {
-        DEPLOYMENT_DIR = "k8s-metrics-server"
+        DEPLOYMENT_DIR = "${params.DEPLOYMENT_DIR}"
     }
 
     stages {
@@ -62,6 +66,12 @@ spec:
 
         stage('Deploy') {
             steps {
+                when {
+                    anyOf {
+                        changeset "**/${env.DEPLOYMENT_DIR}/**"
+                        expression { return params.FORCE_DEPLOY }
+                    }
+                }
                 script {
 
                     def clusterMap = [
