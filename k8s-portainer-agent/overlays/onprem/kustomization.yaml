@@ -1,0 +1,16 @@
+resources:
+  - ../../base
+
+patches:
+  - target:
+      kind: Service
+      name: portainer-agent
+    patch: |-
+      - op: add
+        path: /metadata/annotations
+        value:
+          metallb.universe.tf/allow-shared-ip: "portainer-agent"
+      - op: replace
+        path: /spec/loadBalancerIP
+        value: 10.0.55.100
+
