@@ -68,13 +68,14 @@ spec:
         }
 
         stage('Deploy') {
-            steps {
-                when {
+            when {
                     anyOf {
                         changeset "**/${env.APP_DIR}/**"
                         expression { return params.FORCE_DEPLOY }
                     }
-                }
+            }
+            steps {
+                
                 script {
 
                     def clusterMap = [
