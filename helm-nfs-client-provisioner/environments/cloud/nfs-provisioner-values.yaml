@@ -8,8 +8,8 @@ image:
 imagePullSecrets: []
 
 nfs:
-  server: nas.comintern.local
-  path: /mnt/trash_pool/misc/k8s
+  server: nas01
+  path: /srv/data
   mountOptions:
   volumeName: nfs-subdir-external-provisioner-root
   # Reclaim policy for the main nfs volume
