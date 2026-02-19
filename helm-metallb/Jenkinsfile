@@ -58,13 +58,7 @@ spec:
 
     stages {
 
-        stage('Checkout') {
-            when {
-                    anyOf {
-                        changeset "**/${env.APP_DIR}/**"
-                        expression { return params.FORCE_DEPLOY }
-                    }
-            }
+        stage('Checkout') {            
             steps {
                 container('deploy') {
                     git branch: 'main',
