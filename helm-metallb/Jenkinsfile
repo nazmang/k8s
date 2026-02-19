@@ -59,6 +59,12 @@ spec:
     stages {
 
         stage('Checkout') {
+            when {
+                    anyOf {
+                        changeset "**/${env.APP_DIR}/**"
+                        expression { return params.FORCE_DEPLOY }
+                    }
+            }
             steps {
                 container('deploy') {
                     git branch: 'main',
@@ -136,16 +142,21 @@ spec:
                                                 --version ${params.HELM_CHART_VERSION} \
                                                 -f ${VALUES_FILE}
                                             """
-
                                             // wait for CRDs
                                             sh """
                                             kubectl wait --for=condition=Established crd/ipaddresspools.metallb.io --timeout=60s
                                             kubectl wait --for=condition=Established crd/l2advertisements.metallb.io --timeout=60s
                                             kubectl wait --for=condition=Established crd/bgpadvertisements.metallb.io --timeout=60s
                                             """
-
+                                            // applying MetalLB configuration
                                             sh """
                                                 kubectl apply -f ${METALLB_CONFIG} -n ${NAMESPACE}
+                                            """
+                                            // clean node labels in case they were set by design in the past
+                                            sh """
+                                                for n in $(kubectl get nodes -o name); do
+                                                    kubectl label $n node.kubernetes.io/exclude-from-external-load-balancers-
+                                                done
                                             """
                                         }
 
