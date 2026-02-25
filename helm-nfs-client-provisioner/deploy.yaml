@@ -1,0 +1,26 @@
+steps:
+
+  - type: helm
+    environments:
+
+      cloud:
+        config:
+          repoName: nfs-subdir-external-provisioner
+          repoUrl: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
+          chartName: nfs-subdir-external-provisioner/nfs-subdir-external-provisioner
+          version: 4.0.18
+          releaseName: nfs-client-provisioner
+          namespace: nfs-provisioner
+          values:
+            - environments/cloud/nfs-provisioner-values.yaml
+
+      onprem:
+        config:
+          repoName: nfs-subdir-external-provisioner
+          repoUrl: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
+          chartName: nfs-subdir-external-provisioner/nfs-subdir-external-provisioner
+          version: 4.0.18
+          releaseName: nfs-client-provisioner
+          namespace: nfs-provisioner
+          values:
+            - environments/onprem/nfs-provisioner-values.yaml
