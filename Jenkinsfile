@@ -22,6 +22,7 @@ pipeline {
             agent any
             steps {
                 checkout scm
+                stash name: 'workspace', includes: '**/*'
             }
         }
 
@@ -44,6 +45,7 @@ pipeline {
                         node('k8s-deployer') {
 
                             container('deploy') {
+                                unstash 'workspace'
                                 platformDeploy()
                             }
                         }
