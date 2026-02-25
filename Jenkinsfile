@@ -10,35 +10,16 @@ pipeline {
     }
 
     parameters {
-
-        string(
-            name: 'PROJECT',
-            defaultValue: '',
-            description: 'Deploy only specific project (directory name)'
-        )
-
-        booleanParam(
-            name: 'FORCE_DEPLOY',
-            defaultValue: false,
-            description: 'Force deploy ignoring change detection'
-        )
-
-        choice(
-            name: 'DEPLOY_TARGET',
-            choices: ['single', 'all'],
-            description: 'Deploy to one cluster or all clusters'
-        )
-
-        choice(
-            name: 'CLUSTER',
-            choices: ['cloud', 'onprem'],
-            description: 'Target cluster (used if single selected)'
-        )
+        string(name: 'PROJECT', defaultValue: '')
+        booleanParam(name: 'FORCE_DEPLOY', defaultValue: false)
+        choice(name: 'DEPLOY_TARGET', choices: ['single','all'])
+        choice(name: 'CLUSTER', choices: ['cloud','onprem'])
     }
 
     stages {
 
         stage('Checkout') {
+            agent any
             steps {
                 checkout scm
             }
@@ -63,7 +44,6 @@ pipeline {
                         node('k8s-deployer') {
 
                             container('deploy') {
-
                                 platformDeploy()
                             }
                         }
