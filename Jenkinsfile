@@ -1,4 +1,4 @@
-@Library('platform-deploy-lib') _
+@Library('platform-deploy-lib@main') _
 
 pipeline {
 
