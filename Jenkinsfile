@@ -64,7 +64,7 @@ pipeline {
 
                             container('deploy') {
                                 unstash 'workspace'
-                                platformDeploy(projectOverride: env.PROJECT_SELECTED)
+                                platformDeploy(projectOverride: env.getProperty('PROJECT_SELECTED') ?: '')
                             }
                         }
                     }
