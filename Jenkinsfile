@@ -15,6 +15,7 @@ pipeline {
         choice(name: 'DEPLOY_TARGET', choices: ['single','all'])
         choice(name: 'CLUSTER', choices: ['cloud','onprem'])
         booleanParam(name: 'AUTOFILL_PROJECT', defaultValue: true, description: 'After checkout, show dropdown of projects (dirs with deploy.yaml) to choose from')
+        booleanParam(name: 'SKIP_PROJECT_INPUT', defaultValue: false, description: 'Skip project selection; deploy only changed projects (or all if FORCE_DEPLOY)')
     }
 
     stages {
@@ -24,7 +25,7 @@ pipeline {
             steps {
                 checkout scm
                 script {
-                    if (params.AUTOFILL_PROJECT) {
+                    if (params.AUTOFILL_PROJECT && !params.SKIP_PROJECT_INPUT) {
                         def dirs = sh(script: "ls -d */ 2>/dev/null | sed 's#/##'", returnStdout: true).trim().split("\n").findAll { it?.trim() }
                         def choices = [''] + dirs.findAll { fileExists("${it}/deploy.yaml") }
                         if (choices.size() > 1) {
@@ -62,7 +63,7 @@ pipeline {
 
                             container('deploy') {
                                 unstash 'workspace'
-                                platformDeploy()
+                                platformDeploy(projectOverride: env.PROJECT_SELECTED)
                             }
                         }
                     }
