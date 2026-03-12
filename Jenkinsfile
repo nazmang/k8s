@@ -15,7 +15,7 @@ pipeline {
         choice(name: 'DEPLOY_TARGET', choices: ['single','all'])
         choice(name: 'CLUSTER', choices: ['cloud','onprem'])
         booleanParam(name: 'AUTOFILL_PROJECT', defaultValue: true, description: 'After checkout, show dropdown of projects (dirs with deploy.yaml) to choose from')
-        booleanParam(name: 'SKIP_PROJECT_INPUT', defaultValue: false, description: 'Skip project selection; deploy only changed projects (or all if FORCE_DEPLOY)')
+        booleanParam(name: 'SKIP_PROJECT_INPUT', defaultValue: true, description: 'Skip project selection; deploy only changed projects (or all if FORCE_DEPLOY)')
     }
 
     stages {
@@ -49,6 +49,7 @@ pipeline {
 
                     podTemplate(
                         label: 'k8s-deployer',
+                        serviceAccount: 'jenkins',
                         containers: [
                             containerTemplate(
                                 name: 'deploy',
