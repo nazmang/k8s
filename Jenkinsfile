@@ -25,7 +25,8 @@ pipeline {
                 checkout scm
                 script {
                     if (params.AUTOFILL_PROJECT) {
-                        def choices = [''] + platformProjectChoices()
+                        def dirs = sh(script: "ls -d */ 2>/dev/null | sed 's#/##'", returnStdout: true).trim().split("\n").findAll { it?.trim() }
+                        def choices = [''] + dirs.findAll { fileExists("${it}/deploy.yaml") }
                         if (choices.size() > 1) {
                             def result = input(
                                 message: 'Choose project to deploy',
