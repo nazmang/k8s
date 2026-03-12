@@ -1,0 +1,9 @@
+steps:
+  - type: kustomize
+    environments:
+      cloud:
+        config:
+          overlay: overlays/cloud
+      onprem:
+        config:
+          overlay: overlays/onprem
