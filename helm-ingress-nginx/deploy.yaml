@@ -1,0 +1,25 @@
+steps:
+
+  - type: helm
+    environments:
+
+      cloud:
+        config:
+          repoName: ingress-nginx
+          repoUrl: https://kubernetes.github.io/ingress-nginx
+          chartName: ingress-nginx/ingress-nginx
+          version: 4.13.2
+          releaseName: ingress-nginx
+          namespace: ingress-nginx
+          values:
+            - environments/cloud/ingress.values.yaml
+      onprem:
+        config:
+          repoName: ingress-nginx
+          repoUrl: https://kubernetes.github.io/ingress-nginx
+          chartName: ingress-nginx/ingress-nginx
+          version: 4.13.2
+          releaseName: ingress-nginx
+          namespace: ingress-nginx
+          values:
+            - environments/onprem/ingress.values.yaml
