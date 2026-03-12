@@ -7,8 +7,8 @@ steps:
         config:
           repoName: prometheus-community
           repoUrl: https://prometheus-community.github.io/helm-charts
-          chartName: prometheus-community/prometheus
-          version: 82.10.3
+          chartName: prometheus-community/kube-prometheus-stack
+          version: 82.0.0
           releaseName: prometheus
           namespace: monitoring
           values:
@@ -17,8 +17,8 @@ steps:
         config:
           repoName: prometheus-community
           repoUrl: https://prometheus-community.github.io/helm-charts
-          chartName: prometheus-community/prometheus
-          version: 82.10.3
+          chartName: prometheus-community/kube-prometheus-stack
+          version: 82.0.0
           releaseName: prometheus
           namespace: monitoring
           values:
