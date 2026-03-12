@@ -17,6 +17,7 @@ rules:
     - apiregistration.k8s.io
     - admissionregistration.k8s.io
     - metallb.io
+    - monitoring.coreos.com
   resources: ["*"]
   verbs: ["*"]
 
