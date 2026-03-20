@@ -1,5 +1,3 @@
-depends:
-  - helm-prometheus
 steps:
 
   - type: helm
@@ -7,21 +5,12 @@ steps:
 
       cloud:
         config:
-          repoName: ingress-nginx
-          repoUrl: https://kubernetes.github.io/ingress-nginx
-          chartName: ingress-nginx/ingress-nginx
-          version: 4.13.2
-          releaseName: ingress-nginx
-          namespace: ingress-nginx
+          repoName: cloudflare
+          repoUrl: https://cloudflare.github.io/helm-charts
+          chartName: cloudflare/cloudflared
+          version: 2.0.0
+          releaseName: cloudflared
+          namespace: cloudflare
           values:
-            - environments/cloud/ingress.values.yaml
-      onprem:
-        config:
-          repoName: ingress-nginx
-          repoUrl: https://kubernetes.github.io/ingress-nginx
-          chartName: ingress-nginx/ingress-nginx
-          version: 4.13.2
-          releaseName: ingress-nginx
-          namespace: ingress-nginx
-          values:
-            - environments/onprem/ingress.values.yaml
+            - environments/cloud/cloudflared.values.yaml
+      
