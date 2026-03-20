@@ -1,7 +1,7 @@
-tunnelID: "b16e4df1-2f22-4512-a7bc-29b1ed11d754"
-
-credentials:
-  existingSecret: cloudflared-credentials
+cloudflare:
+  account: "460734107b3e75ca02954c4452315317"
+  tunnelId: "b16e4df1-2f22-4512-a7bc-29b1ed11d754"
+  secretName: cloudflared-credentials
 
 ingress:
   - hostname: "*.k8s.srvxapp.com"
