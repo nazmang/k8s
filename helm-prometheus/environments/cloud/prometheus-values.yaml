@@ -4,10 +4,10 @@ grafana:
 alertmanager:
   enabled: true
   ingress:
-    enabled: false
+    enabled: true
     ingressClassName: nginx
     hosts:
-      - alertmanager.comintern.local
+      - alertmanager.k8s.srvxapp.com
     paths: []
     # - /
 
