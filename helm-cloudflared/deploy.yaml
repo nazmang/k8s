@@ -7,7 +7,7 @@ steps:
         config:
           repoName: cloudflare
           repoUrl: https://cloudflare.github.io/helm-charts
-          chartName: cloudflare/cloudflared
+          chartName: cloudflare/cloudflare-tunnel
           version: 0.3.2
           releaseName: cloudflared
           namespace: cloudflare
