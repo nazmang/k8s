@@ -1,0 +1,20 @@
+tunnelID: "b16e4df1-2f22-4512-a7bc-29b1ed11d754"
+
+credentials:
+  existingSecret: cloudflared-credentials
+
+ingress:
+  - hostname: "*.k8s.srvxapp.com"
+    service: http://ingress-nginx-controller.ingress-nginx.svc.cluster.local:80
+
+  - service: http_status:404
+
+replicaCount: 2
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
