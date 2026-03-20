@@ -4,11 +4,11 @@ cloudflare:
   tunnelName: "ingress"
   secretName: cloudflared-credentials
 
-ingress:
-  - hostname: "*.k8s.srvxapp.com"
-    service: http://ingress-nginx-controller.ingress-nginx.svc.cluster.local:80
+  ingress:
+    - hostname: "*.k8s.srvxapp.com"
+      service: http://ingress-nginx-controller.ingress-nginx.svc.cluster.local:80
 
-  - service: http_status:404
+    - service: http_status:404
 
 replicaCount: 2
 
