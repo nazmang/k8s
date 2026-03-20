@@ -8,7 +8,7 @@ steps:
           repoName: external-dns
           repoUrl: https://kubernetes-sigs.github.io/external-dns/
           chartName: external-dns/external-dns
-          version: v0.18.0
+          version: v1.18.0
           releaseName: external-dns
           namespace: external-dns
           values:
