@@ -1,0 +1,34 @@
+---
+fullnameOverride: external-dns-mikrotik
+
+logLevel: debug
+logFormat: text
+
+interval: 5s
+sources: ["ingress", "service", "crd"]
+registry: txt
+txtOwnerId: default
+txtPrefix: k8s.
+domainFilters: ["srvxapp.com"]
+excludeDomains: []
+policy: sync
+
+provider:
+  name: cloudflare
+env:
+  - name: CF_API_TOKEN
+# kubectl create secret generic cloudflare-api-key --from-literal=apiKey=YOUR_API_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: cloudflare-api-key
+        key: apiKey
+
+extraArgs:
+  - --ignore-ingress-tls-spec
+  - --managed-record-types=A
+  - --managed-record-types=AAAA
+  - --managed-record-types=CNAME
+  - --managed-record-types=TXT
+  - --managed-record-types=MX
+  - --managed-record-types=SRV
+  - --managed-record-types=NS

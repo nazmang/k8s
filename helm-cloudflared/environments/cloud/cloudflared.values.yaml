@@ -5,8 +5,8 @@ cloudflare:
   secretName: cloudflared-credentials
 
   ingress:
-    # - hostname: "*.k8s.srvxapp.com"
-    #   service: http://ingress-nginx-controller.ingress-nginx.svc.cluster.local:80
+    - hostname: "*.k8s.srvxapp.com"
+      service: http://ingress-nginx-controller.ingress-nginx.svc.cluster.local:80
     - hostname: ingress.srvxapp.com
       service: hello_world
 
