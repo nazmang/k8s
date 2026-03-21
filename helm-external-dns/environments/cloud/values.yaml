@@ -1,5 +1,5 @@
 ---
-fullnameOverride: external-dns-mikrotik
+fullnameOverride: external-dns-clouflare
 
 logLevel: debug
 logFormat: text
