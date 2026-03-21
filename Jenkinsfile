@@ -55,7 +55,7 @@ pipeline {
                             containerTemplate(
                                 name: 'deploy',
                                 image: 'nazman/k8s-deployer:latest',
-                                imagePullPolicy: 'Always',
+                                alwaysPullImage: true,
                                 ttyEnabled: true,
                                 command: 'cat'
                             )
