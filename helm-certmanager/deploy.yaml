@@ -22,5 +22,5 @@ steps:
     environments:
       cloud:
         config:
-          files:
+          file:
             - environments/overlays/cloud/certmanager-config.yaml
