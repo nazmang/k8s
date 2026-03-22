@@ -24,7 +24,7 @@ alertmanager:
     ## Secret must be manually created in the namespace
     ##
     tls: 
-    - secretName: ingress-nginx/srvxapp-com-tls
+    - secretName: srvxapp-com-tls
       hosts:
       - alertmanager.k8s.srvxapp.com
 prometheus:
