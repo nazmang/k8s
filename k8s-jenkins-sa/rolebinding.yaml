@@ -18,6 +18,7 @@ rules:
     - admissionregistration.k8s.io
     - metallb.io
     - monitoring.coreos.com
+    - cert-manager.io
   resources: ["*"]
   verbs: ["*"]
 
