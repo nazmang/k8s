@@ -9,7 +9,7 @@ sources: ["ingress", "service", "crd"]
 registry: txt
 txtOwnerId: default
 txtPrefix: k8s.
-domainFilters: ["srvxapp.com"]
+domainFilters: ["srvx.cc"]
 excludeDomains: []
 policy: sync
 
