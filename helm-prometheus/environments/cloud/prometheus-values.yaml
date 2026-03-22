@@ -13,7 +13,7 @@ alertmanager:
     labels: {}
     ingressClassName: nginx
     hosts:
-      - alertmanager.k8s.srvxapp.com
+      - alertmanager.srvx.cc
     paths: []
     # - /
 
@@ -24,10 +24,10 @@ alertmanager:
     ## TLS configuration for Alertmanager Ingress
     ## Secret must be manually created in the namespace
     ##
-    tls: 
-    - secretName: srvxapp-com-tls
-      hosts:
-      - alertmanager.k8s.srvxapp.com
+    # tls: 
+    # - secretName: srvxapp-com-tls
+    #   hosts:
+    #   - alertmanager.srvx.cc
 prometheus:
   prometheusSpec:
     scrapeInterval: 1m
