@@ -87,15 +87,20 @@ prometheus:
     ## TLS configuration for Thanos Ingress
     ## Secret must be manually created in the namespace
     ##
-    tls: 
-    - secretName: thanos-gateway-tls
-      hosts:
-      - thanos-gateway.comintern.local
+    # tls: 
+    # - secretName: thanos-gateway-tls
+    #   hosts:
+    #   - thanos-gateway.comintern.local
        
   ingress:
-    enabled: false
+    enabled: true
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: prom-k8s.srvx.cc
+      external-dns.alpha.kubernetes.io/target: b16e4df1-2f22-4512-a7bc-29b1ed11d754.cfargotunnel.com
+      external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
     ingressClassName: nginx
     hosts:
-      - prom-k8s.comintern.local
+      - prom-k8s.srvx.cc
     paths: []
     tls: []
