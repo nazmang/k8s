@@ -6,7 +6,7 @@ alertmanager:
   ingress:
     enabled: true
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: alertmanager.k8s.srvxapp.com
+      external-dns.alpha.kubernetes.io/hostname: alertmanager.srvx.cc
       external-dns.alpha.kubernetes.io/target: b16e4df1-2f22-4512-a7bc-29b1ed11d754.cfargotunnel.com
       external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
