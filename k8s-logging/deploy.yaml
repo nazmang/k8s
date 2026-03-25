@@ -1,0 +1,13 @@
+steps:
+  - type: decrypt-sops
+    environments:
+      cloud:
+        config:
+          keyParameter: SOPS_AGE_KEY
+          files:
+            - .env
+  - type: kustomize
+    environments:
+      cloud:
+        config:
+          overlay: overlays/cloud
