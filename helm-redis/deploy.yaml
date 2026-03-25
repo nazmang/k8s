@@ -1,0 +1,27 @@
+steps:
+  - type: decrypt-sops
+    environments:
+      cloud:
+        config:
+          keyParameter: SOPS_AGE_KEY
+          files:
+            - overlays/cloud/.env
+
+  - type: kustomize
+    environments:
+      cloud:
+        config:
+          overlay: overlays/cloud
+
+  - type: helm
+    environments:
+      cloud:
+        config:
+          repoName: bitnami
+          repoUrl: https://charts.bitnami.com/bitnami
+          chartName: bitnami/redis
+          version: 20.6.0
+          releaseName: redis
+          namespace: redis
+          values:
+            - environments/cloud/redis.values.yaml

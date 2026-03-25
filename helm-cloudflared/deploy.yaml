@@ -13,4 +13,18 @@ steps:
           namespace: cloudflare
           values:
             - environments/cloud/cloudflared.values.yaml
-      
+
+  - type: decrypt-sops
+    environments:
+      cloud:
+        config:
+          keyParameter: SOPS_AGE_KEY
+          files:
+            - overlays/cloud/secret.yaml
+
+  - type: manifest
+    environments:
+      cloud:
+        config:
+          file:
+            - overlays/cloud/secret.yaml
