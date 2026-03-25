@@ -16,7 +16,7 @@ configMapGenerator:
     options:
       annotations:
         checksum/config: sha256-of-config-content
-      disableNameSuffixHash: true
+      disableNameSuffixHash: false
   - name: fluentd-config
     namespace: logging
     files:
@@ -24,4 +24,4 @@ configMapGenerator:
     options:
       annotations:
         checksum/config: sha256-of-config-content
-      disableNameSuffixHash: true
+      disableNameSuffixHash: false
