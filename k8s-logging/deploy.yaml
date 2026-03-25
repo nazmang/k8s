@@ -10,7 +10,7 @@ steps:
     environments:
       cloud:
         config:
-          command: envsubst < base/config/fluent.conf.template > base/config/fluent.conf
+          command: set -a && source .env && set +a && envsubst < base/config/fluent.conf.template > base/config/fluent.conf
   - type: kustomize
     environments:
       cloud:
