@@ -3,35 +3,88 @@
     port 24224
 </source>
 
-#<match **>
+# <match **>
 #  @type stdout
-#</match>
+# </match>
 
+########################################
+# ACCESS LOGS
+########################################
+<match nginx.access>
+    @type opensearch
+    host 10.163.11.105
+    scheme https
+    port 9200
+    user "${OPENSEARCH_USER}"
+    password "${OPENSEARCH_PASS}"
 
-<match kube.**>
-    @type copy
-    <store>
+    logstash_format true
+    logstash_prefix nginx-access
+    logstash_dateformat %Y.%m.%d
+
+    include_tag_key true
+    tag_key @log_name
+
+    ssl_verify false
+    request_timeout 30s
+    reconnect_on_error true
+
+    <buffer>
         @type file
-        path /fluentd/log
-        append true
-    </store>
-    
-    <store>
-        @type opensearch
-        host opensearch.comintern.local
-        scheme https
-        port 9200
-        user "${OPENSEARCH_USER}"
-        password "${OPENSEARCH_PASS}"
-        logstash_format true
-        #index_name kubernetes.${tag}.%Y%m%d
-        logstash_prefix kubernetes
-        logstash_prefix_key kubernetes
-        logstash_dateformat %Y.%m.%d
-        type_name _doc
-        include_tag_key true
-        ssl_verify false
-        request_timeout 30s
-        reconnect_on_error true
-    </store>
+        path /fluentd/buffer/nginx-access
+        flush_interval 5s
+        retry_forever true
+        chunk_limit_size 5MB
+    </buffer>
+</match>
+
+########################################
+# ERROR LOGS
+########################################
+<match nginx.error>
+    @type opensearch
+    host 10.163.11.105
+    scheme https
+    port 9200
+    user "${OPENSEARCH_USER}"
+    password "${OPENSEARCH_PASS}"
+
+
+    logstash_format true
+    logstash_prefix nginx-error
+    logstash_dateformat %Y.%m.%d
+
+    include_tag_key true
+    tag_key @log_name
+
+    ssl_verify false
+    request_timeout 30s
+    reconnect_on_error true
+
+    <buffer>
+        @type file
+        path /fluentd/buffer/nginx-error
+        flush_interval 5s
+        retry_forever true
+        chunk_limit_size 5MB
+    </buffer>
+</match>
+
+########################################
+# ALL KUBERNETES LOGS
+########################################
+<match kubernetes.**>
+    @type file
+    path /fluentd/log/kubernetes.log
+    append true
+    time_slice_format %Y%m%d-%H
+    time_slice_wait 10m
+    compress gzip
+</match>
+
+########################################
+# DROP EVERYTHING ELSE
+########################################
+<match **>
+  @type null
 </match>
