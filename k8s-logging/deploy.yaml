@@ -10,7 +10,7 @@ steps:
     environments:
       cloud:
         config:
-          command: envsubst < k8s-logging/base/config/fluent.conf.template > k8s-logging/base/config/fluent.conf
+          command: envsubst < base/config/fluent.conf.template > base/config/fluent.conf
   - type: kustomize
     environments:
       cloud:
