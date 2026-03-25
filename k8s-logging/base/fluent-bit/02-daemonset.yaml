@@ -18,18 +18,24 @@ spec:
     spec:
       containers:
         - name: fluent-bit
-          image: fluent/fluent-bit:4.0.1
+          image: fluent/fluent-bit:4.2
           resources:
             limits:
-              memory: 100Mi
+              memory: 200Mi
+              cpu: 500m
             requests:
               cpu: 100m
               memory: 100Mi
           volumeMounts:
             - name: varlog
               mountPath: /var/log
+              readOnly: true
             - name: config
               mountPath: /fluent-bit/etc/
+            - name: storage
+              mountPath: /buffers
+          securityContext:
+            runAsUser: 0
       volumes:
         - name: varlog
           hostPath:
@@ -37,3 +43,9 @@ spec:
         - name: config
           configMap:
             name: fluent-bit-config
+        - name: storage
+          hostPath:
+            path: /var/lib/fluent-bit
+            type: DirectoryOrCreate
+      tolerations:
+        - operator: "Exists"

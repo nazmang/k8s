@@ -4,7 +4,7 @@ metadata:
   name: fluentd
   namespace: logging
 spec:
-  replicas: 1
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -18,13 +18,24 @@ spec:
       labels:
         app: fluentd
     spec:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
+      initContainers:
+        - name: fix-permissions
+          image: busybox
+          command: ["sh", "-c", "chown -R 999:999 /fluentd/buffer"]
+          volumeMounts:
+            - name: buffer
+              mountPath: /fluentd/buffer
       containers:
         - name: fluentd
           image: nazman/fluentd:v1.16-debian
           resources:
             limits:
               cpu: 500m
-              memory: 200Mi
+              memory: 500Mi
             requests:
               cpu: 100m
               memory: 200Mi
@@ -33,6 +44,18 @@ spec:
               mountPath: /fluentd/etc
             - name: log
               mountPath: /fluentd/log
+            - name: buffer
+              mountPath: /fluentd/buffer
+          livenessProbe:
+            tcpSocket:
+              port: 24224
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 24224
+            initialDelaySeconds: 5
+            periodSeconds: 5
       volumes:
         - name: config
           configMap:
@@ -40,3 +63,7 @@ spec:
         - name: log
           persistentVolumeClaim:
             claimName: fluentd-logs
+        - name: buffer
+          hostPath:
+            path: /var/lib/fluentd/buffer
+            type: DirectoryOrCreate
