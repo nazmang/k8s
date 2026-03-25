@@ -6,6 +6,11 @@ steps:
           keyParameter: SOPS_AGE_KEY
           files:
             - .env
+  - type: shell
+    environments:
+      cloud:
+        config:
+          command: envsubst < k8s-logging/base/config/fluent.conf.template > k8s-logging/base/config/fluent.conf
   - type: kustomize
     environments:
       cloud:
