@@ -1,6 +1,10 @@
 global:
   defaultStorageClass: "nfs-client"
 
+image:
+  repository: redis
+  tag: 7.2-bookworm
+
 auth:
   enabled: true
   existingSecret: redis-auth
