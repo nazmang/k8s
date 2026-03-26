@@ -62,6 +62,21 @@ jobs:
               }
             }
 
+            const labelDefs = [
+              { name: 'automated-pr', color: '0075ca' },
+              { name: 'automerge',    color: '00aa00' }
+            ];
+            for (const label of labelDefs) {
+              try {
+                await github.rest.issues.getLabel({ owner, repo, name: label.name });
+              } catch (e) {
+                if (e.status === 404) {
+                  await github.rest.issues.createLabel({ owner, repo, name: label.name, color: label.color });
+                  core.info(`Created label: ${label.name}`);
+                }
+              }
+            }
+
             await github.rest.issues.addLabels({
               owner,
               repo,
