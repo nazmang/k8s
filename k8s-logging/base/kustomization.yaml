@@ -13,6 +13,7 @@ configMapGenerator:
       - config/parsers.conf
       - config/input-kubernetes.conf
       - config/output.conf
+      - config/type_cast.lua
     options:
       annotations:
         checksum/config: sha256-of-config-content
