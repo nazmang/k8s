@@ -28,12 +28,6 @@ steps:
       name: applications.argoproj.io
       timeout: 120
 
-  - type: wait
-    config:
-      kind: CustomResourceDefinition
-      name: appprojects.argoproj.io
-      timeout: 120
-
   - type: manifest
     environments:
       cloud:
