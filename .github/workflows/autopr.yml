@@ -1,7 +1,10 @@
 name: Auto PR
 
 on:
-  push:
+  workflow_run:
+    workflows: ["gitleaks"]
+    types:
+      - completed
     branches:
       - feature
       - argocd
@@ -9,6 +12,7 @@ on:
 
 jobs:
   create-pull-request:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Create Pull Request
@@ -17,7 +21,7 @@ jobs:
         with:
           script: |
             const { repo, owner } = context.repo;
-            const headBranch = context.ref.replace('refs/heads/', '');
+            const headBranch = context.payload.workflow_run.head_branch;
             const baseBranch = 'main'; // change to default branch name
 
             if (headBranch === baseBranch) {
