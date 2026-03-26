@@ -19,6 +19,7 @@ rules:
     - metallb.io
     - monitoring.coreos.com
     - cert-manager.io
+    - argoproj.io
   resources: ["*"]
   verbs: ["*"]
 
