@@ -76,7 +76,7 @@ configs:
         #       command: [sh, -c, find . -name env.yaml]
         # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sensitive-data-and-sso-client-secrets
         # -- Create the argocd-secret
-        createSecret: ENC[AES256_GCM,data:FFCtyg==,iv:x8nHA7/Dh8X8Rv5jl0K9N5nSm7/wfFjyFgzb0nBSPbo=,tag:GguQp6J4osr1JhKIznhvrA==,type:bool]
+        createSecret: ENC[AES256_GCM,data:LbWvMg==,iv:1ZsNmcy5jZ2q9V2u098K5GZnU3+n5gTfmNUwdMctELg=,tag:c7JDzc3B80NQQcGMsW6SDg==,type:bool]
         # -- Labels to be added to argocd-secret
         labels: {}
         # -- Annotations to be added to argocd-secret
@@ -136,11 +136,11 @@ redis:
     enabled: false
 externalRedis:
     enabled: true
-    host: redis-master
+    host: redis-master.redis.svc.cluster.local
     port: 6379
     username: ""
     password: ""
-    existingSecret: ENC[AES256_GCM,data:S4syT+lfickPjw==,iv:6UGIBH3CFiWB1Qnw2oVNq0pdrWz3lUKNUt7S/h0RZbY=,tag:sKj5MmU4DiLMJIruE+BsVA==,type:str]
+    existingSecret: ENC[AES256_GCM,data:Xiw0h0KC4w1Jxg==,iv:NjtfUfr8qDHD9c8D3EqmS/zl0MdcjZuajPm7ocoSycs=,tag:ZWympbShUaF1+NMoDRSAcw==,type:str]
     secretAnnotations: {}
     # existingSecretPasswordKey: redis-password
     # selector: {}
@@ -166,6 +166,102 @@ repoServer:
           value: /custom-tools/kubectl
         - name: HELM_SECRETS_BACKEND
           value: sops
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
+        # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
         # https://github.com/jkroepke/helm-secrets/wiki/Security-in-shared-environments
@@ -339,14 +435,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBSaHpyRjM1c1l1WjU1UDl1
-            WHdkVUQzaE84NmlDcytUREZtSnZnRmZxUW5RCngzU25YQVNVd1dYZ3QyTnY2U1hj
-            b3YvU1pIMEJ3Z3o5U1BLMGF0UkdCdVUKLS0tIDVkWEZIY1RMaXJjeUpOcXhIeU1M
-            elhPS1Vvd3NtMU5Eb2tMY2RjM0RQWDAK5y5HKGOWvj3OO0gXNYG2j1KGO2aM7V2g
-            kvRTcMZjHxCV0AEeajLfk6ely1LRP+0Yyn9KbsQ9yeWUn6m0X36hBQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB0K3lHTU1aV2ZnQmpsajJh
+            VWt5c2VmazZVTTFLdThVNVQxcWo1bFRaRFdrCmhHZ2FWOTdOcjhZK3cwNi9hV05w
+            QWZ4MWwrTUZSZ3kveitnb1BKdk5NaHcKLS0tIGcrVEdvS2dvZUs3N0hRdjF2bUlr
+            OVNMK0phaitzR0hnS0RtNlZ6b1FpcVkKU/vuBp7JnDjZjx5Fg+KsI3C83qu+3rtO
+            Lp8Un4dy9n3nWE7bVLZGGrmIQeS4q5sTZYQZ8CiNd7Tlx5Rz9A8myw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-03-26T16:01:29Z"
-    mac: ENC[AES256_GCM,data:z6+OxR2Mi/PzAlvzQVWicOTt3KUE1yNorVRfvO+r8unYY4eua9f17slStkEryrcOIJ41r91jfs0YFR3JW3tS8B6leMwl3Ynl9G8er6vXQZi1iOI2xege1YejEN/TAMKneJ260toqD4HxS6kZwehbBb9ChRbV/wi/GQFZWweSa2E=,iv:bPfb8PLJ7qijtWPRepRBvdrqZHz54W28m5yf3dvF1eY=,tag:kJpEgrRb6599B6a5cStZmA==,type:str]
+    lastmodified: "2026-03-26T18:02:06Z"
+    mac: ENC[AES256_GCM,data:dYJ4hGixci+6yLrnjEcnKTeOFUhtoF35rzOmnAwurzN9azZnEEWPb5WzTZK5oaF+jzzPPHT3RRQER1AtJubdcV9t3zQeP6LhJhRS15bV76wLpnafV6OD05HK2wkFWJEPH+zipZepcIh7PydJyi3CZ/lRUcgF1ew6/S8rwxr6my4=,iv:SXDPoXkm/F5/dRWD23Wc2nc9j+E9KRP+XylxMngEmGQ=,tag:ssgGtYP+5/PJXSwzy6PY3g==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*)$
     version: 3.7.1
