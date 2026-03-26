@@ -76,7 +76,7 @@ configs:
         #       command: [sh, -c, find . -name env.yaml]
         # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sensitive-data-and-sso-client-secrets
         # -- Create the argocd-secret
-        createSecret: ENC[AES256_GCM,data:DA8ZNQ==,iv:9zSylkgk9HMx8Y0czorwOmyuXEqkw7uZYPXLFuU8AvQ=,tag:hgBRGfCLkP1xvrWlyNpfNA==,type:bool]
+        createSecret: ENC[AES256_GCM,data:Hd2gpA==,iv:Cy+/IpNlsmZo3dXHMVlD3j7M270O4pAq4qvQpuu0KuU=,tag:QrIe1TBtrdNVIzj+pUGtWA==,type:bool]
         # -- Labels to be added to argocd-secret
         labels: {}
         # -- Annotations to be added to argocd-secret
@@ -125,9 +125,9 @@ server:
         annotations:
             kubernetes.io/ingress.class: nginx
             # cert-manager.io/cluster-issuer: selfsigned-issuer
-            # nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-            # nginx.ingress.kubernetes.io/ssl-redirect: "true"
-            # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+            nginx.ingress.kubernetes.io/backend-protocol: HTTP
+            nginx.ingress.kubernetes.io/ssl-redirect: "false"
+            nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
         tls: false
         ingressClassName: nginx
 dex:
@@ -140,7 +140,7 @@ externalRedis:
     port: 6379
     username: ""
     password: ""
-    existingSecret: ENC[AES256_GCM,data:xpKwweG9PkvtbQ==,iv:6HalS+K8QvwnB9auunvtAxH17cXlNyshRPL169/QuVQ=,tag:xKotGm8r6e9cTC+vJEEbJw==,type:str]
+    existingSecret: ENC[AES256_GCM,data:F+g12vAtMrEgJg==,iv:rkWLkMMgIp7zoFFoyeEqGGdfnj/mCphe9ZO4LrtDSoA=,tag:uOobboD1QWXi4qfKLLfsmA==,type:str]
     secretAnnotations: {}
     # existingSecretPasswordKey: redis-password
     # selector: {}
@@ -307,14 +307,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBsWnJjTmF1TTFvcVp4LzNJ
-            enhqZi9nbWt1TlduZmdjOFJsc0VOejlVQ21FCnoxOTVrUzM3YXBpS1VucXB4cGxQ
-            citpdHAwaGoxQ2FtRFNuRFJEaExkaXMKLS0tIC9wbHN1TFlUZGxRRHJWUjlpdHFj
-            RWowRDFPaUJPb0FGd3RaTTRlVHNsem8KoQ37xwazyfmzrtis5Ftu4hM6OkHpfMmk
-            r22isnZL3d2Ij64MEvaep6cCClpqNeWLTzCIbm9Ngrk2l7eCrHTVcQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB6LzQwd2RDdTE5alNKN0da
+            ZEY4Q1N1RGVPRFBKRXA5ZEpLVDFObldGOENBCk9xUUtVVFF5UFcyaXZxK2d0dm5x
+            V2trWFNhaE1Zc2VseFF5SkcrdWxVQjQKLS0tIERqMDVqMUxjejJMcXNNRStrQllr
+            WE9jRlUzWmo1SmlKRGw0VmJhZVFMZk0KI0Xon59T5q15qlrKaephg/ioB7Qj7tja
+            XNZ5MxMajTxAfRFnEwVqlgjq95zIs4h3nU79hzg/SSUYFoEU9Pp2wA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-03-26T18:16:02Z"
-    mac: ENC[AES256_GCM,data:I+TXlM9LUh2EY3wIy/OSAFq9vdXPDqeCSICmTrQk6ENsDnotaYlqETVOVZudI65QR8PsOaHNzqWuAbjy67qfpkkM4Ua3yUr80sahGqbIXerhVcZL7g3wZIlcKuFhaV9GbWLyW9zN3RqfSsmKauQyShfJ8lhrlCZ+My3KaRUkHNg=,iv:Ex1a+aPTWhnTE6v/3wgNIup3wvfPMljVwYT+PUxkNqI=,tag:7ct65M4PgDftY+p2QSyG8Q==,type:str]
+    lastmodified: "2026-03-26T18:24:45Z"
+    mac: ENC[AES256_GCM,data:ZNhZbcJwXp38dTxd4dO8aUI6gderGAKPiVMKkISs9biCjLssMJ8YobtIvbD00uwGDNLtWBR5r5NGp61HI/NCBd3wkS9RRAy5j01Df8CnTje5DNqvAfB7pYR+fWg7zSG4Yx7XVg0rWh9qQo9S6/Muq1DpbVaZ9SI5E0UkWT/iy2Q=,iv:tV/tYIVim7IInxHvIFzEyQ0aY0c6A2hqm27s6N0GVAA=,tag:PQgVoa8gPWKmX/9tlfNpzw==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*)$
     version: 3.7.1
