@@ -1,4 +1,3 @@
-# Auto PR workflow
 name: Auto PR
 
 on:
