@@ -1,3 +1,6 @@
+depends:
+  - helm-redis
+
 steps:
   - type: decrypt-sops
     environments:
@@ -19,6 +22,12 @@ steps:
           namespace: argocd
           values:
             - environments/cloud/argocd.values.yaml
+  - type: wait
+    config:
+      kind: CustomResourceDefinition
+      name: applications.argoproj.io
+      timeout: 120  
+
   - type: manifest
     environments:
       cloud:
