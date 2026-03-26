@@ -26,13 +26,7 @@ steps:
     config:
       kind: CustomResourceDefinition
       name: applications.argoproj.io
-      timeout: 120
-
-  - type: wait
-    config:
-      kind: CustomResourceDefinition
-      name: appprojects.argoproj.io
-      timeout: 120
+      timeout: 120  
 
   - type: manifest
     environments:
