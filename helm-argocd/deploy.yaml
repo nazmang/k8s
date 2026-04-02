@@ -9,7 +9,13 @@ steps:
           keyParameter: SOPS_AGE_KEY
           files:
             - environments/cloud/argocd.values.yaml
-            - environments/cloud/main.yaml
+            - environments/cloud/secrets.yaml
+  - type: manifest
+    environments:
+      cloud:
+        config:
+          file:
+            - environments/cloud/secrets.yaml
   - type: helm
     environments:
       cloud:
