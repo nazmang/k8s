@@ -5,7 +5,7 @@ metadata:
     namespace: cert-manager
 type: Opaque
 stringData:
-    api-token: ENC[AES256_GCM,data:th/6OL08Jd/a+A3S9xnzVro1yBaa5mp2IOp9CTflTH0VwFmxzI1M6zXDZ4YZueXw+jBM57I=,iv:IYOmHR3zHCkMs8+dAEM9150EpHoL4Z/MEE9n6OHrpxo=,tag:Kmm3LtSDEy8UVSBK2cf7kg==,type:str]
+    api-token: ENC[AES256_GCM,data:ec0CQhOawVNBuEiXAc/DaBkRb+UlExfwvbwvDw+hdfkKYkm8sQ/xNytOku3BWMYiq757Nng=,iv:F31qJF3pxCKeh5R3/7NCzptXCVFRqHKMc48EDmfNcIs=,tag:vIfuF2zt2/u+kKR8/j5Jgg==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -15,16 +15,16 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA2SjFQT1FuUmpuNVZ1a0dy
-            YzBJWmwwVEtIeGcwakdKbzAwSkkxUzJyVzE0Ck1xWVVTN3VkekxBQjAvaEF4UnNL
-            ek1LZnI0OEg1QWY5WHNTYXNha1g0Z2sKLS0tIHRSQnp6b1JLdm5zaWROWnR2Y1o4
-            TFc3YnlVMUluWlRBYUE5RU9Odzk2UWMKDTuNh5Lvq5e7YTugPKaoPK2kW0XtXbEi
-            eJedtmPrFf93Z96WzHcEZQ/LWzb1MdLUAhWT71mb45gAQUTmD3lXFQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBWN21FaElYcHk4c2RJOGFz
+            aDZTUFYzNFBFWG5oV3pJVjFOY2tuN2kwQlNNCk9wbVl3L3JoWk9GUkJlTEZFMks2
+            U2lKVFV3ZWJYK3pIQVJPY1A5WkhDVU0KLS0tIGVLQUlvTjg4S084a3lKNUFkVEVU
+            bUJMazhxU0lTVXFCUElCU3ExU3RyU3MKc0Hh1q2RL715HmRIyguBG+4btB+rZOlQ
+            oFy0ok2gRa85aPLQK1RuMjYJm7/70dIr2CzxaYRq3xdjzbzS2e2zuw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-03-22T17:28:24Z"
-    mac: ENC[AES256_GCM,data:fefD3QwyGguBYnh1/Bztr35zlAt1z/aMUSxGppcf/9kNo/6TTvgjgJMLNq86S4Gwd2xDs3tsdG91STr5AuQup40aJHPV1ofdzgb67meCY0hhcG65gx0fSDZ1gBmgPluLXdZ1jTcminmdU7/FipUPgdq2s2TKRsrsn/xnKEXURYg=,iv:0llZnaCISvBeq/7gsErgwlzMlk92cLgtUYYGfgaDtx8=,tag:sJCowZsXdoeRuMwxdnz+gA==,type:str]
+    lastmodified: "2026-04-21T15:19:24Z"
+    mac: ENC[AES256_GCM,data:mPct5TkabDnVyUYt5llELTPWKQTCwqx1jJHpC7BUTcwA/7JLRYOargsZMFLWD6O1O0D3PUxHn4MT1owTjKxU3qaHVvzIkacDTmL+E2fD/vWJG8fEc2z0eNbXqhCHJ8endaipb9MPMe56qcCGs9rbBObfyeM4gq5c+ckY5khvSFQ=,iv:UQ4RRDOqb4TlUhS71uUNBYVts4DoOeARKM809gbiqE8=,tag:ij9TS0zs3k9opCnhYDLS1Q==,type:str]
     pgp: []
-    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token)$
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*)$
     version: 3.7.1
 ---
 apiVersion: cert-manager.io/v1
@@ -33,16 +33,16 @@ metadata:
     name: letsencrypt-dns
 spec:
     acme:
-        email: ENC[AES256_GCM,data:s4lM25xNUbGWCUQrCMjY5hQ=,iv:Fw6J6N1Sxg7gT0b152P9FWWyW9NKQlYfEpvt7I1DzXs=,tag:v0KyhkBsGWXwLBqhaqtpfA==,type:str]
+        email: ENC[AES256_GCM,data:9vp1DdTl1uro+WTBY/nvkUc=,iv:C0t2ARcmyTz7s0k5LbQV6dGClgSCDdsQVa00a6QvPoc=,tag:3IHlufJPERybrkyhqFYkbw==,type:str]
         server: https://acme-v02.api.letsencrypt.org/directory
         privateKeySecretRef:
-            name: ENC[AES256_GCM,data:CLHOEm93EmgEnSomGYR6sJE/yQ==,iv:W9if4ITH2XFDsCVtaY01rp+mq3Yb/GJ2HeQ/qeOHvPY=,tag:l/Vvmegb7+8uPKuwG0LsJg==,type:str]
+            name: ENC[AES256_GCM,data:0KzQBvGOkUX7m72PzAX4gIsQ2A==,iv:Qlee8FI2NyeX7HFF//OuBy31tPYP8NoOkzxKozqOI+s=,tag:ynrgbV4xeOOxSjQoRUdfWw==,type:str]
         solvers:
             - dns01:
                 cloudflare:
                     apiTokenSecretRef:
-                        name: ENC[AES256_GCM,data:oz442b2aGdSs6qQI4SRxEdtizW4Kk75q3Nf4,iv:r9gRXbKiM/DX4D52d2sH0ZwFfYceNo15QWmTWSt/gZE=,tag:0/cUml4EyaqGRCf1xjm/KQ==,type:str]
-                        key: ENC[AES256_GCM,data:rIkAxHGXHcuA,iv:CpM9uHD4vmaq8cCMu+LtuBBnbhVq63ekJyeSoHGlWzg=,tag:WZku4lu3QbCWtSDjSVzsWQ==,type:str]
+                        name: ENC[AES256_GCM,data:/PI23cQrCKLHbCAda0Bwajak2de1kNIJRsvv,iv:ZlDd1chSHPCCcKG/GcCGHBBkqRZp+WLqfxsD1LiIyxI=,tag:Xo3y1OUvkEQ1DWo/7B6u9Q==,type:str]
+                        key: ENC[AES256_GCM,data:bLKyPgzcjm24,iv:YIomxLGHwRX7KNXTF4aiWeu/0Ch8mOX0sK31eqMcrwg=,tag:kg337ZMl9xwQO3Yw03+zgQ==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -52,16 +52,16 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA2SjFQT1FuUmpuNVZ1a0dy
-            YzBJWmwwVEtIeGcwakdKbzAwSkkxUzJyVzE0Ck1xWVVTN3VkekxBQjAvaEF4UnNL
-            ek1LZnI0OEg1QWY5WHNTYXNha1g0Z2sKLS0tIHRSQnp6b1JLdm5zaWROWnR2Y1o4
-            TFc3YnlVMUluWlRBYUE5RU9Odzk2UWMKDTuNh5Lvq5e7YTugPKaoPK2kW0XtXbEi
-            eJedtmPrFf93Z96WzHcEZQ/LWzb1MdLUAhWT71mb45gAQUTmD3lXFQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBWN21FaElYcHk4c2RJOGFz
+            aDZTUFYzNFBFWG5oV3pJVjFOY2tuN2kwQlNNCk9wbVl3L3JoWk9GUkJlTEZFMks2
+            U2lKVFV3ZWJYK3pIQVJPY1A5WkhDVU0KLS0tIGVLQUlvTjg4S084a3lKNUFkVEVU
+            bUJMazhxU0lTVXFCUElCU3ExU3RyU3MKc0Hh1q2RL715HmRIyguBG+4btB+rZOlQ
+            oFy0ok2gRa85aPLQK1RuMjYJm7/70dIr2CzxaYRq3xdjzbzS2e2zuw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-03-22T17:28:24Z"
-    mac: ENC[AES256_GCM,data:fefD3QwyGguBYnh1/Bztr35zlAt1z/aMUSxGppcf/9kNo/6TTvgjgJMLNq86S4Gwd2xDs3tsdG91STr5AuQup40aJHPV1ofdzgb67meCY0hhcG65gx0fSDZ1gBmgPluLXdZ1jTcminmdU7/FipUPgdq2s2TKRsrsn/xnKEXURYg=,iv:0llZnaCISvBeq/7gsErgwlzMlk92cLgtUYYGfgaDtx8=,tag:sJCowZsXdoeRuMwxdnz+gA==,type:str]
+    lastmodified: "2026-04-21T15:19:24Z"
+    mac: ENC[AES256_GCM,data:mPct5TkabDnVyUYt5llELTPWKQTCwqx1jJHpC7BUTcwA/7JLRYOargsZMFLWD6O1O0D3PUxHn4MT1owTjKxU3qaHVvzIkacDTmL+E2fD/vWJG8fEc2z0eNbXqhCHJ8endaipb9MPMe56qcCGs9rbBObfyeM4gq5c+ckY5khvSFQ=,iv:UQ4RRDOqb4TlUhS71uUNBYVts4DoOeARKM809gbiqE8=,tag:ij9TS0zs3k9opCnhYDLS1Q==,type:str]
     pgp: []
-    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token)$
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*)$
     version: 3.7.1
 ---
 apiVersion: cert-manager.io/v1
@@ -90,16 +90,16 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA2SjFQT1FuUmpuNVZ1a0dy
-            YzBJWmwwVEtIeGcwakdKbzAwSkkxUzJyVzE0Ck1xWVVTN3VkekxBQjAvaEF4UnNL
-            ek1LZnI0OEg1QWY5WHNTYXNha1g0Z2sKLS0tIHRSQnp6b1JLdm5zaWROWnR2Y1o4
-            TFc3YnlVMUluWlRBYUE5RU9Odzk2UWMKDTuNh5Lvq5e7YTugPKaoPK2kW0XtXbEi
-            eJedtmPrFf93Z96WzHcEZQ/LWzb1MdLUAhWT71mb45gAQUTmD3lXFQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBWN21FaElYcHk4c2RJOGFz
+            aDZTUFYzNFBFWG5oV3pJVjFOY2tuN2kwQlNNCk9wbVl3L3JoWk9GUkJlTEZFMks2
+            U2lKVFV3ZWJYK3pIQVJPY1A5WkhDVU0KLS0tIGVLQUlvTjg4S084a3lKNUFkVEVU
+            bUJMazhxU0lTVXFCUElCU3ExU3RyU3MKc0Hh1q2RL715HmRIyguBG+4btB+rZOlQ
+            oFy0ok2gRa85aPLQK1RuMjYJm7/70dIr2CzxaYRq3xdjzbzS2e2zuw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-03-22T17:28:24Z"
-    mac: ENC[AES256_GCM,data:fefD3QwyGguBYnh1/Bztr35zlAt1z/aMUSxGppcf/9kNo/6TTvgjgJMLNq86S4Gwd2xDs3tsdG91STr5AuQup40aJHPV1ofdzgb67meCY0hhcG65gx0fSDZ1gBmgPluLXdZ1jTcminmdU7/FipUPgdq2s2TKRsrsn/xnKEXURYg=,iv:0llZnaCISvBeq/7gsErgwlzMlk92cLgtUYYGfgaDtx8=,tag:sJCowZsXdoeRuMwxdnz+gA==,type:str]
+    lastmodified: "2026-04-21T15:19:24Z"
+    mac: ENC[AES256_GCM,data:mPct5TkabDnVyUYt5llELTPWKQTCwqx1jJHpC7BUTcwA/7JLRYOargsZMFLWD6O1O0D3PUxHn4MT1owTjKxU3qaHVvzIkacDTmL+E2fD/vWJG8fEc2z0eNbXqhCHJ8endaipb9MPMe56qcCGs9rbBObfyeM4gq5c+ckY5khvSFQ=,iv:UQ4RRDOqb4TlUhS71uUNBYVts4DoOeARKM809gbiqE8=,tag:ij9TS0zs3k9opCnhYDLS1Q==,type:str]
     pgp: []
-    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token)$
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*)$
     version: 3.7.1
 ---
 apiVersion: cert-manager.io/v1
@@ -128,16 +128,16 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA2SjFQT1FuUmpuNVZ1a0dy
-            YzBJWmwwVEtIeGcwakdKbzAwSkkxUzJyVzE0Ck1xWVVTN3VkekxBQjAvaEF4UnNL
-            ek1LZnI0OEg1QWY5WHNTYXNha1g0Z2sKLS0tIHRSQnp6b1JLdm5zaWROWnR2Y1o4
-            TFc3YnlVMUluWlRBYUE5RU9Odzk2UWMKDTuNh5Lvq5e7YTugPKaoPK2kW0XtXbEi
-            eJedtmPrFf93Z96WzHcEZQ/LWzb1MdLUAhWT71mb45gAQUTmD3lXFQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBWN21FaElYcHk4c2RJOGFz
+            aDZTUFYzNFBFWG5oV3pJVjFOY2tuN2kwQlNNCk9wbVl3L3JoWk9GUkJlTEZFMks2
+            U2lKVFV3ZWJYK3pIQVJPY1A5WkhDVU0KLS0tIGVLQUlvTjg4S084a3lKNUFkVEVU
+            bUJMazhxU0lTVXFCUElCU3ExU3RyU3MKc0Hh1q2RL715HmRIyguBG+4btB+rZOlQ
+            oFy0ok2gRa85aPLQK1RuMjYJm7/70dIr2CzxaYRq3xdjzbzS2e2zuw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-03-22T17:28:24Z"
-    mac: ENC[AES256_GCM,data:fefD3QwyGguBYnh1/Bztr35zlAt1z/aMUSxGppcf/9kNo/6TTvgjgJMLNq86S4Gwd2xDs3tsdG91STr5AuQup40aJHPV1ofdzgb67meCY0hhcG65gx0fSDZ1gBmgPluLXdZ1jTcminmdU7/FipUPgdq2s2TKRsrsn/xnKEXURYg=,iv:0llZnaCISvBeq/7gsErgwlzMlk92cLgtUYYGfgaDtx8=,tag:sJCowZsXdoeRuMwxdnz+gA==,type:str]
+    lastmodified: "2026-04-21T15:19:24Z"
+    mac: ENC[AES256_GCM,data:mPct5TkabDnVyUYt5llELTPWKQTCwqx1jJHpC7BUTcwA/7JLRYOargsZMFLWD6O1O0D3PUxHn4MT1owTjKxU3qaHVvzIkacDTmL+E2fD/vWJG8fEc2z0eNbXqhCHJ8endaipb9MPMe56qcCGs9rbBObfyeM4gq5c+ckY5khvSFQ=,iv:UQ4RRDOqb4TlUhS71uUNBYVts4DoOeARKM809gbiqE8=,tag:ij9TS0zs3k9opCnhYDLS1Q==,type:str]
     pgp: []
-    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token)$
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*)$
     version: 3.7.1
 ---
 apiVersion: monitoring.coreos.com/v1
@@ -200,14 +200,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA2SjFQT1FuUmpuNVZ1a0dy
-            YzBJWmwwVEtIeGcwakdKbzAwSkkxUzJyVzE0Ck1xWVVTN3VkekxBQjAvaEF4UnNL
-            ek1LZnI0OEg1QWY5WHNTYXNha1g0Z2sKLS0tIHRSQnp6b1JLdm5zaWROWnR2Y1o4
-            TFc3YnlVMUluWlRBYUE5RU9Odzk2UWMKDTuNh5Lvq5e7YTugPKaoPK2kW0XtXbEi
-            eJedtmPrFf93Z96WzHcEZQ/LWzb1MdLUAhWT71mb45gAQUTmD3lXFQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBWN21FaElYcHk4c2RJOGFz
+            aDZTUFYzNFBFWG5oV3pJVjFOY2tuN2kwQlNNCk9wbVl3L3JoWk9GUkJlTEZFMks2
+            U2lKVFV3ZWJYK3pIQVJPY1A5WkhDVU0KLS0tIGVLQUlvTjg4S084a3lKNUFkVEVU
+            bUJMazhxU0lTVXFCUElCU3ExU3RyU3MKc0Hh1q2RL715HmRIyguBG+4btB+rZOlQ
+            oFy0ok2gRa85aPLQK1RuMjYJm7/70dIr2CzxaYRq3xdjzbzS2e2zuw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-03-22T17:28:24Z"
-    mac: ENC[AES256_GCM,data:fefD3QwyGguBYnh1/Bztr35zlAt1z/aMUSxGppcf/9kNo/6TTvgjgJMLNq86S4Gwd2xDs3tsdG91STr5AuQup40aJHPV1ofdzgb67meCY0hhcG65gx0fSDZ1gBmgPluLXdZ1jTcminmdU7/FipUPgdq2s2TKRsrsn/xnKEXURYg=,iv:0llZnaCISvBeq/7gsErgwlzMlk92cLgtUYYGfgaDtx8=,tag:sJCowZsXdoeRuMwxdnz+gA==,type:str]
+    lastmodified: "2026-04-21T15:19:24Z"
+    mac: ENC[AES256_GCM,data:mPct5TkabDnVyUYt5llELTPWKQTCwqx1jJHpC7BUTcwA/7JLRYOargsZMFLWD6O1O0D3PUxHn4MT1owTjKxU3qaHVvzIkacDTmL+E2fD/vWJG8fEc2z0eNbXqhCHJ8endaipb9MPMe56qcCGs9rbBObfyeM4gq5c+ckY5khvSFQ=,iv:UQ4RRDOqb4TlUhS71uUNBYVts4DoOeARKM809gbiqE8=,tag:ij9TS0zs3k9opCnhYDLS1Q==,type:str]
     pgp: []
-    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token)$
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*)$
     version: 3.7.1

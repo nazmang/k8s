@@ -8,6 +8,9 @@ configs:
         create: true
         kustomize.buildOptions: --enable-alpha-plugins --enable-exec
         helm.valuesFileSchemes: secrets+gpg-import, secrets+gpg-import-kubernetes, secrets+age-import, secrets+age-import-kubernetes, secrets,secrets+literal, https
+        accounts.readonly: apiKey
+    rbac:
+        policy.csv: g, readonly, role:readonly
     ssh:
         # -- Specifies if the argocd-ssh-known-hosts-cm configmap should be created by Helm.
         create: true
@@ -76,7 +79,7 @@ configs:
         #       command: [sh, -c, find . -name env.yaml]
         # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sensitive-data-and-sso-client-secrets
         # -- Create the argocd-secret
-        createSecret: ENC[AES256_GCM,data:0wCkLQ==,iv:GIE6x7fcaU/diJ0hw4J24lxSIvJhJrGtYM07Fx5mj2k=,tag:NHF+G+5jkFrNgP6lPmx/Xg==,type:bool]
+        createSecret: ENC[AES256_GCM,data:jfCWfg==,iv:IZQVfFfI8ApVrGAb3/ThACNq5R+yUYeLF0YA5R6Yd70=,tag:5lEohD/oHRTAYdCd/ajing==,type:bool]
         # -- Labels to be added to argocd-secret
         labels: {}
         # -- Annotations to be added to argocd-secret
@@ -145,9 +148,9 @@ externalRedis:
     port: 6379
     username: ""
     password: ""
-    existingSecret: ENC[AES256_GCM,data:1B63BgZIeXenvw==,iv:p26TgvPhxgE0fmIepvDMb61kWkc5kQH+euWmvUNUe70=,tag:S0w7m+X95yeqaEl7NwXcCw==,type:str]
+    existingSecret: ENC[AES256_GCM,data:UTps7ePEfUcl/w==,iv:e3S8vv0ER73x3C1+pcXhN4UYx21ZoEYWnywbaTDFvtE=,tag:k+LhzAAO6Nbc58jNnhGwrw==,type:str]
     secretAnnotations: {}
-    existingSecretPasswordKey: ENC[AES256_GCM,data:WKa/5bAuadViECB/cIw=,iv:WHwXveITGuoCSFevKCRye0r3CUamKtbtsjbLmLGfqqg=,tag:e85ZfsZL0Hnr7cUXnWCLEg==,type:str]
+    existingSecretPasswordKey: ENC[AES256_GCM,data:DIGvWDnb1q5OfGhJUI0=,iv:6tM8vduhJikXYUzCZZEexY6gcXtYRW6dcGy0mu6GEOg=,tag:LtXERstYbuqTTnOKBBzrag==,type:str]
     # selector: {}
 repoServer:
     autoscaling:
@@ -312,14 +315,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBkVi84RnVlb1NEM2lPSklB
-            L0dNS0FaSFRJdEVKR1FibHVmMkFqTm1QeGlVCkczcWFadkNSR1ZIcDZBRWdjWTha
-            anJ6dXJaWW53dWdLVTlISDc3eGxFaXcKLS0tIHZjZEpEdStRczBUY0pnUXNZOU9N
-            ZHN1aE9wRll4d3YvNytZSzJlNlYwVjQKFNBjaDCdR0g1/1oxk+KWC0+lf1GH18lJ
-            uUoDxzOZvcewTJWfSWL4jgRMgzzU8qLg7Vs2mXCE+nDn/vv6Lh73xQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBucndRR0NMeEx4bW50cUZn
+            dHdXNVB0RzFLRENOQjErNUJDZWhYT2VxYVRZCk5sL28zTGw5OFhOcEJ6b3FhaSty
+            NVNIUGpaRDhoRk4weUFicHliSG1qT3cKLS0tIDVJTllCaG9qRzhrcHViUXVhQVM0
+            TVVzNUtWaXRWZVU2SWRVVnVrWkpDSHMKH7ejDQqvjBIuU1PUcN3IkonV+Qzy0xsB
+            IdbbYZBgY+vuntwpnpZJ+cRus0Iuo98xv82CAuFchcCbTskJjhGTnA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-04-02T16:54:55Z"
-    mac: ENC[AES256_GCM,data:Yp15bXCItIcr+2TwgTHJqm+lCSRHJvGbmqrKA6FA89q6D07/Zv3KckC8Br68GTXeaA1BLsNuzdnjJ6kUSU5FemRoRgFBljeu3A+w/p0ulmu9nfbZjROva81CAek88eoHn4dxCyLC0dzXDbmupi0TtfiIpug8gPV1aPe+BVIhvmM=,iv:10twbmR/swJjx7YUHc5SUdpM/6bUigkYEvoT3GzbH7A=,tag:rR584xnt9BA0dRSmvZFJMw==,type:str]
+    lastmodified: "2026-04-30T14:46:59Z"
+    mac: ENC[AES256_GCM,data:PyaFG/caIZDkBwuzjVCQ9bYu/0QyUCzk2bZxxQO+V5dTRGM8t2ioYL97vKPT2l94sH47UzIpZPWpJgirF6zw//2ERac1N8wqxoouUlGmykzIlt50nsXzAkMd4WcWBSYwlsaDrQtj+85FEbXDjN0utf76zgD0nWInk+AOkMT94QY=,iv:IKYxDqY/qa3bL1mnNbL9spKrOxmZ/fKMakj448uTFNg=,tag:amorf29B7TeCQm/QEgvXiA==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*)$
     version: 3.7.1
