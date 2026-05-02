@@ -1,0 +1,10 @@
+steps:
+  - type: helm
+    environments:
+      cloud:
+        config:
+          chartName: ./chart
+          releaseName: uptime-kuma
+          namespace: uptime-kuma
+          values:
+            - environments/cloud/uptime-kuma.values.yaml
