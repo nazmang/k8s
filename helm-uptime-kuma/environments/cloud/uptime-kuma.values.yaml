@@ -1,0 +1,22 @@
+persistence:
+  storageClass: "nfs-client"
+  size: 5Gi
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    external-dns.alpha.kubernetes.io/hostname: uptime-kuma.srvx.cc
+    external-dns.alpha.kubernetes.io/target: b16e4df1-2f22-4512-a7bc-29b1ed11d754.cfargotunnel.com
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+  host: uptime-kuma.srvx.cc
+
+httpRoute:
+  enabled: false
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: uptime-kuma.srvx.cc
+  parentRefs:
+    - name: srvx-cc-gateway
+      namespace: gateway
+  hostname: uptime-kuma.srvx.cc
