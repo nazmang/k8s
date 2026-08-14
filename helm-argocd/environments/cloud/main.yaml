@@ -15,6 +15,7 @@ spec:
         - https://*.github.com/*
         - https://stakater.github.io/stakater-charts
         - https://cloudhippie.github.io/charts
+        - https://kyverno.github.io/kyverno/
     destinations:
         - namespace: '*'
           server: https://kubernetes.default.svc
