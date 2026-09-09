@@ -1,6 +1,7 @@
 # Runbook — cluster memory pressure: resize VMs, fix scheduler accounting
 
-**Status:** steps 1-3 done (`nas01`, `k8s01`, `k8s02`, 2026-09-09). Steps 4-5 pending.
+**Status:** steps 1-4 done (all VM resizes, 2026-09-09). Step 5 (kubelet
+reservations) is the only one left.
 **Blast radius:** every stateful workload in the cluster. Read the whole file first.
 
 > **The provider reports failure on success. Read "Provider behaviour" below
@@ -349,12 +350,38 @@ sudo ps -eo args | grep -- '-id 101' | grep -oE ' -m [0-9]+'    # expect -m 1638
 
 Run the etcd gate a third time before moving on to the kubelet step.
 
-Finally, the kubelet reservations. This restarts kubelet on each node, rolling:
+**Step 4 DONE 2026-09-09.** Clean `Apply complete` again, no error. k8s03 came
+back at `16377000Ki`, `nas01` still resolved, and all three etcd endpoints
+reported healthy (7-11ms commits). That ends the reboots.
+
+Finally, the kubelet reservations -- the change the whole runbook exists for.
+
+Use `--tags=kubelet`, not `--tags=node`. The task that writes
+`/etc/kubernetes/kubelet-config.yaml` (`roles/kubernetes/node/tasks/kubelet.yml`)
+carries the `kubelet` and `kubeadm` tags and notifies the restart handler, so
+`kubelet` is the minimal scope that does the job. `node` is the whole role --
+kubelet binary install, nginx-proxy, kube-vip -- none of which needs touching.
 
 ```bash
 cd ~/Документы/kubespray
-ansible-playbook -i inventory/hetzner1/hosts.ini cluster.yml --tags=node
+./bin/ansible-playbook -i inventory/hetzner1/hosts.ini cluster.yml --tags=kubelet
 ```
+
+Consider `--limit` one node at a time. A kubelet restart does not kill running
+pods (containerd keeps them), but the node goes briefly `NotReady`, and after
+this particular day there is no prize for doing all four at once.
+
+Before, on any node:
+
+```yaml
+kubeReserved:   {cpu: 100m, memory: 256Mi, ...}
+systemReserved: {cpu: 500m, memory: 512Mi, ...}
+# no evictionHard block at all -- which is why the kubelet default of
+# memory.available<100Mi applied
+```
+
+After, expect `1Gi` / `2Gi` and an `evictionHard` block carrying
+`memory.available: 500Mi` and `nodefs.available: 10%`.
 
 ## Verification
 
