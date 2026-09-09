@@ -1,7 +1,6 @@
 # Runbook — cluster memory pressure: resize VMs, fix scheduler accounting
 
-**Status:** steps 1-4 done (all VM resizes, 2026-09-09). Step 5 (kubelet
-reservations) is the only one left.
+**Status:** COMPLETE, 2026-09-09. All five steps applied and verified.
 **Blast radius:** every stateful workload in the cluster. Read the whole file first.
 
 > **The provider reports failure on success. Read "Provider behaviour" below
@@ -364,8 +363,35 @@ kubelet binary install, nginx-proxy, kube-vip -- none of which needs touching.
 
 ```bash
 cd ~/Документы/kubespray
-./bin/ansible-playbook -i inventory/hetzner1/hosts.ini cluster.yml --tags=kubelet
+./bin/ansible-playbook -i inventory/hetzner1/hosts.ini cluster.yml \
+  --become --tags=kubelet,download --limit=k8s04
+./bin/ansible-playbook -i inventory/hetzner1/hosts.ini cluster.yml \
+  --become --tags=kubelet,download --limit=k8s01,k8s02,k8s03
 ```
+
+**Three flags, all three learned the hard way. None is optional:**
+
+- **`--become`.** Nothing sets it -- not `ansible.cfg`, not the inventory -- so
+  it must be on the command line. Without it the run dies at
+  `chown failed: Operation not permitted: /tmp/releases`. Earlier tasks
+  deceptively pass, because the directories they touch already exist and need
+  no change.
+- **`download` alongside `kubelet`.** `main.yml` imports `install.yml` under the
+  `kubelet` tag, and import tags propagate to every task inside, so the binary
+  copies run whether you want them or not. They read from `/tmp/releases`, which
+  had been cleaned away, giving
+  `Source /tmp/releases/kubeadm-1.34.3-amd64 not found`. The binaries in
+  `/usr/local/bin` were already current; the download just re-supplies the
+  source the copy expects.
+- **Every etcd member in one `--limit`.** `--limit=k8s01` alone fails with
+  `Unrecognized type AnsibleUndefined for ipwrap filter`: a control-plane task
+  builds the etcd endpoint list from `hostvars[item]['main_access_ip']` across
+  all of `etcd_hosts`, and hosts outside the limit have no facts. k8s03 got away
+  with `--limit` only because it is not in `kube_control_plane` and skipped that
+  task. Run the three etcd members together.
+
+Each failure was clean -- the config was never written, kubelet stayed active,
+nothing was left half-applied.
 
 Consider `--limit` one node at a time. A kubelet restart does not kill running
 pods (containerd keeps them), but the node goes briefly `NotReady`, and after
@@ -382,6 +408,23 @@ systemReserved: {cpu: 500m, memory: 512Mi, ...}
 
 After, expect `1Gi` / `2Gi` and an `evictionHard` block carrying
 `memory.available: 500Mi` and `nodefs.available: 10%`.
+
+**Result, measured 2026-09-09 after all five steps:**
+
+| node | capacity | allocatable | requests |
+|---|---|---|---|
+| k8s01 | 16376996Ki | 12719268Ki | 891940Ki (7%) |
+| k8s02 | 16377004Ki | 12719276Ki | 1350692Ki (10%) |
+| k8s03 | 16377000Ki | 12719272Ki | 2854454Ki (22%) |
+| k8s04 | 8131780Ki | 4474052Ki | 2085466Ki (46%) |
+
+Capacity minus allocatable is now ~3.5Gi per node instead of 868Mi, so
+host-deployed etcd and the OS are finally accounted for. All nodes `Ready`, all
+three etcd endpoints healthy at 8-16ms, no pod evicted, MinIO 4/4.
+
+kube-apiserver's ~2Gi is still unaccounted -- that waits on the dormant kubeadm
+patch and the next `upgrade-cluster.yml`. The gap it leaves is now 2Gi out of
+12.7Gi rather than 2Gi out of 7.2Gi on a node that was already full.
 
 ## Verification
 
@@ -427,6 +470,22 @@ eviction). Nothing here is destructive — no volumes, no data paths are touched
 - **MinIO runs all 16 volumes over NFS to a single VM.** An object store built
   for direct-attached disks, with no redundancy against the loss of `nas01`.
   Structural; out of scope here.
+- **Log shipping to OpenSearch has been broken since at least 2026-08-23.**
+  Found while verifying step 5, and unrelated to any of this work. `fluentd` on
+  k8s03 went `CrashLoopBackOff` after its reboot -- `[401] Unauthorized` against
+  OpenSearch, killed at exit 137 before it could finish starting. Its twin on
+  k8s04 reads `1/1 Running` with zero restarts in 169 days and looks perfectly
+  healthy, but its log holds 48 `401`s, the most recent dated 2026-08-23: it is
+  not delivering logs either. It merely started back when the credentials still
+  worked, and it will present exactly as k8s03 does the moment it restarts.
+  Fixing it needs the OpenSearch credentials and is a separate job.
+
+  That was the third latent failure a reboot exposed today, after the NFS
+  hostname and the provider's phantom error. They share a shape worth naming:
+  **a process that started while things worked goes on looking healthy long
+  after they stopped working, and a cluster that never restarts never finds
+  out.**
+
 - **The kubespray inventory is not version-controlled.** `inventory/` is covered
   by kubespray's own `.gitignore`, so the cluster's configuration — including
   the file this runbook adds — exists only on one laptop.
