@@ -1,7 +1,10 @@
 # Runbook — cluster memory pressure: resize VMs, fix scheduler accounting
 
-**Status:** prepared 2026-09-09, not yet executed.
+**Status:** step 1 of 5 done (`nas01`, 2026-09-09). Steps 2-5 pending.
 **Blast radius:** every stateful workload in the cluster. Read the whole file first.
+
+> **The provider reports failure on success. Read "Provider behaviour" below
+> before running any `apply`, and never re-run one that failed.**
 
 ## Symptom
 
@@ -144,6 +147,52 @@ MinIO may mark drives offline and enter recovery. Do it in a quiet window.
 2026-05-18). Run a full `plan` first and confirm it contains exactly the four
 memory changes and nothing else.
 
+## Provider behaviour — established on nas01, 2026-09-09
+
+`Telmate/proxmox 3.0.2-rc03` **does the work and then reports it as an error.**
+Observed on the `nas01` apply:
+
+```
+module.dev_proxmox_vms["nas01"].proxmox_vm_qemu.this: Modifying...
+module.dev_proxmox_vms["nas01"].proxmox_vm_qemu.this: Still modifying... [00m10s elapsed]
+│ Error: VM 100 already running
+```
+
+What actually happened: the provider stopped the VM, started it with the new
+memory, then issued a second, redundant start against the now-running VM and
+failed on it. Verified after the fact — the QEMU PID changed from `3321316` to
+`2763173`, `qm list` showed `MEM(MB) 8192`, and the live process carried
+`-m 8192`. The change was fully applied.
+
+Three consequences, and the third is the dangerous one:
+
+1. **`apply` will exit non-zero on every one of these VMs.** Expect it. A failed
+   apply here is not evidence that anything is wrong.
+2. **The reboot is real.** The provider performs a genuine stop/start, so
+   `automatic_reboot` is doing its job even though the run ends in an error. Do
+   not add a manual `qm shutdown` on top — that would be a second outage.
+3. **Terraform records the change as applied anyway.** After the `nas01` failure,
+   state held `memory: 8192` and the serial had advanced 101 → 103. A subsequent
+   `terraform plan` therefore reports *no changes pending* for that VM whether or
+   not the guest really got the memory. **`plan` is no longer a valid check after
+   a failed apply, and re-running `apply` is the worst move available** — it would
+   act on a resource Terraform already believes is converged. Verify against the
+   hypervisor instead, using the checks below.
+
+### Verifying an apply that "failed"
+
+```bash
+# On the hypervisor. PID must differ from before the apply; MEM(MB) must be new.
+sudo qm list | grep -E 'NAME|<vm-name>'
+
+# Authoritative: what the running QEMU process was actually started with.
+sudo ps -eo args | grep -- '-id <vmid>' | grep -oE ' -m [0-9]+'
+```
+
+If `-m` shows the new value, the step succeeded — move on. If it shows the old
+one, the VM was never restarted: the config is staged and a clean
+`sudo qm shutdown <vmid> && sudo qm start <vmid>` will apply it.
+
 ## Execution
 
 ```bash
@@ -153,12 +202,23 @@ cd ~/Документы/terraform/infra/proxmox
 terraform plan            # expect exactly 4 memory changes, no replacements
 ```
 
+Run `plan` **before the first apply only.** Once an apply has failed-but-applied,
+state is ahead of what the plan can tell you.
+
 Then, **one VM per step**:
 
 ```bash
 # 1. nas01 (VMID 100) — quiet window; all 27 PVCs stall for the reboot
 terraform apply -target='module.dev_proxmox_vms["nas01"]'
 ```
+
+**DONE 2026-09-09.** Ended in `Error: VM 100 already running`; the change had
+applied regardless (PID 3321316 → 2763173, `-m 8192`). The outage was short
+enough that nothing in the cluster noticed: MinIO's four pods stayed up with
+zero restarts on a 21-day uptime, every PVC stayed `Bound`, and no pod left
+`Running`. The `hard` NFS mounts blocked and resumed exactly as intended. The
+one `Pending` PVC (`trivy-dashboard`, storage class `managed-csi-premium`) has
+been pending for 84 days and is unrelated.
 
 Gate before continuing — on any cluster node:
 
@@ -169,9 +229,14 @@ kubectl get pvc -A | grep -v Bound                   # expect none
 ```
 
 ```bash
-# 2. k8s01 (VMID 102)
+# 2. k8s01 (VMID 102) — expect the "already running" error; verify, do not retry
 terraform apply -target='module.dev_proxmox_vms["k8s01"]'
+sudo ps -eo args | grep -- '-id 102' | grep -oE ' -m [0-9]+'    # expect -m 16384
 ```
+
+From here on each apply reboots a control-plane node that is also an etcd
+member. The node will be gone for the length of a stop/start, so treat the
+gate below as mandatory rather than advisory.
 
 Gate — **etcd must be healthy on all three members before the next step**:
 
@@ -188,12 +253,22 @@ kubectl get nodes                                    # all Ready
 ```
 
 ```bash
-# 3. k8s02 (VMID 103) — same gate afterwards
+# 3. k8s02 (VMID 103)
 terraform apply -target='module.dev_proxmox_vms["k8s02"]'
-
-# 4. k8s03 (VMID 101) — same gate afterwards
-terraform apply -target='module.dev_proxmox_vms["k8s03"]'
+sudo ps -eo args | grep -- '-id 103' | grep -oE ' -m [0-9]+'    # expect -m 16384
 ```
+
+**Run the etcd gate again here.** Two of the three members have now been
+restarted; starting k8s03 before k8s02 is back in the quorum leaves one member
+of three and takes the API server down with it.
+
+```bash
+# 4. k8s03 (VMID 101 — NOT k8s01; the numbering does not match the names)
+terraform apply -target='module.dev_proxmox_vms["k8s03"]'
+sudo ps -eo args | grep -- '-id 101' | grep -oE ' -m [0-9]+'    # expect -m 16384
+```
+
+Run the etcd gate a third time before moving on to the kubelet step.
 
 Finally, the kubelet reservations. This restarts kubelet on each node, rolling:
 
