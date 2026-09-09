@@ -1,6 +1,6 @@
 # Runbook — cluster memory pressure: resize VMs, fix scheduler accounting
 
-**Status:** steps 1-2 done (`nas01`, `k8s01`, 2026-09-09). Steps 3-5 pending.
+**Status:** steps 1-3 done (`nas01`, `k8s01`, `k8s02`, 2026-09-09). Steps 4-5 pending.
 **Blast radius:** every stateful workload in the cluster. Read the whole file first.
 
 > **The provider reports failure on success. Read "Provider behaviour" below
@@ -309,13 +309,14 @@ Gate — **etcd must be healthy on all three members before the next step**:
 
 ```bash
 sudo systemctl is-active etcd                        # on k8s01, k8s02, k8s03
-ls /etc/ssl/etcd/ssl/                                # confirm the cert filenames first
 sudo etcdctl \
   --endpoints=https://127.0.0.1:2379 \
   --cacert=/etc/ssl/etcd/ssl/ca.pem \
-  --cert=/etc/ssl/etcd/ssl/member-$(hostname).pem \
-  --key=/etc/ssl/etcd/ssl/member-$(hostname)-key.pem \
+  --cert=/etc/ssl/etcd/ssl/admin-$(hostname).pem \
+  --key=/etc/ssl/etcd/ssl/admin-$(hostname)-key.pem \
   endpoint health --cluster
+# All three endpoints must report healthy. Verified 2026-09-09 after step 3:
+# commits took 10-13ms and `member list` showed etcd1/2/3 all started.
 kubectl get nodes                                    # all Ready
 ```
 
@@ -324,6 +325,17 @@ kubectl get nodes                                    # all Ready
 terraform -chdir=$TF apply -target='module.dev_proxmox_vms["k8s02"]'
 sudo ps -eo args | grep -- '-id 103' | grep -oE ' -m [0-9]+'    # expect -m 16384
 ```
+
+**DONE 2026-09-09.** This one exited `Apply complete! Resources: 0 added, 1
+changed, 0 destroyed` -- no error, 1m54s instead of 30s. So the "already
+running" failure is a race, not a certainty: expect it, but do not treat a
+clean run as suspicious. The node came back with capacity `16377004Ki`.
+
+This step was also the first real test of the `/etc/hosts` fix, and it held:
+`getent hosts nas01` answered on k8s02 after the reboot, and
+`minio-comintern-pool-0-1` remounted and returned to 2/2 on its own. Without
+that fix this step would have taken the tenant to two of four. `openclaw`,
+also on k8s02, sat in `Unknown` for about a minute and recovered unaided.
 
 **Run the etcd gate again here.** Two of the three members have now been
 restarted; starting k8s03 before k8s02 is back in the quorum leaves one member
