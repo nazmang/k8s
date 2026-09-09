@@ -143,6 +143,25 @@ how alerts get delivered. Rebooting it stalls every one of them. With `hard`
 NFS mounts (the default) clients block and resume once the server returns, but
 MinIO may mark drives offline and enter recovery. Do it in a quiet window.
 
+**Your kubeconfig dies with k8s01.** `~/.kube/hetzner` points straight at
+`https://10.163.11.101:6443`, which is k8s01 itself — there is no VIP and no
+external load balancer. (The `nginx-proxy` pods on k8s03/k8s04 are kubespray's
+node-local balancers, bound to 127.0.0.1 on those hosts, and are no use from a
+workstation.) So the moment step 2 reboots k8s01, every `kubectl` in this
+runbook stops working, including the health gates.
+
+Prepare a fallback pointing at the other control-plane node, and **test it while
+both are still up**:
+
+```bash
+sed 's|10.163.11.101:6443|10.163.11.102:6443|' ~/.kube/hetzner > ~/.kube/hetzner-k8s02
+chmod 600 ~/.kube/hetzner-k8s02
+KUBECONFIG=~/.kube/hetzner-k8s02 kubectl get nodes     # verified working 2026-09-09
+```
+
+Use it for the gates around step 2, and switch back to the k8s01 one before
+step 3 reboots k8s02.
+
 **The Terraform state is four months old** (serial 101, last written
 2026-05-18). Run a full `plan` first and confirm it contains exactly the four
 memory changes and nothing else.
