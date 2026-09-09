@@ -214,11 +214,16 @@ one, the VM was never restarted: the config is staged and a clean
 
 ## Execution
 
+Every command below carries `-chdir`, so it is safe to paste from any
+directory. A bare `terraform apply` run from the wrong place fails with
+`No configuration files` -- harmless, but it wastes a step in the middle of
+a maintenance window.
+
 ```bash
-cd ~/Документы/terraform/infra/proxmox
+TF=/home/nazman/Документы/terraform/infra/proxmox
 
 # 0. Confirm the blast radius before touching anything.
-terraform plan            # expect exactly 4 memory changes, no replacements
+terraform -chdir=$TF plan     # expect exactly 4 memory changes, no replacements
 ```
 
 Run `plan` **before the first apply only.** Once an apply has failed-but-applied,
@@ -228,7 +233,7 @@ Then, **one VM per step**:
 
 ```bash
 # 1. nas01 (VMID 100) — quiet window; all 27 PVCs stall for the reboot
-terraform apply -target='module.dev_proxmox_vms["nas01"]'
+terraform -chdir=$TF apply -target='module.dev_proxmox_vms["nas01"]'
 ```
 
 **DONE 2026-09-09.** Ended in `Error: VM 100 already running`; the change had
@@ -249,7 +254,7 @@ kubectl get pvc -A | grep -v Bound                   # expect none
 
 ```bash
 # 2. k8s01 (VMID 102) — expect the "already running" error; verify, do not retry
-terraform apply -target='module.dev_proxmox_vms["k8s01"]'
+terraform -chdir=$TF apply -target='module.dev_proxmox_vms["k8s01"]'
 sudo ps -eo args | grep -- '-id 102' | grep -oE ' -m [0-9]+'    # expect -m 16384
 ```
 
@@ -273,7 +278,7 @@ kubectl get nodes                                    # all Ready
 
 ```bash
 # 3. k8s02 (VMID 103)
-terraform apply -target='module.dev_proxmox_vms["k8s02"]'
+terraform -chdir=$TF apply -target='module.dev_proxmox_vms["k8s02"]'
 sudo ps -eo args | grep -- '-id 103' | grep -oE ' -m [0-9]+'    # expect -m 16384
 ```
 
@@ -283,7 +288,7 @@ of three and takes the API server down with it.
 
 ```bash
 # 4. k8s03 (VMID 101 — NOT k8s01; the numbering does not match the names)
-terraform apply -target='module.dev_proxmox_vms["k8s03"]'
+terraform -chdir=$TF apply -target='module.dev_proxmox_vms["k8s03"]'
 sudo ps -eo args | grep -- '-id 101' | grep -oE ' -m [0-9]+'    # expect -m 16384
 ```
 
