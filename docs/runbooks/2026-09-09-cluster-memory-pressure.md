@@ -1,6 +1,6 @@
 # Runbook — cluster memory pressure: resize VMs, fix scheduler accounting
 
-**Status:** step 1 of 5 done (`nas01`, 2026-09-09). Steps 2-5 pending.
+**Status:** steps 1-2 done (`nas01`, `k8s01`, 2026-09-09). Steps 3-5 pending.
 **Blast radius:** every stateful workload in the cluster. Read the whole file first.
 
 > **The provider reports failure on success. Read "Provider behaviour" below
@@ -162,6 +162,36 @@ KUBECONFIG=~/.kube/hetzner-k8s02 kubectl get nodes     # verified working 2026-0
 Use it for the gates around step 2, and switch back to the k8s01 one before
 step 3 reboots k8s02.
 
+**A node reboot used to wipe all NFS storage on that node. Fixed 2026-09-09 —
+verify before rebooting anything.** All 27 PVs name the server by hostname
+(`spec.nfs.server: nas01`, 27 of 27), and nothing in the cluster's DNS resolves
+that name. Resolution depended entirely on a hand-added line in `/etc/hosts` —
+which cloud-init rewrites on every boot, because `manage_etc_hosts` is `True`
+and the entry was never added to `/etc/cloud/templates/hosts.debian.tmpl`.
+
+The landmine sat unarmed for 222 days simply because no node had rebooted. Step
+2 rebooted k8s01 and it went off: `nas01` stopped resolving there, and
+`minio-comintern-pool-0-2` could not mount any of its four volumes —
+`mount.nfs: Resource temporarily unavailable`, which reads like a server fault
+and is not one. The other three MinIO pods stayed up only because their mounts
+predated the reboot and `hard` mounts recover; nothing new could mount.
+
+Fixed on all four nodes by adding the entry to the cloud-init template as well
+as to the live file, so it now survives a reboot:
+
+```bash
+grep -q nas01 /etc/cloud/templates/hosts.debian.tmpl \
+  || printf '\n10.163.11.100\tnas01\n' | sudo tee -a /etc/cloud/templates/hosts.debian.tmpl
+grep -q nas01 /etc/hosts || printf '10.163.11.100\tnas01\n' | sudo tee -a /etc/hosts
+getent hosts nas01        # must answer on every node before you reboot it
+```
+
+Had step 3 run without this, k8s02's MinIO pod would have broken the same way,
+leaving the tenant on two of four. **Re-check `getent hosts nas01` on the target
+node before each remaining reboot.** The durable fix is to stop naming the
+server by hostname in the PVs, or to serve `nas01` from CoreDNS — neither is in
+scope here.
+
 **The Terraform state is four months old** (serial 101, last written
 2026-05-18). Run a full `plan` first and confirm it contains exactly the four
 memory changes and nothing else.
@@ -258,9 +288,22 @@ terraform -chdir=$TF apply -target='module.dev_proxmox_vms["k8s01"]'
 sudo ps -eo args | grep -- '-id 102' | grep -oE ' -m [0-9]+'    # expect -m 16384
 ```
 
+**DONE 2026-09-09.** Same `already running` error, change applied: the node
+came back `Ready` with capacity `16376996Ki`. It also detonated the
+`/etc/hosts` landmine described above — `minio-comintern-pool-0-2` sat in
+`Unknown` for ~15 minutes, unable to mount, until the entry was restored. The
+pod then came up on its own with no intervention beyond that. All four nodes
+have since been inoculated, so steps 3 and 4 should not repeat it.
+
 From here on each apply reboots a control-plane node that is also an etcd
 member. The node will be gone for the length of a stop/start, so treat the
 gate below as mandatory rather than advisory.
+
+Before each remaining reboot, on the node about to go down:
+
+```bash
+getent hosts nas01        # must answer 10.163.11.100
+```
 
 Gate — **etcd must be healthy on all three members before the next step**:
 
