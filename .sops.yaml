@@ -1,4 +1,25 @@
+# Same age recipient as the argocd-apps and docker repositories; the private
+# half lives in argocd-apps/.age/age.key (gitignored, mode 600).
 creation_rules:
+  # Documentation. These files hold no keys and no passwords -- they hold a map
+  # of the infrastructure: which node runs what, how the cluster failed and
+  # why, which parts are deliberately unfinished. This repository is public.
+  #
+  # Encrypted whole, as binary:
+  #
+  #   sops -e --input-type binary --output-type json docs/x.md > docs/x.md.sops
+  #   sops -d --input-type json --output-type binary docs/x.md.sops > docs/x.md
+  #
+  # The plaintext .md is gitignored; the .sops file beside it is what git
+  # carries. docs/README.md stays readable and says so.
+  - path_regex: docs/.*\.md(\.sops)?$
+    age: "age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe"
+
+  # Pre-existing rule, unchanged. Unlike the per-path rules in argocd-apps this
+  # one is broad on purpose, matching every yaml/yml/env/json in the repository
+  # and encrypting fields by name. Note what that means in practice: a new
+  # secret field whose name does not match this list commits in PLAINTEXT, so
+  # adding one means extending the regex first.
   - age: "age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe"
     path_regex: \.(yaml|yml|env|json)$
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*)$
