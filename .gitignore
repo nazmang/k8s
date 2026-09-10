@@ -2,3 +2,7 @@ k8s-jenkins
 k8s-postgres
 .pgp/
 .age/
+
+# Documentation is committed encrypted (see .sops.yaml); plaintext stays local.
+docs/**/*.md
+!docs/README.md
