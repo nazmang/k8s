@@ -17,6 +17,70 @@ kubeProxy:
   
 alertmanager:
   enabled: true
+
+  # Until 2026-09-10 this section was absent, so the chart's default config
+  # applied: a single receiver named `null` that every route ended at. The stack
+  # collected metrics and evaluated 154 alerting rules for months while
+  # delivering nothing -- 15 alerts were queued behind it, three at critical.
+  #
+  # Alerts now go to ntfy through the ntfy-alertmanager bridge (deployed from the
+  # argocd-apps repo into this namespace). The bridge exists because
+  # Alertmanager's webhook posts its own JSON with no body templating, so
+  # pointing it straight at ntfy publishes the raw payload as the message text.
+  config:
+    global:
+      resolve_timeout: 5m
+
+    # Kept verbatim from the chart defaults. Without these, a node going down
+    # delivers the critical alert plus every warning and info alert it causes.
+    inhibit_rules:
+      - source_matchers:
+          - 'severity = critical'
+        target_matchers:
+          - 'severity =~ warning|info'
+        equal: ['namespace', 'alertname']
+      - source_matchers:
+          - 'severity = warning'
+        target_matchers:
+          - 'severity = info'
+        equal: ['namespace', 'alertname']
+      - source_matchers:
+          - 'alertname = InfoInhibitor'
+        target_matchers:
+          - 'severity = info'
+        equal: ['namespace']
+      - target_matchers:
+          - 'alertname = InfoInhibitor'
+
+    route:
+      group_by: ['namespace', 'alertname']
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 12h
+      receiver: 'ntfy'
+      routes:
+        # Watchdog fires constantly by design: it is a dead man's switch, meant
+        # to be noticed when it STOPS arriving. Delivering it to a phone every
+        # 12 hours would be pure noise, so it still goes nowhere -- but that
+        # means nothing currently watches for its absence. Uptime Kuma's "push"
+        # monitor type would close that gap: point this route at the push URL
+        # and Kuma complains when the heartbeat stops.
+        - receiver: 'null'
+          matchers:
+            - alertname = "Watchdog"
+
+    receivers:
+      - name: 'null'
+      - name: 'ntfy'
+        webhook_configs:
+          # In-cluster: does not depend on the Cloudflare tunnel or DNS beyond
+          # the cluster. No basic auth -- both repos holding this config are
+          # public, so a shared password would need its own decryption path for
+          # what is a hop between two pods in one namespace.
+          - url: 'http://ntfy-alertmanager.monitoring.svc.cluster.local:8080/'
+            send_resolved: true
+            max_alerts: 0
+
   ingress:
     enabled: true
     annotations:
