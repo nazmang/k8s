@@ -1,5 +1,19 @@
 grafana:
   enabled: false
+
+# kube-proxy binds its metrics to 127.0.0.1:10249, so Prometheus cannot reach it
+# and all four targets sat down permanently, keeping TargetDown firing. Opening
+# the port means a kubespray change plus a kube-proxy restart on every node, and
+# the metrics it would yield -- rule-sync duration, endpoint counts -- are for
+# clusters with tens of thousands of rules, not four nodes. Nothing is lost by
+# not scraping it: kube-proxy's pod health is still covered by kube-state-metrics,
+# and if kube-proxy actually dies, services break loudly.
+#
+# Set this to true and configure kube_proxy_metrics_bind_address in kubespray if
+# those metrics are ever wanted.
+kubeProxy:
+  enabled: false
+
   
 alertmanager:
   enabled: true
