@@ -25,6 +25,16 @@ spec:
       initContainers:
         - name: fix-permissions
           image: busybox
+          # Must be root. The pod's securityContext sets runAsUser 999, which the
+          # init container inherits, and chown as a non-root user fails with
+          # "Operation not permitted" -- so this container could never do the one
+          # job it exists for. It only appeared to work on nodes where the
+          # hostPath directory already happened to have the right owner: on
+          # 2026-09-10, k8s03 and k8s04 had kube:systemd-journal and ran fine
+          # while k8s02 had root:root and the pod sat in Init:CrashLoopBackOff.
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
           command: ["sh", "-c", "chown -R 999:999 /fluentd/buffer"]
           volumeMounts:
             - name: buffer

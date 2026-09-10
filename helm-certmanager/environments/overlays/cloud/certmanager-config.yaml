@@ -1,3 +1,12 @@
+# cert-manager configuration for the cloud cluster.
+#
+# The two wildcard Certificates that used to live here -- srvxapp-com-wildcard
+# (*.srvxapp.com) and srv-cc-wildcard (*.srvx.cc) -- were removed on 2026-09-10.
+# Nothing consumed them: no pod mounted srvxapp-com-tls or srv-cc-tls, every
+# *.srvx.cc Ingress runs without TLS because Cloudflare terminates it, and
+# ingress-nginx has no --default-ssl-certificate. They spent 171 days raising
+# CertificateExpired at critical for certificates nobody used. Git history has
+# them if a direct-TLS setup ever needs them back.
 apiVersion: v1
 kind: Secret
 metadata:
@@ -5,7 +14,7 @@ metadata:
     namespace: cert-manager
 type: Opaque
 stringData:
-    api-token: ENC[AES256_GCM,data:ec0CQhOawVNBuEiXAc/DaBkRb+UlExfwvbwvDw+hdfkKYkm8sQ/xNytOku3BWMYiq757Nng=,iv:F31qJF3pxCKeh5R3/7NCzptXCVFRqHKMc48EDmfNcIs=,tag:vIfuF2zt2/u+kKR8/j5Jgg==,type:str]
+    api-token: ENC[AES256_GCM,data:FgfNn+MOkLkXT/0WKM8F5rnug0SC32RhaSdstiZlh3CI+q8+BLZtvLchH5g2bApPbD2vMAk=,iv:nA5MpVcItrJuujtjlGbMnAq+HaVxhHfkm3EsjHlTPSo=,tag:irLKTw5+cS943l3+r/Sjtw==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -15,14 +24,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBWN21FaElYcHk4c2RJOGFz
-            aDZTUFYzNFBFWG5oV3pJVjFOY2tuN2kwQlNNCk9wbVl3L3JoWk9GUkJlTEZFMks2
-            U2lKVFV3ZWJYK3pIQVJPY1A5WkhDVU0KLS0tIGVLQUlvTjg4S084a3lKNUFkVEVU
-            bUJMazhxU0lTVXFCUElCU3ExU3RyU3MKc0Hh1q2RL715HmRIyguBG+4btB+rZOlQ
-            oFy0ok2gRa85aPLQK1RuMjYJm7/70dIr2CzxaYRq3xdjzbzS2e2zuw==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBIOXZLejVJR2dsMU1jMFVa
+            c1FzM00zVzBrY2lZL0xhRkt4VGhsWTVseEhvCm1yZHlkMlNlNGRGdGppZW16ZFZs
+            K25OTDM4RERRMGd6dllvMzNSNXM4MFkKLS0tIEVVQ0lzR2V5VEp6MWd3eGpwMm10
+            YjhyVkx6UmpWbExmSDVPVFhyZ3ZzK2cKkHH0Q7MTFCH8vExalipJUudxM349I1PL
+            3VQCNfZ5GWLqsscVF+KvLdQF7+X+C2qSpVwKXtPOH/VFo1QPf9nQNA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-04-21T15:19:24Z"
-    mac: ENC[AES256_GCM,data:mPct5TkabDnVyUYt5llELTPWKQTCwqx1jJHpC7BUTcwA/7JLRYOargsZMFLWD6O1O0D3PUxHn4MT1owTjKxU3qaHVvzIkacDTmL+E2fD/vWJG8fEc2z0eNbXqhCHJ8endaipb9MPMe56qcCGs9rbBObfyeM4gq5c+ckY5khvSFQ=,iv:UQ4RRDOqb4TlUhS71uUNBYVts4DoOeARKM809gbiqE8=,tag:ij9TS0zs3k9opCnhYDLS1Q==,type:str]
+    lastmodified: "2026-09-10T14:21:04Z"
+    mac: ENC[AES256_GCM,data:uGRpXw8fXKB3+WG80LYInHCHtBD4s7/Id45B/EiBiZcBeVZV+gjbXoQXG9T+NFFYNZMriENVPB/kgtVNLnFpA1TwwXDc/BapQG4oYL0E7CnVFFqAyjd4gTJxh05U0g5eO6bbzHT+WmcXfhc3e74JO1nR7hrecuJJnQgqJ6GTz4U=,iv:8dr9FstyKLmJcVdEe98LFYecJWrfc6Yu8bRcqd8hYeg=,tag:EnNgt0Cef7aKVv2qp+Soew==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*)$
     version: 3.7.1
@@ -33,16 +42,16 @@ metadata:
     name: letsencrypt-dns
 spec:
     acme:
-        email: ENC[AES256_GCM,data:9vp1DdTl1uro+WTBY/nvkUc=,iv:C0t2ARcmyTz7s0k5LbQV6dGClgSCDdsQVa00a6QvPoc=,tag:3IHlufJPERybrkyhqFYkbw==,type:str]
+        email: ENC[AES256_GCM,data:ob0si1jWGulBDHM94p/wgpA=,iv:LzGkeTez7kGCNp4lmHTKGtfI6/MAq9omVTLv6aF5970=,tag:fjURrVqXUtQdvS4qsG8nkA==,type:str]
         server: https://acme-v02.api.letsencrypt.org/directory
         privateKeySecretRef:
-            name: ENC[AES256_GCM,data:0KzQBvGOkUX7m72PzAX4gIsQ2A==,iv:Qlee8FI2NyeX7HFF//OuBy31tPYP8NoOkzxKozqOI+s=,tag:ynrgbV4xeOOxSjQoRUdfWw==,type:str]
+            name: ENC[AES256_GCM,data:oTqHEyE3c4pKB4mUqYDRPh09IQ==,iv:+LIDsJSFIjZj2g90xRfiyaQMU1x4GAryRzVpP+Ff+Tw=,tag:qnE8yDNO3tB6fVY5YP2TjQ==,type:str]
         solvers:
             - dns01:
                 cloudflare:
                     apiTokenSecretRef:
-                        name: ENC[AES256_GCM,data:/PI23cQrCKLHbCAda0Bwajak2de1kNIJRsvv,iv:ZlDd1chSHPCCcKG/GcCGHBBkqRZp+WLqfxsD1LiIyxI=,tag:Xo3y1OUvkEQ1DWo/7B6u9Q==,type:str]
-                        key: ENC[AES256_GCM,data:bLKyPgzcjm24,iv:YIomxLGHwRX7KNXTF4aiWeu/0Ch8mOX0sK31eqMcrwg=,tag:kg337ZMl9xwQO3Yw03+zgQ==,type:str]
+                        name: ENC[AES256_GCM,data:c1LQRvyCSEoG4hBZLsX3flYLl8Otw9+HXhor,iv:p8MXJ0NyiBOraojOGjTB8rah3kgB7fdr8rlCWPPvPcw=,tag:9xtc14MX2w/Ow1GaZvf7bw==,type:str]
+                        key: ENC[AES256_GCM,data:9LUK2hAmqqB2,iv:A9erfdykeCaIa/0uR9mC3o9chnid7rt8/wbpMTMy+z0=,tag:/pTwLAks+wFD26NcNMGmIw==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -52,35 +61,24 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBWN21FaElYcHk4c2RJOGFz
-            aDZTUFYzNFBFWG5oV3pJVjFOY2tuN2kwQlNNCk9wbVl3L3JoWk9GUkJlTEZFMks2
-            U2lKVFV3ZWJYK3pIQVJPY1A5WkhDVU0KLS0tIGVLQUlvTjg4S084a3lKNUFkVEVU
-            bUJMazhxU0lTVXFCUElCU3ExU3RyU3MKc0Hh1q2RL715HmRIyguBG+4btB+rZOlQ
-            oFy0ok2gRa85aPLQK1RuMjYJm7/70dIr2CzxaYRq3xdjzbzS2e2zuw==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBIOXZLejVJR2dsMU1jMFVa
+            c1FzM00zVzBrY2lZL0xhRkt4VGhsWTVseEhvCm1yZHlkMlNlNGRGdGppZW16ZFZs
+            K25OTDM4RERRMGd6dllvMzNSNXM4MFkKLS0tIEVVQ0lzR2V5VEp6MWd3eGpwMm10
+            YjhyVkx6UmpWbExmSDVPVFhyZ3ZzK2cKkHH0Q7MTFCH8vExalipJUudxM349I1PL
+            3VQCNfZ5GWLqsscVF+KvLdQF7+X+C2qSpVwKXtPOH/VFo1QPf9nQNA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-04-21T15:19:24Z"
-    mac: ENC[AES256_GCM,data:mPct5TkabDnVyUYt5llELTPWKQTCwqx1jJHpC7BUTcwA/7JLRYOargsZMFLWD6O1O0D3PUxHn4MT1owTjKxU3qaHVvzIkacDTmL+E2fD/vWJG8fEc2z0eNbXqhCHJ8endaipb9MPMe56qcCGs9rbBObfyeM4gq5c+ckY5khvSFQ=,iv:UQ4RRDOqb4TlUhS71uUNBYVts4DoOeARKM809gbiqE8=,tag:ij9TS0zs3k9opCnhYDLS1Q==,type:str]
+    lastmodified: "2026-09-10T14:21:04Z"
+    mac: ENC[AES256_GCM,data:uGRpXw8fXKB3+WG80LYInHCHtBD4s7/Id45B/EiBiZcBeVZV+gjbXoQXG9T+NFFYNZMriENVPB/kgtVNLnFpA1TwwXDc/BapQG4oYL0E7CnVFFqAyjd4gTJxh05U0g5eO6bbzHT+WmcXfhc3e74JO1nR7hrecuJJnQgqJ6GTz4U=,iv:8dr9FstyKLmJcVdEe98LFYecJWrfc6Yu8bRcqd8hYeg=,tag:EnNgt0Cef7aKVv2qp+Soew==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*)$
     version: 3.7.1
 ---
 apiVersion: cert-manager.io/v1
-kind: Certificate
+kind: ClusterIssuer
 metadata:
-    name: srvxapp-com-wildcard
-    namespace: monitoring
+    name: selfsigned-issuer
 spec:
-    secretName: srvxapp-com-tls
-    issuerRef:
-        name: letsencrypt-dns
-        kind: ClusterIssuer
-    commonName: '*.srvxapp.com'
-    dnsNames:
-        - '*.srvxapp.com'
-        - srvxapp.com
-    privateKey:
-        algorithm: RSA
-        size: 2048
+    selfSigned: {}
 sops:
     kms: []
     gcp_kms: []
@@ -90,52 +88,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBWN21FaElYcHk4c2RJOGFz
-            aDZTUFYzNFBFWG5oV3pJVjFOY2tuN2kwQlNNCk9wbVl3L3JoWk9GUkJlTEZFMks2
-            U2lKVFV3ZWJYK3pIQVJPY1A5WkhDVU0KLS0tIGVLQUlvTjg4S084a3lKNUFkVEVU
-            bUJMazhxU0lTVXFCUElCU3ExU3RyU3MKc0Hh1q2RL715HmRIyguBG+4btB+rZOlQ
-            oFy0ok2gRa85aPLQK1RuMjYJm7/70dIr2CzxaYRq3xdjzbzS2e2zuw==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBIOXZLejVJR2dsMU1jMFVa
+            c1FzM00zVzBrY2lZL0xhRkt4VGhsWTVseEhvCm1yZHlkMlNlNGRGdGppZW16ZFZs
+            K25OTDM4RERRMGd6dllvMzNSNXM4MFkKLS0tIEVVQ0lzR2V5VEp6MWd3eGpwMm10
+            YjhyVkx6UmpWbExmSDVPVFhyZ3ZzK2cKkHH0Q7MTFCH8vExalipJUudxM349I1PL
+            3VQCNfZ5GWLqsscVF+KvLdQF7+X+C2qSpVwKXtPOH/VFo1QPf9nQNA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-04-21T15:19:24Z"
-    mac: ENC[AES256_GCM,data:mPct5TkabDnVyUYt5llELTPWKQTCwqx1jJHpC7BUTcwA/7JLRYOargsZMFLWD6O1O0D3PUxHn4MT1owTjKxU3qaHVvzIkacDTmL+E2fD/vWJG8fEc2z0eNbXqhCHJ8endaipb9MPMe56qcCGs9rbBObfyeM4gq5c+ckY5khvSFQ=,iv:UQ4RRDOqb4TlUhS71uUNBYVts4DoOeARKM809gbiqE8=,tag:ij9TS0zs3k9opCnhYDLS1Q==,type:str]
-    pgp: []
-    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*)$
-    version: 3.7.1
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-    name: srv-cc-wildcard
-    namespace: monitoring
-spec:
-    secretName: srvxapp-com-tls
-    issuerRef:
-        name: letsencrypt-dns
-        kind: ClusterIssuer
-    commonName: '*.srvx.cc'
-    dnsNames:
-        - '*.srvx.cc'
-        - srvx.cc
-    privateKey:
-        algorithm: RSA
-        size: 2048
-sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age:
-        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
-          enc: |
-            -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBWN21FaElYcHk4c2RJOGFz
-            aDZTUFYzNFBFWG5oV3pJVjFOY2tuN2kwQlNNCk9wbVl3L3JoWk9GUkJlTEZFMks2
-            U2lKVFV3ZWJYK3pIQVJPY1A5WkhDVU0KLS0tIGVLQUlvTjg4S084a3lKNUFkVEVU
-            bUJMazhxU0lTVXFCUElCU3ExU3RyU3MKc0Hh1q2RL715HmRIyguBG+4btB+rZOlQ
-            oFy0ok2gRa85aPLQK1RuMjYJm7/70dIr2CzxaYRq3xdjzbzS2e2zuw==
-            -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-04-21T15:19:24Z"
-    mac: ENC[AES256_GCM,data:mPct5TkabDnVyUYt5llELTPWKQTCwqx1jJHpC7BUTcwA/7JLRYOargsZMFLWD6O1O0D3PUxHn4MT1owTjKxU3qaHVvzIkacDTmL+E2fD/vWJG8fEc2z0eNbXqhCHJ8endaipb9MPMe56qcCGs9rbBObfyeM4gq5c+ckY5khvSFQ=,iv:UQ4RRDOqb4TlUhS71uUNBYVts4DoOeARKM809gbiqE8=,tag:ij9TS0zs3k9opCnhYDLS1Q==,type:str]
+    lastmodified: "2026-09-10T14:21:04Z"
+    mac: ENC[AES256_GCM,data:uGRpXw8fXKB3+WG80LYInHCHtBD4s7/Id45B/EiBiZcBeVZV+gjbXoQXG9T+NFFYNZMriENVPB/kgtVNLnFpA1TwwXDc/BapQG4oYL0E7CnVFFqAyjd4gTJxh05U0g5eO6bbzHT+WmcXfhc3e74JO1nR7hrecuJJnQgqJ6GTz4U=,iv:8dr9FstyKLmJcVdEe98LFYecJWrfc6Yu8bRcqd8hYeg=,tag:EnNgt0Cef7aKVv2qp+Soew==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*)$
     version: 3.7.1
@@ -200,14 +160,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBWN21FaElYcHk4c2RJOGFz
-            aDZTUFYzNFBFWG5oV3pJVjFOY2tuN2kwQlNNCk9wbVl3L3JoWk9GUkJlTEZFMks2
-            U2lKVFV3ZWJYK3pIQVJPY1A5WkhDVU0KLS0tIGVLQUlvTjg4S084a3lKNUFkVEVU
-            bUJMazhxU0lTVXFCUElCU3ExU3RyU3MKc0Hh1q2RL715HmRIyguBG+4btB+rZOlQ
-            oFy0ok2gRa85aPLQK1RuMjYJm7/70dIr2CzxaYRq3xdjzbzS2e2zuw==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBIOXZLejVJR2dsMU1jMFVa
+            c1FzM00zVzBrY2lZL0xhRkt4VGhsWTVseEhvCm1yZHlkMlNlNGRGdGppZW16ZFZs
+            K25OTDM4RERRMGd6dllvMzNSNXM4MFkKLS0tIEVVQ0lzR2V5VEp6MWd3eGpwMm10
+            YjhyVkx6UmpWbExmSDVPVFhyZ3ZzK2cKkHH0Q7MTFCH8vExalipJUudxM349I1PL
+            3VQCNfZ5GWLqsscVF+KvLdQF7+X+C2qSpVwKXtPOH/VFo1QPf9nQNA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-04-21T15:19:24Z"
-    mac: ENC[AES256_GCM,data:mPct5TkabDnVyUYt5llELTPWKQTCwqx1jJHpC7BUTcwA/7JLRYOargsZMFLWD6O1O0D3PUxHn4MT1owTjKxU3qaHVvzIkacDTmL+E2fD/vWJG8fEc2z0eNbXqhCHJ8endaipb9MPMe56qcCGs9rbBObfyeM4gq5c+ckY5khvSFQ=,iv:UQ4RRDOqb4TlUhS71uUNBYVts4DoOeARKM809gbiqE8=,tag:ij9TS0zs3k9opCnhYDLS1Q==,type:str]
+    lastmodified: "2026-09-10T14:21:04Z"
+    mac: ENC[AES256_GCM,data:uGRpXw8fXKB3+WG80LYInHCHtBD4s7/Id45B/EiBiZcBeVZV+gjbXoQXG9T+NFFYNZMriENVPB/kgtVNLnFpA1TwwXDc/BapQG4oYL0E7CnVFFqAyjd4gTJxh05U0g5eO6bbzHT+WmcXfhc3e74JO1nR7hrecuJJnQgqJ6GTz4U=,iv:8dr9FstyKLmJcVdEe98LFYecJWrfc6Yu8bRcqd8hYeg=,tag:EnNgt0Cef7aKVv2qp+Soew==,type:str]
     pgp: []
     encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*)$
     version: 3.7.1

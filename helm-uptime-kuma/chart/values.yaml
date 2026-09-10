@@ -28,6 +28,31 @@ httpRoute:
       namespace: gateway
   hostname: uptime-kuma.example.com
 
+# Probe timings are deliberately slack, and the reason is not caution for its
+# own sake: Kuma keeps its SQLite database on an NFS volume, and an NFS stall
+# blocks the Node event loop, so `/` stops answering while the process is
+# perfectly healthy. The previous values (timeout 5s, period 10s, threshold 3)
+# killed the container after ~45s of that -- 413 restarts in 129 days, and each
+# restart emitted its own false "Down" alerts, because a restarting Kuma cannot
+# record a heartbeat and reports the exception as the monitor's failure reason.
+# These tolerate ~2.5 minutes of stall before restarting.
+#
+# This treats the symptom. The cure is moving the database off NFS; until that
+# lands, do not tighten these back up.
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 90
+  periodSeconds: 30
+  timeoutSeconds: 20
+  failureThreshold: 5
+
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 15
+  timeoutSeconds: 10
+  failureThreshold: 3
+
 resources:
   requests:
     cpu: 50m
