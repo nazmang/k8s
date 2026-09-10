@@ -1,5 +1,16 @@
 persistence:
-  storageClass: "nfs-client"
+  # local-path, not nfs-client. Kuma keeps its database in SQLite, and SQLite on
+  # NFS is the root of the false alerts this cluster chased for months: an NFS
+  # stall blocks the Node event loop, beat() throws KnexTimeoutError before it can
+  # record a heartbeat, and Kuma reports the exception as the monitored service
+  # being down. It also failed the liveness probe often enough to rack up 413
+  # container restarts in 129 days.
+  #
+  # The volume is now node-local, so the pod is pinned to whichever node it first
+  # landed on and the data does not survive that node's disk. That is acceptable
+  # here: PVE backs up the VMs whole to external storage, and the database is 6MB
+  # of monitor config plus history rather than anything irreplaceable.
+  storageClass: "local-path"
   size: 5Gi
 
 ingress:
