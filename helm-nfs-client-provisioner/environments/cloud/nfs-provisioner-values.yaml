@@ -8,7 +8,23 @@ image:
 imagePullSecrets: []
 
 nfs:
-  server: nas01
+  # IP, not the hostname. Nothing in the cluster's DNS resolves "nas01" --
+  # resolution rested entirely on a hand-added /etc/hosts line, which cloud-init
+  # rewrites on every boot (manage_etc_hosts is True). On 2026-09-09 a node
+  # reboot took that line away and every NFS mount on it failed with
+  # `mount.nfs: Resource temporarily unavailable`, which reads like a server
+  # fault and is not one. The entry is now in the cloud-init template on all four
+  # nodes as well, but this removes the dependency instead of propping it up.
+  #
+  # Only affects PVs created from here on. The 27 that already existed CANNOT be
+  # converted: spec.persistentvolumesource is immutable after creation, so a
+  # patch is refused with
+  #   Forbidden: spec.persistentvolumesource is immutable after creation
+  # Moving them would mean recreating each PVC and copying its data, which is
+  # not worth it. They keep resolving nas01 through the /etc/hosts entry, which
+  # now survives reboots because it is in the cloud-init template. New volumes
+  # simply stop adding to that pile.
+  server: 10.163.11.100
   path: /srv/data
   mountOptions:
   volumeName: nfs-subdir-external-provisioner-root
