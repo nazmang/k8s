@@ -88,6 +88,20 @@ alertmanager:
       external-dns.alpha.kubernetes.io/target: b16e4df1-2f22-4512-a7bc-29b1ed11d754.cfargotunnel.com
       external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      # Basic auth, added 2026-09-10. Both of these ingresses were reachable
+      # from the internet with no authentication whatsoever -- verified by a
+      # POST to /api/v2/silences returning 422, i.e. the request reached
+      # payload validation. Anyone could read every alert and, worse, create
+      # silences: muting the monitoring of an infrastructure from outside it,
+      # quietly, is the first move before anything that would be noticed.
+      #
+      # The credentials live in the Secret monitoring-basic-auth (namespace
+      # monitoring, key `auth`, htpasswd with bcrypt). The Secret itself is not
+      # created by this chart -- see basic-auth-credentials.yaml beside this
+      # file for the encrypted copy and how to recreate it.
+      nginx.ingress.kubernetes.io/auth-type: basic
+      nginx.ingress.kubernetes.io/auth-secret: monitoring-basic-auth
+      nginx.ingress.kubernetes.io/auth-realm: "Monitoring - authentication required"
     labels: {}
     ingressClassName: nginx
     hosts:
@@ -177,6 +191,20 @@ prometheus:
       external-dns.alpha.kubernetes.io/target: b16e4df1-2f22-4512-a7bc-29b1ed11d754.cfargotunnel.com
       external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      # Basic auth, added 2026-09-10. Both of these ingresses were reachable
+      # from the internet with no authentication whatsoever -- verified by a
+      # POST to /api/v2/silences returning 422, i.e. the request reached
+      # payload validation. Anyone could read every alert and, worse, create
+      # silences: muting the monitoring of an infrastructure from outside it,
+      # quietly, is the first move before anything that would be noticed.
+      #
+      # The credentials live in the Secret monitoring-basic-auth (namespace
+      # monitoring, key `auth`, htpasswd with bcrypt). The Secret itself is not
+      # created by this chart -- see basic-auth-credentials.yaml beside this
+      # file for the encrypted copy and how to recreate it.
+      nginx.ingress.kubernetes.io/auth-type: basic
+      nginx.ingress.kubernetes.io/auth-secret: monitoring-basic-auth
+      nginx.ingress.kubernetes.io/auth-realm: "Monitoring - authentication required"
     ingressClassName: nginx
     hosts:
       - prom-k8s.srvx.cc
