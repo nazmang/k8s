@@ -124,6 +124,33 @@ prometheus:
   prometheusSpec:
     scrapeInterval: 1m
     evaluationInterval: 1m
+
+    # Persistent storage, added 2026-09-11. Until now Prometheus ran on an
+    # emptyDir: every restart of the pod erased every metric. That is not an
+    # abstract loss -- it came up the moment someone asked how often n8n falls
+    # over, and the answer was "there is no history, the pod restarted
+    # yesterday evening". Alerting without history can tell you that something
+    # is broken now, and nothing about whether it has been breaking for months.
+    #
+    # local-path, not nfs-client, on purpose: the TSDB does fsync-heavy random
+    # writes and behaves on NFS exactly as SQLite did for Uptime Kuma and n8n.
+    # The cost is that the volume lives on one node (currently k8s03) and the
+    # pod cannot move without it -- acceptable for a single-replica Prometheus,
+    # and the operator recreates an empty one if the node is ever lost.
+    #
+    # The size cap is not decoration: the TSDB grows about 1 GB/day here and
+    # k8s03 had 13.5 GB free. retentionSize is what actually bounds it --
+    # `retention: 10d` alone would have filled the node's root disk in under
+    # two weeks and taken the kubelet with it.
+    retentionSize: 8GB
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: local-path
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 10Gi
     thanos:
       image: thanosio/thanos:v0.40.1
       # secretProviderClass:
