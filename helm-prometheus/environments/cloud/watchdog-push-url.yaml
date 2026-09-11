@@ -1,0 +1,41 @@
+# Uptime Kuma push URL for the cluster's dead man's switch.
+#
+# The Watchdog alert fires permanently by design and its whole value is in being
+# noticed when it STOPS. Until 2026-09-11 it was routed to the 'null' receiver,
+# so nothing watched for its absence: if this Prometheus and this Alertmanager
+# died together, there would be nobody left to evaluate a rule about them.
+#
+# The URL carries a token, and both repositories holding this configuration are
+# public -- hence a Secret rather than a value in prometheus-values.yaml. The
+# key name ends in Secret so the broad encrypted_regex in .sops.yaml covers it.
+#
+# Alertmanager reads it through webhook_configs.url_file, and the chart mounts
+# the Secret via alertmanagerSpec.secrets. Recreate the live Secret with:
+#
+#   kubectl create secret generic alertmanager-watchdog -n monitoring \
+#     --from-literal=url="$(sops -d watchdog-push-url.yaml | yq -r .pushUrlSecret)"
+#
+# Anyone holding this URL can keep the dead man's switch alive while the
+# monitoring behind it is dead -- which is precisely the failure it exists to
+# catch. Treat it as a credential.
+pushUrlSecret: ENC[AES256_GCM,data:frE3GmzXlZVQ6IsaO/avhcJzcVO6R/h5yysWe9WFUhX+VOE0a+0POiYSIWTi07GKOsC969XD+EQXvKP+6JJzOJK8GcCWi66yDdl+qzWSrd3DE4dDFWIYZm7R05o=,iv:Ml9F5aQoDERvYxXbfQXwA7KQgoa3O3k5nrUTpBNqjnU=,tag:DqzWRbtEUDa2DOfMEPiHvg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBKb1VmbE8xWkJPVUhwYkc1
+            UWNJRW56bDlNVG9rWTBSY1dsald2RnRKU1JRCjlnTW5IcXRVTkkyZzd0UnpDb2Jo
+            VVh5eHlqVElicE9vSTZsRjkrMGRyWGcKLS0tIHJIaGZHQ0xlcDZuemp0K1JsNyti
+            TlVwYXkvUG9zUHlJRm50UHdxaldkSmMK5BZC4qm0IILDyfX70TAzuGz20yVzAkSh
+            nwP35wp3bFDhcPFsHcRRjvXByEnzWLMLUeGa6spKpj9jXD61pGlICA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-09-11T19:06:14Z"
+    mac: ENC[AES256_GCM,data:EMP4DhWuFaVePaDDSUkvoq2sGF0RPtzRMdCKPjxiH72FdFuOXaEowtWe28NIcY7PkJKLB69nkrBN8C8T4JKm46F9N7095k8YtvnAQlGth6HFlA6Mm0WOxjYQ7ZPoTG2vrNi5bF/KrL4j4glwwlbWvEX2RCMItIreXHy0XpVS5RQ=,iv:CLJFAPS1Il6TWwAaJiXs9M6Vrlkol68kmnueH4KrO44=,tag:BA9ZKU7ljLxxMuh/vM1uNw==,type:str]
+    pgp: []
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*|pushUrlSecret)$
+    version: 3.7.1
