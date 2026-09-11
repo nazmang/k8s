@@ -65,12 +65,32 @@ alertmanager:
         # means nothing currently watches for its absence. Uptime Kuma's "push"
         # monitor type would close that gap: point this route at the push URL
         # and Kuma complains when the heartbeat stops.
-        - receiver: 'null'
+        # Dead man's switch, wired up 2026-09-11. Previously 'null', with the
+        # comment above explaining exactly this gap for anyone who read it.
+        #
+        # repeat_interval here is 5m rather than the 12h above: the point is a
+        # steady heartbeat, and the Kuma monitor waits 900s before complaining,
+        # so two beats can be lost to a network hiccup without an incident.
+        # send_resolved is off -- this alert never resolves.
+        - receiver: 'deadmansswitch'
           matchers:
             - alertname = "Watchdog"
+          group_wait: 0s
+          group_interval: 1m
+          repeat_interval: 5m
 
     receivers:
+      # Kept: kube-prometheus-stack ships routes that reference it.
       - name: 'null'
+      # The URL carries a token and this repository is public, so it arrives
+      # through a mounted Secret rather than living here. See
+      # watchdog-push-url.yaml beside this file, and alertmanagerSpec.secrets
+      # below for the mount.
+      - name: 'deadmansswitch'
+        webhook_configs:
+          - url_file: /etc/alertmanager/secrets/alertmanager-watchdog/url
+            send_resolved: false
+            max_alerts: 0
       - name: 'ntfy'
         webhook_configs:
           # In-cluster: does not depend on the Cloudflare tunnel or DNS beyond
@@ -80,6 +100,13 @@ alertmanager:
           - url: 'http://ntfy-alertmanager.monitoring.svc.cluster.local:8080/'
             send_resolved: true
             max_alerts: 0
+
+  alertmanagerSpec:
+    # Mounted at /etc/alertmanager/secrets/alertmanager-watchdog/ -- the chart
+    # takes the list and Alertmanager reads the file through url_file. The
+    # Secret is not created by this chart; see watchdog-push-url.yaml.
+    secrets:
+      - alertmanager-watchdog
 
   ingress:
     enabled: true
