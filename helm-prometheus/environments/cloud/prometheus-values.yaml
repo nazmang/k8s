@@ -78,9 +78,25 @@ alertmanager:
           group_wait: 0s
           group_interval: 1m
           repeat_interval: 5m
+        # InfoInhibitor is plumbing, not an alert: it exists only as the
+        # source side of the inhibit rule above that mutes severity=info while
+        # something louder is going on in the same namespace. It has no `for`
+        # and matches `ALERTS{severity="info"} == 1`, which includes *pending*
+        # alerts -- so every short-lived scan pod in trivy-system that trips
+        # CPUThrottlingHigh (info, for: 15m) for a few minutes fires an
+        # InfoInhibitor even though CPUThrottlingHigh itself never does.
+        # 196 firings in the week before 2026-09-16, each one delivered to a
+        # phone as "[FIRING] InfoInhibitor trivy-system" followed by RESOLVED.
+        #
+        # The chart's inhibit rule with an empty source_matchers (kept above)
+        # was meant to swallow it and does not. A route to 'null' does.
+        - receiver: 'null'
+          matchers:
+            - alertname = "InfoInhibitor"
 
     receivers:
-      # Kept: kube-prometheus-stack ships routes that reference it.
+      # Sink for InfoInhibitor (route above). Nothing else references it:
+      # this `config` block replaces the chart's default routes wholesale.
       - name: 'null'
       # The URL carries a token and this repository is public, so it arrives
       # through a mounted Secret rather than living here. See
