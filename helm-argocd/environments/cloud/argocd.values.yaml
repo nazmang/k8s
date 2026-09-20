@@ -79,7 +79,7 @@ configs:
         #       command: [sh, -c, find . -name env.yaml]
         # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sensitive-data-and-sso-client-secrets
         # -- Create the argocd-secret
-        createSecret: ENC[AES256_GCM,data:jfCWfg==,iv:IZQVfFfI8ApVrGAb3/ThACNq5R+yUYeLF0YA5R6Yd70=,tag:5lEohD/oHRTAYdCd/ajing==,type:bool]
+        createSecret: ENC[AES256_GCM,data:VOvFnA==,iv:FUK4Owl2owdPJUvsN87/QK30Fxq4u9kiQysteAz7evY=,tag:aQaW9+ImaWy1RJCLGJl8ew==,type:bool]
         # -- Labels to be added to argocd-secret
         labels: {}
         # -- Annotations to be added to argocd-secret
@@ -113,9 +113,90 @@ configs:
         # -- Admin password modification time. Eg. `"2006-01-02T15:04:05Z"`
         # @default -- `""` (defaults to current time)
         argocdServerAdminPasswordMtime: ""
+applicationSet:
+    metrics:
+        enabled: true
+        serviceMonitor:
+            enabled: true
+            # kube-prometheus-stack's serviceMonitorSelector matches on this
+            # label; without it the object is created and silently ignored.
+            additionalLabels:
+                release: prometheus
 notifications:
+    metrics:
+        enabled: true
+        serviceMonitor:
+            enabled: true
+            # kube-prometheus-stack's serviceMonitorSelector matches on this
+            # label; without it the object is created and silently ignored.
+            additionalLabels:
+                release: prometheus
     enabled: true
+# Metrics and alerts for Argo CD itself (added 2026-09-20). Until then no
+# component of Argo CD was scraped at all -- restarts, failed syncs and
+# OutOfSync apps were only ever noticed through other services' symptoms.
+controller:
+    metrics:
+        enabled: true
+        serviceMonitor:
+            enabled: true
+            # kube-prometheus-stack's serviceMonitorSelector matches on this
+            # label; without it the object is created and silently ignored.
+            additionalLabels:
+                release: prometheus
+        rules:
+            enabled: true
+            additionalLabels:
+                release: prometheus
+            spec:
+                - alert: ArgoCDControllerMetricsMissing
+                  expr: absent(argocd_app_info)
+                  for: 15m
+                  labels:
+                    severity: critical
+                  annotations:
+                    summary: Argo CD application-controller metrics are absent
+                    description: 'No argocd_app_info series for 15m: the controller is down, not scraped, or the ServiceMonitor lost its release=prometheus label.'
+                - alert: ArgoCDComponentDown
+                  expr: up{namespace="argocd"} == 0
+                  for: 10m
+                  labels:
+                    severity: critical
+                  annotations:
+                    summary: Argo CD target {{ $labels.job }} is down
+                    description: Prometheus cannot scrape {{ $labels.job }} ({{ $labels.pod }}) for 10m.
+                - alert: ArgoAppOutOfSync
+                  expr: argocd_app_info{sync_status="OutOfSync"} == 1
+                  for: 30m
+                  labels:
+                    severity: warning
+                  annotations:
+                    summary: Argo CD app {{ $labels.name }} is OutOfSync
+                    description: '{{ $labels.name }} ({{ $labels.dest_namespace }}) has been OutOfSync for 30m. With automated sync + selfHeal that means sync is failing or something keeps fighting it.'
+                - alert: ArgoAppUnhealthy
+                  expr: argocd_app_info{health_status=~"Degraded|Missing"} == 1
+                  for: 15m
+                  labels:
+                    severity: warning
+                  annotations:
+                    summary: Argo CD app {{ $labels.name }} is {{ $labels.health_status }}
+                    description: '{{ $labels.name }} ({{ $labels.dest_namespace }}) reports health {{ $labels.health_status }} for 15m.'
+                - alert: ArgoAppSyncFailed
+                  expr: increase(argocd_app_sync_total{phase=~"Error|Failed"}[1h]) > 0
+                  labels:
+                    severity: warning
+                  annotations:
+                    summary: Argo CD sync of {{ $labels.name }} failed
+                    description: '{{ $labels.name }} had a sync end in phase {{ $labels.phase }} within the last hour.'
 server:
+    metrics:
+        enabled: true
+        serviceMonitor:
+            enabled: true
+            # kube-prometheus-stack's serviceMonitorSelector matches on this
+            # label; without it the object is created and silently ignored.
+            additionalLabels:
+                release: prometheus
     extraArgs:
         - --insecure
     autoscaling:
@@ -148,11 +229,19 @@ externalRedis:
     port: 6379
     username: ""
     password: ""
-    existingSecret: ENC[AES256_GCM,data:UTps7ePEfUcl/w==,iv:e3S8vv0ER73x3C1+pcXhN4UYx21ZoEYWnywbaTDFvtE=,tag:k+LhzAAO6Nbc58jNnhGwrw==,type:str]
+    existingSecret: ENC[AES256_GCM,data:C+nZBnHmZpGl/Q==,iv:FraHXZ2ZoW6OCdwbvoqrOnF5ucdu9PJP1v8h3IkWyEs=,tag:wrrHqvy4dQAn/yJUz2LOOQ==,type:str]
     secretAnnotations: {}
-    existingSecretPasswordKey: ENC[AES256_GCM,data:DIGvWDnb1q5OfGhJUI0=,iv:6tM8vduhJikXYUzCZZEexY6gcXtYRW6dcGy0mu6GEOg=,tag:LtXERstYbuqTTnOKBBzrag==,type:str]
+    existingSecretPasswordKey: ENC[AES256_GCM,data:GdkwneFIiMx6JHABpeU=,iv:TfXJV/KOtCT1njwkDJHk1c4LUaFMpYLk+kZgrPrcHgU=,tag:dDu36XyhQln60Ze2v349uA==,type:str]
     # selector: {}
 repoServer:
+    metrics:
+        enabled: true
+        serviceMonitor:
+            enabled: true
+            # kube-prometheus-stack's serviceMonitorSelector matches on this
+            # label; without it the object is created and silently ignored.
+            additionalLabels:
+                release: prometheus
     autoscaling:
         enabled: true
         minReplicas: 1
@@ -315,14 +404,14 @@ sops:
         - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBucndRR0NMeEx4bW50cUZn
-            dHdXNVB0RzFLRENOQjErNUJDZWhYT2VxYVRZCk5sL28zTGw5OFhOcEJ6b3FhaSty
-            NVNIUGpaRDhoRk4weUFicHliSG1qT3cKLS0tIDVJTllCaG9qRzhrcHViUXVhQVM0
-            TVVzNUtWaXRWZVU2SWRVVnVrWkpDSHMKH7ejDQqvjBIuU1PUcN3IkonV+Qzy0xsB
-            IdbbYZBgY+vuntwpnpZJ+cRus0Iuo98xv82CAuFchcCbTskJjhGTnA==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB5VTZZWnZuV0p4SDFoamRh
+            MFlxRDFCWTZVajMyaUVjL1FyUmIycnYxaVVrCkI1SUxBeFVmNWcxTWo4RE5YL3Nu
+            STBweGxzY3gwVWRpL1BMaG9QVE5Db00KLS0tIDNpL2YzSmhWTlVKOWtud3JUUmUx
+            RkJLVTdWS05iTS8wendoTFFYOFlQNGcKeMhMM3sjr0xIIuI6D2EGenB5ez9X3Xup
+            0H3FggVeHgDtCQMpi0WBsJaBXhFb6NjnnxNOqsvMD2GHiCb6Ss0Wbw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-04-30T14:46:59Z"
-    mac: ENC[AES256_GCM,data:PyaFG/caIZDkBwuzjVCQ9bYu/0QyUCzk2bZxxQO+V5dTRGM8t2ioYL97vKPT2l94sH47UzIpZPWpJgirF6zw//2ERac1N8wqxoouUlGmykzIlt50nsXzAkMd4WcWBSYwlsaDrQtj+85FEbXDjN0utf76zgD0nWInk+AOkMT94QY=,iv:IKYxDqY/qa3bL1mnNbL9spKrOxmZ/fKMakj448uTFNg=,tag:amorf29B7TeCQm/QEgvXiA==,type:str]
+    lastmodified: "2026-09-20T08:34:38Z"
+    mac: ENC[AES256_GCM,data:ShXaT4a3FjTYyPefTsyInbLdMVXwlT0gEi4SPfWsYdoDXvhSEehJFHYlvtY5ICqo6KcA0xc/IOmxbqKrViB/hFauAx+QdDJXBE2z9XM6cPBAyFHHAueRNGPeQw+sKz5z4F63Rw3P7v9a1oD0jPQIs1iTgY9PUFvLGgvRhDHAmK8=,iv:Z51KNli6fZMG2Dg94r+QIVLeXW/BGKXHiVyi2k9IAC4=,tag:o4osGPYANlIPZI3g8rZioQ==,type:str]
     pgp: []
-    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*)$
+    encrypted_regex: ^(SOPS_AGE_KEY|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|OPENSEARCH_.*|pushUrlSecret)$
     version: 3.7.1
