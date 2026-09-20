@@ -280,3 +280,64 @@ prometheus:
       - prom-k8s.srvx.cc
     paths: []
     tls: []
+
+# Alerts kube-prometheus-stack ships as severity=info, which this cluster's
+# routing never delivers (info is muted by InfoInhibitor by design), plus two
+# it does not ship at all. Added 2026-09-20 after k8s01 hit ephemeral-storage
+# pressure at 06:10 UTC and evicted dev/tutor-bot: KubeNodeEviction fired 28
+# times as info and nobody saw it. The shipped rules are left as they are;
+# these are separate, delivered copies with a stricter severity.
+additionalPrometheusRulesMap:
+  node-pressure-and-restarts:
+    groups:
+      - name: node-pressure-delivered
+        rules:
+          - alert: NodeUnderPressure
+            expr: kube_node_status_condition{condition=~"MemoryPressure|DiskPressure|PIDPressure",status="true"} == 1
+            for: 2m
+            labels:
+              severity: warning
+            annotations:
+              summary: "{{ $labels.node }} reports {{ $labels.condition }}"
+              description: "kubelet on {{ $labels.node }} has {{ $labels.condition }}=true for 2m; pods will be evicted."
+          - alert: PodEvicted
+            expr: increase(kube_pod_status_reason{reason="Evicted"}[30m]) > 0 or kube_pod_status_reason{reason="Evicted"} == 1
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "{{ $labels.namespace }}/{{ $labels.pod }} was evicted"
+              description: "kubelet evicted the pod (node resource pressure). The Failed pod object stays until deleted; check `kubectl describe pod` for the resource and threshold."
+          - alert: NodeRootFilesystemLow
+            expr: 100 * node_filesystem_avail_bytes{mountpoint="/",fstype!~"tmpfs|overlay"} / node_filesystem_size_bytes{mountpoint="/",fstype!~"tmpfs|overlay"} < 15
+            for: 10m
+            labels:
+              severity: warning
+            annotations:
+              summary: "{{ $labels.instance }} root filesystem below 15% free"
+              description: "{{ $labels.instance }} has {{ $value | printf \"%.1f\" }}% free on /. kubelet starts evicting at 10% (30 GB disks: ~3 GB)."
+          - alert: NodeRootFilesystemCritical
+            expr: 100 * node_filesystem_avail_bytes{mountpoint="/",fstype!~"tmpfs|overlay"} / node_filesystem_size_bytes{mountpoint="/",fstype!~"tmpfs|overlay"} < 11
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "{{ $labels.instance }} root filesystem below 11% free -- eviction imminent"
+              description: "{{ $labels.instance }} has {{ $value | printf \"%.1f\" }}% free on /; kubelet's eviction threshold is 10%."
+      - name: system-container-restarts
+        rules:
+          - alert: SystemContainerRestarted
+            expr: increase(kube_pod_container_status_restarts_total{namespace=~"argocd|monitoring|ingress-nginx|kube-system|cloudflare|metallb-system|openclaw|ntfy"}[1h]) > 0
+            labels:
+              severity: warning
+            annotations:
+              summary: "{{ $labels.namespace }}/{{ $labels.pod }} restarted"
+              description: "Container {{ $labels.container }} restarted {{ $value | printf \"%.0f\" }}x in the last hour. Single restarts never trip KubePodCrashLooping, so this is the only notice you get."
+          - alert: ContainerOOMKilled
+            expr: kube_pod_container_status_last_terminated_reason{reason="OOMKilled"} == 1
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "{{ $labels.namespace }}/{{ $labels.pod }} was OOMKilled"
+              description: "Container {{ $labels.container }}'s last termination was OOMKilled. Raise the limit or find the leak; this fires for as long as the last termination reason stays OOMKilled."
