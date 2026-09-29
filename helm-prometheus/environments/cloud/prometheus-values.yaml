@@ -165,6 +165,21 @@ alertmanager:
     #   - alertmanager.srvx.cc
 prometheus:
   prometheusSpec:
+    # Cross-watch of the OTHER monitoring stack's alert delivery. The Swarm
+    # stack (docker-monitoring) ships alerts to ntfy through its own bridge;
+    # from 2026-09-16 to 2026-09-29 that bridge held a revoked token, every
+    # Swarm alert was dropped, and nothing noticed -- the Swarm Alertmanager's
+    # own "notifications failing" alert went down the same broken path. This
+    # stack delivers through a different bridge, so it watches the Swarm
+    # Alertmanager's counters directly (routing mesh port 9093 on dkr01). No
+    # auth: /metrics on the private 10.163.11.0/24 network.
+    additionalScrapeConfigs:
+      - job_name: swarm-alertmanager
+        scrape_interval: 1m
+        static_configs:
+          - targets: ["10.163.11.105:9093"]
+            labels:
+              stack: swarm
     scrapeInterval: 1m
     evaluationInterval: 1m
 
@@ -288,6 +303,26 @@ prometheus:
 # times as info and nobody saw it. The shipped rules are left as they are;
 # these are separate, delivered copies with a stricter severity.
 additionalPrometheusRulesMap:
+  swarm-alert-delivery:
+    groups:
+      - name: swarm-alert-delivery
+        rules:
+          - alert: SwarmAlertDeliveryFailing
+            expr: sum(increase(alertmanager_notifications_failed_total{job="swarm-alertmanager"}[15m])) > 0
+            for: 10m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Swarm Alertmanager cannot deliver notifications"
+              description: "The Swarm Alertmanager failed {{ $value | printf \"%.0f\" }} notification attempts in 15m. Its alerts are NOT reaching the phone -- check monitoring_ntfy-alertmanager on Swarm (token in the monitoring_ntfy_alertmanager volume). Found missing for 13 days on 2026-09-29."
+          - alert: SwarmAlertmanagerUnreachable
+            expr: up{job="swarm-alertmanager"} == 0
+            for: 15m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Swarm Alertmanager unreachable from k8s"
+              description: "k8s Prometheus cannot scrape 10.163.11.105:9093 for 15m: the Swarm Alertmanager or dkr01 is down, so Swarm alerts may not be sent at all."
   node-pressure-and-restarts:
     groups:
       - name: node-pressure-delivered
