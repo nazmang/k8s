@@ -68,8 +68,8 @@ spec:
             periodSeconds: 5
       volumes:
         - name: config
-          configMap:
-            name: fluentd-config
+          secret:
+            secretName: fluentd-config
         - name: log
           persistentVolumeClaim:
             claimName: fluentd-logs
