@@ -18,6 +18,14 @@ configMapGenerator:
       annotations:
         checksum/config: sha256-of-config-content
       disableNameSuffixHash: false
+
+# fluent.conf is rendered from fluent.conf.template with OPENSEARCH_USER /
+# OPENSEARCH_PASS (deploy.yaml: decrypt-sops + envsubst), so it carries the
+# OpenSearch password in clear: it goes into a Secret, not a ConfigMap
+# (2026-09-29, found during the fluentd password rotation -- the rendered file
+# had been sitting in ConfigMap fluentd-config-* readable by anything with
+# `get configmap` in the namespace).
+secretGenerator:
   - name: fluentd-config
     namespace: logging
     files:
