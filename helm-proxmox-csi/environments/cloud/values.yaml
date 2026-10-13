@@ -1,0 +1,27 @@
+# Values for the upstream proxmox-csi-plugin chart (cloud = Hetzner, pve01).
+# The cluster connection (url, token) lives in secrets.yaml, encrypted by sops.
+#
+# Nodes must carry topology.kubernetes.io/region=hetzner and zone=pve01
+# (the Proxmox node name) — set in kubespray
+# inventory/hetzner1/group_vars/k8s_cluster/node-labels.yml.
+#
+# Terraform ignores disk changes on every VM (modules/proxmox_vm,
+# ignore_changes = [bootdisk, disk]); without that, the next apply would plan
+# to detach CSI disks, i.e. delete PVC data.
+
+storageClass:
+  # Pilot class. Retain: a deleted PVC leaves the Proxmox disk behind, so a
+  # mistake during the pilot costs a manual cleanup, not data.
+  - name: proxmox-lvm
+    storage: vmdata_thin
+    reclaimPolicy: Retain
+    fstype: ext4
+    cache: none
+
+# The plugin exposes Prometheus metrics, but the chart only supports
+# annotation-based discovery, which this cluster's Prometheus operator does not
+# use. Left off for the pilot; a ServiceMonitor and a PrometheusRule (controller
+# down, attach errors) come before any production workload uses the class
+# (ADR-0007).
+metrics:
+  enabled: false

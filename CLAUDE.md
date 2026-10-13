@@ -149,6 +149,7 @@ project-name/
 | `helm-minio/` | helm | Object storage (operator + tenant) |
 | `helm-nfs-client-provisioner/` | helm | Dynamic NFS PersistentVolumes |
 | `helm-prometheus/` | helm | Prometheus monitoring stack |
+| `helm-proxmox-csi/` | decrypt-sops+shell | Proxmox CSI block volumes (OCI chart, cloud only) |
 | `helm-redis/` | helm | Redis |
 | `helm-reloader/` | helm | Restart workloads on config changes |
 | `helm-trustmanager/` | helm | Trusted certificate management |
