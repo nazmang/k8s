@@ -1,0 +1,29 @@
+# Proxmox CSI (sergelogvinov/proxmox-csi-plugin): block volumes on pve01's
+# LVM-thin, attached to the k8s VMs through the Proxmox API.
+#
+# The chart is published only as OCI (ghcr.io). The `helm` step adds a classic
+# repository (`helm repo add`), which OCI does not support, so the release is
+# installed by a `shell` step instead. secrets.yaml is decrypted in place first
+# and passed to helm as a second values file.
+steps:
+
+  - type: decrypt-sops
+    environments:
+      cloud:
+        config:
+          keyParameter: SOPS_AGE_KEY
+          files:
+            - environments/cloud/secrets.yaml
+
+  - type: shell
+    environments:
+      cloud:
+        config:
+          command: >-
+            helm upgrade --install proxmox-csi
+            oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin
+            --version 0.5.12
+            --namespace csi-proxmox --create-namespace
+            -f environments/cloud/values.yaml
+            -f environments/cloud/secrets.yaml
+            --wait --timeout 5m
