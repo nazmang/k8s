@@ -1,10 +1,9 @@
 # Proxmox CSI (sergelogvinov/proxmox-csi-plugin): block volumes on pve01's
 # LVM-thin, attached to the k8s VMs through the Proxmox API.
 #
-# The chart is published only as OCI (ghcr.io). The `helm` step adds a classic
-# repository (`helm repo add`), which OCI does not support, so the release is
-# installed by a `shell` step instead. secrets.yaml is decrypted in place first
-# and passed to helm as a second values file.
+# The chart is published only as OCI (ghcr.io); the helm step handles an
+# oci:// repoUrl without `helm repo add` (platform-deploy-lib#1).
+# secrets.yaml is decrypted in place first and passed as a second values file.
 steps:
 
   - type: decrypt-sops
@@ -15,12 +14,15 @@ steps:
           files:
             - environments/cloud/secrets.yaml
 
-  # One line on purpose: platform-deploy-lib reads deploy.yaml with its own
-  # YamlParser, which has no block scalars. A folded `>-` command arrived as
-  # the literal string ">-", ran as an empty shell and the build went green
-  # without installing anything (build 162, 13.10.2026).
-  - type: shell
+  - type: helm
     environments:
       cloud:
         config:
-          command: helm upgrade --install proxmox-csi oci://ghcr.io/sergelogvinov/charts/proxmox-csi-plugin --version 0.5.12 --namespace csi-proxmox --create-namespace -f environments/cloud/values.yaml -f environments/cloud/secrets.yaml --wait --timeout 5m
+          repoUrl: oci://ghcr.io/sergelogvinov/charts
+          chartName: proxmox-csi-plugin
+          version: 0.5.12
+          releaseName: proxmox-csi
+          namespace: csi-proxmox
+          values:
+            - environments/cloud/values.yaml
+            - environments/cloud/secrets.yaml
