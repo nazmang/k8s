@@ -73,13 +73,12 @@
 ########################################
 # ALL KUBERNETES LOGS
 ########################################
+# stdout only, no files (2026-10-14): the PVC behind /fluentd/log was an
+# RWO volume shared by two replicas on NFS and never received anything --
+# fluent-bit forwards only nginx.* (output.conf). No loop through
+# fluent-bit either: it tails only the ingress-nginx container logs.
 <match kubernetes.**>
-    @type file
-    path /fluentd/log/kubernetes.log
-    append true
-    time_slice_format %Y%m%d-%H
-    time_slice_wait 10m
-    compress gzip
+    @type stdout
 </match>
 
 ########################################

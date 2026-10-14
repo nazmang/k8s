@@ -2,7 +2,6 @@ resources:
   - 00-namespace.yaml
   - fluent-bit/02-daemonset.yaml
   - fluentd/02-deployment.yaml
-  - fluentd/03-pvc.yaml
   - fluentd/04-service.yaml
 
 configMapGenerator:
