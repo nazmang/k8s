@@ -26,3 +26,10 @@ steps:
           values:
             - environments/cloud/values.yaml
             - environments/cloud/secrets.yaml
+
+  - type: manifest
+    environments:
+      cloud:
+        config:
+          file:
+            - environments/cloud/prometheusrule.yaml
