@@ -1,0 +1,40 @@
+# CSI-specific alerts. The rest is already covered by kube-prometheus defaults:
+# controller/node pods (KubeDeploymentReplicasMismatch, KubeDaemonSetRolloutStuck,
+# KubePodCrashLooping), volume fill (KubePersistentVolumeFillingUp). Thin-pool
+# fill on pve01 is watched from the Swarm side (docker repo, rules/lvm.rules.yml).
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: proxmox-csi
+  namespace: csi-proxmox
+  labels:
+    release: prometheus
+spec:
+  groups:
+    - name: proxmox-csi
+      rules:
+        # WaitForFirstConsumer: a PVC is Pending until a pod using it is
+        # scheduled. 15 min with a consumer means provisioning or attach fails
+        # (Proxmox API, token, storage full). A PVC created with no pod at all
+        # also lands here -- delete it or give it a consumer.
+        - alert: ProxmoxCsiPvcPending
+          expr: |
+            kube_persistentvolumeclaim_status_phase{phase="Pending"} == 1
+            and on (namespace, persistentvolumeclaim)
+            kube_persistentvolumeclaim_info{storageclass="proxmox-lvm"}
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: "PVC {{ $labels.namespace }}/{{ $labels.persistentvolumeclaim }} Pending on proxmox-lvm"
+            description: "kubectl -n {{ $labels.namespace }} describe pvc {{ $labels.persistentvolumeclaim }}; controller logs: kubectl -n csi-proxmox logs deploy/proxmox-csi-proxmox-csi-plugin-controller -c proxmox-csi-plugin-controller"
+        - alert: ProxmoxCsiNodePluginMissing
+          expr: |
+            kube_daemonset_status_number_ready{namespace="csi-proxmox"}
+            < kube_daemonset_status_desired_number_scheduled{namespace="csi-proxmox"}
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Proxmox CSI node plugin not ready on every node"
+            description: "Volumes can't attach to pods on nodes without a ready csi-proxmox node pod."
