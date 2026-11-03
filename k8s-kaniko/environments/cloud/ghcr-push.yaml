@@ -1,0 +1,31 @@
+# Push/pull for ghcr.io/nazmang/* from kaniko build pods (ns jenkins).
+# Mounted as /kaniko/.docker/config.json. Only the ghcr.io entry; no other registry.
+# Rotate with the owner's GitHub PAT (homelab-rotation-01): replace with a packages-only PAT.
+apiVersion: v1
+kind: Secret
+metadata:
+    name: ghcr-push
+    namespace: jenkins
+type: kubernetes.io/dockerconfigjson
+stringData:
+    .dockerconfigjson: ENC[AES256_GCM,data:zKcfsuZFvPzlUeVKTy4CIAfpfByKUvfhYtNaqbv6szyL3SDeUJqDE63x6iSyeAn4QlD+p4YzpMvU8WEMb4L0WlaZkBwhW1J6aWwdjimBuxuW8NP4vbmb7W/qZhcwfGEwhw==,iv:/FjRNZBjjuMchv4R8k4w/FlGXola/MEFT/a309aCzwo=,tag:ynO0c1noOJCBHGvizW1oKg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1wp7n5rlrjdqjx7hpkfv35ejwauuggyncl0cu4zllcq59a696sudqnucqfe
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBwa0NPeVduczZOVm5JdkFZ
+            OER0a2pRMm44Y2NBYVR5L3JxRzNZNVZYTnlJCmdYaTBTL2tRNUJqVnhaY2RLQUFI
+            UFhycHgxZFI4NFVOZ1VXWnpRV0d3S0EKLS0tIDNIaFQ3cmVBcVd4M1p1eVI5ODln
+            YUJ4K1FqSmhGRk45MTExVzlpRDBnYWMKK8xexE0oHSKRbrTog2wn3VYg4zxwCRoU
+            28I7E02stJK3bv7XEsUT1bUbgDByzjiaYWlflJRhPD8yEXEmA0usrA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-11-03T19:27:24Z"
+    mac: ENC[AES256_GCM,data:7R9ALO6wwW1aivCAwfNGCRXnd36vVJ81NwPF6cvKHep1kYdv5Tjva0GgoKutMXtiHTH0yr2J3Ll4OhNRXQxvKRIcQgcknkLNXKJjmP0X8n5YZyj/nPXOIP/f8NAUdYLQmj9DIIVUHJIf5UiLBospK7MzQXvAkIVUozRFXnTCCiw=,iv:sW84hSsf0nBVYEuHvEGBjAXkbYJbVgCFAp90rDIH2vw=,tag:GTr/KYonUe7ynCliHDH/pw==,type:str]
+    pgp: []
+    encrypted_regex: ^(SOPS_AGE_KEY|\.dockerconfigjson|.*password.*|.*PASSWORD.*|.*Secret.*|email|.*USERNAME.*|MIKROTIK_BASEURL|access-token|unseal_keys.*|vault-init.yaml|object-storage-configs.yaml|api-token|token_secret|OPENSEARCH_.*|pushUrlSecret)$
+    version: 3.7.1

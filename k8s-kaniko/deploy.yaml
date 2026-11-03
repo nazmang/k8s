@@ -1,0 +1,15 @@
+steps:
+  - type: decrypt-sops
+    environments:
+      cloud:
+        config:
+          keyParameter: SOPS_AGE_KEY
+          files:
+            - environments/cloud/ghcr-push.yaml
+  - type: manifest
+    environments:
+      cloud:
+        config:
+          file:
+            - environments/cloud/serviceaccount.yaml
+            - environments/cloud/ghcr-push.yaml
