@@ -21,7 +21,7 @@ spec:
           expr: |
             kube_persistentvolumeclaim_status_phase{phase="Pending"} == 1
             and on (namespace, persistentvolumeclaim)
-            kube_persistentvolumeclaim_info{storageclass="proxmox-lvm"}
+            kube_persistentvolumeclaim_info{storageclass=~"proxmox-lvm(-luks)?"}
           for: 15m
           labels:
             severity: warning

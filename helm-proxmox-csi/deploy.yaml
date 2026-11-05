@@ -13,6 +13,7 @@ steps:
           keyParameter: SOPS_AGE_KEY
           files:
             - environments/cloud/secrets.yaml
+            - environments/cloud/luks-secret.yaml
 
   - type: helm
     environments:
@@ -32,4 +33,5 @@ steps:
       cloud:
         config:
           file:
+            - environments/cloud/luks-secret.yaml
             - environments/cloud/prometheusrule.yaml
