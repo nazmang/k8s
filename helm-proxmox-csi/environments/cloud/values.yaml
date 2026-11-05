@@ -17,6 +17,19 @@ storageClass:
     reclaimPolicy: Retain
     fstype: ext4
     cache: none
+  # LUKS volumes. The passphrase comes from environments/cloud/luks-secret.yaml.
+  # Disks of this class are outside the VM backup (`backup` is left off), so the
+  # workload must have its own encrypted backup before it moves here.
+  - name: proxmox-lvm-luks
+    storage: vmdata_thin
+    reclaimPolicy: Retain
+    fstype: ext4
+    cache: none
+    extraParameters:
+      csi.storage.k8s.io/node-stage-secret-name: proxmox-csi-luks
+      csi.storage.k8s.io/node-stage-secret-namespace: csi-proxmox
+      csi.storage.k8s.io/node-expand-secret-name: proxmox-csi-luks
+      csi.storage.k8s.io/node-expand-secret-namespace: csi-proxmox
 
 # The plugin exposes Prometheus metrics, but the chart only supports
 # annotation-based discovery, which this cluster's Prometheus operator does not
