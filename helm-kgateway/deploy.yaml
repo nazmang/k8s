@@ -1,0 +1,41 @@
+# kgateway: Gateway API implementation that replaces ingress-nginx.
+# Gateway API CRDs (upstream standard-install.yaml v1.7.0, kgateway v2.5
+# is built against it) are vendored in crds/ and applied first.
+steps:
+
+  - type: manifest
+    environments:
+      cloud:
+        config:
+          file:
+            - crds/gateway-api-v1.7.0-standard.yaml
+
+  - type: helm
+    environments:
+      cloud:
+        config:
+          repoUrl: oci://cr.kgateway.dev/kgateway-dev/charts
+          chartName: kgateway-crds
+          version: v2.5.0
+          releaseName: kgateway-crds
+          namespace: kgateway-system
+
+  - type: helm
+    environments:
+      cloud:
+        config:
+          repoUrl: oci://cr.kgateway.dev/kgateway-dev/charts
+          chartName: kgateway
+          version: v2.5.0
+          releaseName: kgateway
+          namespace: kgateway-system
+          values:
+            - environments/cloud/kgateway.values.yaml
+
+  - type: manifest
+    environments:
+      cloud:
+        config:
+          file:
+            - manifests/cloud/gateway.yaml
+            - manifests/cloud/routes.yaml
