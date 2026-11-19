@@ -1,0 +1,49 @@
+# Proxy for the Cloudflare tunnel. TLS ends at Cloudflare, so the listener
+# is plain HTTP and the Service stays ClusterIP (cloudflared runs in-cluster).
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: GatewayParameters
+metadata:
+  name: public
+  namespace: kgateway-system
+spec:
+  kube:
+    deployment:
+      replicas: 2
+    envoyContainer:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
+    service:
+      type: ClusterIP
+    stats:
+      enabled: true
+      # Default Envoy stats produce hundreds of thousands of series.
+      matcher:
+        inclusionList:
+          - prefix: "http."
+          - prefix: "listener."
+          - prefix: "server."
+          - prefix: "cluster_manager."
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: public
+  namespace: kgateway-system
+spec:
+  gatewayClassName: kgateway
+  infrastructure:
+    parametersRef:
+      group: gateway.kgateway.dev
+      kind: GatewayParameters
+      name: public
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: All
