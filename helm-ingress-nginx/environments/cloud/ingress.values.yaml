@@ -62,6 +62,7 @@ controller:
       # -- Defines a limit on the number of scraped targets that will be accepted.
       targetLimit: 0  
   config:
+    use-http2: "false"  # CVE-2026-123007, CVE-2026-123633
     use-forwarded-headers: "true"
     set-real-ip-from: "0.0.0.0/0" #!
     real-ip-header: "CF-Connecting-IP"
