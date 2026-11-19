@@ -40,3 +40,4 @@ steps:
         config:
           file:
             - environments/cloud/main.yaml
+            - environments/cloud/httproute.yaml
