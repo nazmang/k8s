@@ -20,6 +20,8 @@ rules:
     - monitoring.coreos.com
     - cert-manager.io
     - argoproj.io
+    - gateway.networking.k8s.io
+    - gateway.kgateway.dev
   resources: ["*"]
   verbs: ["*"]
 
