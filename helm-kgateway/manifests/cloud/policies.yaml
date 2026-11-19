@@ -14,3 +14,21 @@ spec:
   timeouts:
     request: 0s
     streamIdle: 1h
+---
+# WebSocket upgrades on the listener (Envoy rejects Upgrade with 403 otherwise).
+# ingress-nginx allowed them by default; uptime-kuma, ntfy, n8n and openclaw need them.
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: ListenerPolicy
+metadata:
+  name: public-upgrades
+  namespace: kgateway-system
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: public
+  default:
+    httpSettings:
+      upgradeConfig:
+        enabledUpgrades:
+          - websocket
