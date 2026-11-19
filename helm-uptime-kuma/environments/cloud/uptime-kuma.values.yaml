@@ -23,11 +23,13 @@ ingress:
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
   host: uptime-kuma.srvx.cc
 
+# kgateway Gateway `public` (k8s helm-kgateway). The Ingress above stays until
+# external-dns reads HTTPRoutes; the tunnel decides which path gets traffic.
 httpRoute:
-  enabled: false
+  enabled: true
   annotations:
     external-dns.alpha.kubernetes.io/hostname: uptime-kuma.srvx.cc
   parentRefs:
-    - name: srvx-cc-gateway
-      namespace: gateway
+    - name: public
+      namespace: kgateway-system
   hostname: uptime-kuma.srvx.cc
