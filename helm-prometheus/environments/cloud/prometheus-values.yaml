@@ -124,6 +124,20 @@ alertmanager:
     secrets:
       - alertmanager-watchdog
 
+  # HTTPRoute on the kgateway Gateway `public` (k8s helm-kgateway). The Cloudflare
+  # tunnel sends alertmanager.srvx.cc here; Cloudflare Access guards it. kgateway
+  # basic auth takes only SHA-1 htpasswd, so basic auth stays on the nginx path
+  # only (decision 19.11.2026). The Ingress below stays for external-dns until
+  # it reads HTTPRoutes.
+  route:
+    main:
+      enabled: true
+      hostnames:
+        - alertmanager.srvx.cc
+      parentRefs:
+        - name: public
+          namespace: kgateway-system
+
   ingress:
     enabled: true
     annotations:

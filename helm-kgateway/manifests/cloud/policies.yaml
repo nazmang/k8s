@@ -1,0 +1,16 @@
+# Gateway-wide defaults close to ingress-nginx: no total request timeout
+# (long downloads, WebSocket), idle streams closed after 1h.
+# Per-app HTTPRoutes and their policies live with the apps, not here.
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: TrafficPolicy
+metadata:
+  name: public-defaults
+  namespace: kgateway-system
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: public
+  timeouts:
+    request: 0s
+    streamIdle: 1h

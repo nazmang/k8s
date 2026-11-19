@@ -38,4 +38,4 @@ steps:
         config:
           file:
             - manifests/cloud/gateway.yaml
-            - manifests/cloud/routes.yaml
+            - manifests/cloud/policies.yaml
