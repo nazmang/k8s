@@ -1,6 +1,14 @@
 # kgateway: Gateway API implementation that replaces ingress-nginx.
-# Requires Gateway API CRDs v1.7.0 (argocd-apps gateway-api.yaml).
+# Gateway API CRDs (upstream standard-install.yaml v1.7.0, kgateway v2.5
+# is built against it) are vendored in crds/ and applied first.
 steps:
+
+  - type: manifest
+    environments:
+      cloud:
+        config:
+          file:
+            - crds/gateway-api-v1.7.0-standard.yaml
 
   - type: helm
     environments:
