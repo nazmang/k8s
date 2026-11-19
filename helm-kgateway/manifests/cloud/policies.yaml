@@ -1,0 +1,43 @@
+# Gateway-wide defaults close to what ingress-nginx did: no total request
+# timeout (long downloads, WebSocket), idle streams closed after 1h.
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: TrafficPolicy
+metadata:
+  name: public-defaults
+  namespace: kgateway-system
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: public
+  timeouts:
+    request: 0s
+    streamIdle: 1h
+---
+# review: nginx proxy-body-size 10m.
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: TrafficPolicy
+metadata:
+  name: native-review
+  namespace: dev
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: native-review
+  buffer:
+    maxRequestSize: 10Mi
+---
+# MinIO speaks TLS with an operator-issued certificate (nginx backend-protocol HTTPS).
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: BackendConfigPolicy
+metadata:
+  name: minio-tls
+  namespace: minio-operator
+spec:
+  targetRefs:
+    - group: ""
+      kind: Service
+      name: minio
+  tls:
+    insecureSkipVerify: true
