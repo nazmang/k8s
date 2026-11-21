@@ -1,0 +1,120 @@
+# Private proxy on its own MetalLB address, not behind the Cloudflare tunnel.
+# Hosts here are reachable only from the internal network and VPN; TLS ends
+# on this Gateway (cert-manager certificates live next to the apps).
+# externalTrafficPolicy: Local keeps the real client address (no SNAT), which
+# apps that check proxy attribution need (openclaw: gateway.trustedProxies).
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: GatewayParameters
+metadata:
+  name: private
+  namespace: kgateway-system
+spec:
+  kube:
+    deployment:
+      replicas: 2
+    envoyContainer:
+      resources:
+        requests:
+          cpu: 50m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
+    service:
+      type: LoadBalancer
+      externalTrafficPolicy: Local
+      extraAnnotations:
+        metallb.universe.tf/loadBalancerIPs: 10.164.12.64
+    stats:
+      enabled: true
+      matcher:
+        inclusionList:
+          - prefix: "http."
+          - prefix: "listener."
+          - prefix: "server."
+          - prefix: "cluster_manager."
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: private
+  namespace: kgateway-system
+spec:
+  gatewayClassName: kgateway
+  infrastructure:
+    parametersRef:
+      group: gateway.kgateway.dev
+      kind: GatewayParameters
+      name: private
+  listeners:
+    # Plain HTTP only redirects to HTTPS (route lives with the app).
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector: &apps
+            matchExpressions:
+              - key: kubernetes.io/metadata.name
+                operator: In
+                values: [openclaw]
+    # Certificates are in the app namespace; the app grants access with a
+    # ReferenceGrant.
+    - name: openclaw
+      protocol: HTTPS
+      port: 443
+      hostname: openclaw.srvx.cc
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: openclaw-tls
+            namespace: openclaw
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector: *apps
+    - name: openclaw-sandbox
+      protocol: HTTPS
+      port: 443
+      hostname: openclaw-sandbox.srvx.cc
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: openclaw-sandbox-tls
+            namespace: openclaw
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector: *apps
+---
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: TrafficPolicy
+metadata:
+  name: private-defaults
+  namespace: kgateway-system
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: private
+  timeouts:
+    request: 0s
+    streamIdle: 1h
+---
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: ListenerPolicy
+metadata:
+  name: private-upgrades
+  namespace: kgateway-system
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: private
+  default:
+    httpSettings:
+      upgradeConfig:
+        enabledUpgrades:
+          - websocket
