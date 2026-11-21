@@ -39,3 +39,4 @@ steps:
           file:
             - manifests/cloud/gateway.yaml
             - manifests/cloud/policies.yaml
+            - manifests/cloud/private-gateway.yaml
