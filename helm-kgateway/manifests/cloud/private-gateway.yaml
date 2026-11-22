@@ -57,7 +57,7 @@ spec:
             matchExpressions:
               - key: kubernetes.io/metadata.name
                 operator: In
-                values: [openclaw, semaphore]
+                values: [openclaw, semaphore, minio-operator, trivy-dashboard]
     # Certificates are in the app namespace; the app grants access with a
     # ReferenceGrant.
     - name: openclaw
@@ -110,6 +110,62 @@ spec:
               - key: kubernetes.io/metadata.name
                 operator: In
                 values: [semaphore]
+    # *.comintern.local: self-signed certificates (ClusterIssuer selfsigned-issuer),
+    # internal names only.
+    - name: minio
+      protocol: HTTPS
+      port: 443
+      hostname: minio.comintern.local
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: minio-api-tls
+            namespace: minio-operator
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchExpressions:
+              - key: kubernetes.io/metadata.name
+                operator: In
+                values: [minio-operator]
+    - name: minio-console
+      protocol: HTTPS
+      port: 443
+      hostname: minio-console.comintern.local
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: minio-console-tls
+            namespace: minio-operator
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchExpressions:
+              - key: kubernetes.io/metadata.name
+                operator: In
+                values: [minio-operator]
+    - name: trivy-dashboard
+      protocol: HTTPS
+      port: 443
+      hostname: trivy-dashboard.comintern.local
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: trivy-dashboard-tls
+            namespace: trivy-dashboard
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchExpressions:
+              - key: kubernetes.io/metadata.name
+                operator: In
+                values: [trivy-dashboard]
 ---
 apiVersion: gateway.kgateway.dev/v1alpha1
 kind: TrafficPolicy
