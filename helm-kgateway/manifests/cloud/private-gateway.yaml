@@ -53,11 +53,11 @@ spec:
       allowedRoutes:
         namespaces:
           from: Selector
-          selector: &apps
+          selector:
             matchExpressions:
               - key: kubernetes.io/metadata.name
                 operator: In
-                values: [openclaw]
+                values: [openclaw, semaphore]
     # Certificates are in the app namespace; the app grants access with a
     # ReferenceGrant.
     - name: openclaw
@@ -73,7 +73,11 @@ spec:
       allowedRoutes:
         namespaces:
           from: Selector
-          selector: *apps
+          selector: &apps
+            matchExpressions:
+              - key: kubernetes.io/metadata.name
+                operator: In
+                values: [openclaw]
     - name: openclaw-sandbox
       protocol: HTTPS
       port: 443
@@ -88,6 +92,24 @@ spec:
         namespaces:
           from: Selector
           selector: *apps
+    - name: semaphore
+      protocol: HTTPS
+      port: 443
+      hostname: semaphore.srvx.cc
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: semaphore-tls
+            namespace: semaphore
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchExpressions:
+              - key: kubernetes.io/metadata.name
+                operator: In
+                values: [semaphore]
 ---
 apiVersion: gateway.kgateway.dev/v1alpha1
 kind: TrafficPolicy
