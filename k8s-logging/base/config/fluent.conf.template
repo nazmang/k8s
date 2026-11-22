@@ -39,6 +39,38 @@
 </match>
 
 ########################################
+# KGATEWAY (ENVOY) ACCESS LOGS
+########################################
+# 30-day retention: ISM policy envoy-access-30d on the OpenSearch side.
+<match envoy.access>
+    @type opensearch
+    host 10.163.11.105
+    scheme https
+    port 9200
+    user "${OPENSEARCH_USER}"
+    password "${OPENSEARCH_PASS}"
+
+    logstash_format true
+    logstash_prefix envoy-access
+    logstash_dateformat %Y.%m.%d
+
+    include_tag_key true
+    tag_key @log_name
+
+    ssl_verify false
+    request_timeout 30s
+    reconnect_on_error true
+
+    <buffer>
+        @type file
+        path /fluentd/buffer/envoy-access
+        flush_interval 5s
+        retry_forever true
+        chunk_limit_size 5MB
+    </buffer>
+</match>
+
+########################################
 # ERROR LOGS
 ########################################
 <match nginx.error>
