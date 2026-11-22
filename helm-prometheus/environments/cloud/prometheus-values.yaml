@@ -282,7 +282,21 @@ prometheus:
     # - secretName: thanos-gateway-tls
     #   hosts:
     #   - thanos-gateway.comintern.local
-       
+
+  # HTTPRoute on the kgateway Gateway `public`, same as alertmanager above:
+  # the Cloudflare tunnel sends prom-k8s.srvx.cc here, Cloudflare Access
+  # (with the Grafana service token) guards it, no basic auth on this path
+  # (decision 19.11.2026). The Ingress below stays for external-dns and as
+  # the rollback path until ingress-nginx is removed.
+  route:
+    main:
+      enabled: true
+      hostnames:
+        - prom-k8s.srvx.cc
+      parentRefs:
+        - name: public
+          namespace: kgateway-system
+
   ingress:
     enabled: true
     annotations:
