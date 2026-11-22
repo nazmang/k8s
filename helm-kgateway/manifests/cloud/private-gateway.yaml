@@ -118,3 +118,28 @@ spec:
       upgradeConfig:
         enabledUpgrades:
           - websocket
+      accessLog:
+        # JSON to stdout, picked up by fluent-bit (k8s-logging). Path without
+        # the query string: tokens sometimes travel there.
+        - fileSink:
+            path: /dev/stdout
+            jsonFormat:
+              start_time: "%START_TIME%"
+              authority: "%REQ(:AUTHORITY)%"
+              method: "%REQ(:METHOD)%"
+              path: "%PATH(NQ)%"
+              protocol: "%PROTOCOL%"
+              status: "%RESPONSE_CODE%"
+              response_flags: "%RESPONSE_FLAGS%"
+              bytes_received: "%BYTES_RECEIVED%"
+              bytes_sent: "%BYTES_SENT%"
+              duration_ms: "%DURATION%"
+              upstream_ms: "%RESP(X-ENVOY-UPSTREAM-SERVICE-TIME)%"
+              upstream_host: "%UPSTREAM_HOST%"
+              upstream_cluster: "%UPSTREAM_CLUSTER%"
+              route: "%ROUTE_NAME%"
+              client_ip: "%REQ(CF-CONNECTING-IP)%"
+              downstream_ip: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
+              user_agent: "%REQ(USER-AGENT)%"
+              request_id: "%REQ(X-REQUEST-ID)%"
+              upgrade: "%REQ(UPGRADE)%"

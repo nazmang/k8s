@@ -1,0 +1,38 @@
+# Prometheus scrapes for kgateway. Envoy stats are trimmed by the
+# GatewayParameters matcher (http., listener., server., cluster_manager.),
+# about 500 series per proxy pod.
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: kgateway-proxies
+  namespace: kgateway-system
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      kgateway: kube-gateway
+  podMetricsEndpoints:
+    - port: http-monitoring
+      path: /metrics
+      interval: 30s
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_label_gateway_networking_k8s_io_gateway_name]
+          targetLabel: gateway
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: kgateway-controller
+  namespace: kgateway-system
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kgateway
+      app.kubernetes.io/component: controller
+  podMetricsEndpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s
