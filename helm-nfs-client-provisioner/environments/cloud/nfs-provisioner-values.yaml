@@ -26,7 +26,19 @@ nfs:
   # simply stop adding to that pile.
   server: 10.163.11.100
   path: /srv/data
+  # NFSv4.1, not the negotiated 4.2. In 4.2 copy_file_range() becomes a
+  # server-side async COPY and the client waits for a CB_OFFLOAD callback.
+  # Since the NFS server booted kernel 6.8.0-149 (2026-11-17) that callback
+  # does not arrive: an in-volume fs.copyFile() blocked forever in
+  # handle_async_copy while the callback channel was UP. 4.1 has no COPY, so
+  # the kernel falls back to read/write.
+  #
+  # The chart puts these options on the StorageClass (new PVs only) and, as a
+  # side effect, mounts its own root through a separate PV/PVC instead of an
+  # inline volume. Existing PVs keep 4.2 until their spec.mountOptions is set
+  # (that field is mutable) and the pod using them is recreated.
   mountOptions:
+    - nfsvers=4.1
   volumeName: nfs-subdir-external-provisioner-root
   # Reclaim policy for the main nfs volume
   reclaimPolicy: Retain
