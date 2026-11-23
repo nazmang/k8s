@@ -5,7 +5,12 @@ logLevel: debug
 logFormat: text
 
 interval: 5s
-sources: ["ingress", "service", "crd"]
+# gateway-httproute publishes HTTPRoute hostnames with the Gateway's address.
+# Limited to Gateway kgateway-system/private (LoadBalancer 10.164.12.64): the
+# public Gateway sits behind the Cloudflare tunnel, its hostnames are CNAMEs
+# managed in terraform and its address is a ClusterIP, so it must not be
+# published. The chart adds the gateway.networking.k8s.io RBAC by itself.
+sources: ["ingress", "service", "crd", "gateway-httproute"]
 registry: txt
 txtOwnerId: default
 txtPrefix: k8s.
@@ -25,6 +30,8 @@ env:
 
 extraArgs:
   - --ignore-ingress-tls-spec
+  - --gateway-namespace=kgateway-system
+  - --gateway-name=private
   - --managed-record-types=A
   - --managed-record-types=AAAA
   - --managed-record-types=CNAME
