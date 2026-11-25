@@ -29,6 +29,7 @@ httpRoute:
   enabled: true
   annotations:
     external-dns.alpha.kubernetes.io/hostname: uptime-kuma.srvx.cc
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
   parentRefs:
     - name: public
       namespace: kgateway-system

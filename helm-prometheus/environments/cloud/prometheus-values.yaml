@@ -132,6 +132,8 @@ alertmanager:
   route:
     main:
       enabled: true
+      annotations:
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
       hostnames:
         - alertmanager.srvx.cc
       parentRefs:
@@ -291,6 +293,8 @@ prometheus:
   route:
     main:
       enabled: true
+      annotations:
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
       hostnames:
         - prom-k8s.srvx.cc
       parentRefs:
