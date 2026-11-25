@@ -16,6 +16,7 @@ spec:
       annotations:
         checksum/config: "{{CONFIG_CHECKSUM}}"
     spec:
+      serviceAccountName: fluent-bit
       containers:
         - name: fluent-bit
           image: fluent/fluent-bit:4.2

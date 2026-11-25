@@ -71,6 +71,38 @@
 </match>
 
 ########################################
+# APPLICATION MARKS (app_allow.lua allowlist)
+########################################
+# 14-day retention: ISM policy on the OpenSearch side (app-marks-*).
+<match app.marks>
+    @type opensearch
+    host 10.163.11.105
+    scheme https
+    port 9200
+    user "${OPENSEARCH_USER}"
+    password "${OPENSEARCH_PASS}"
+
+    logstash_format true
+    logstash_prefix app-marks
+    logstash_dateformat %Y.%m.%d
+
+    include_tag_key true
+    tag_key @log_name
+
+    ssl_verify false
+    request_timeout 30s
+    reconnect_on_error true
+
+    <buffer>
+        @type file
+        path /fluentd/buffer/app-marks
+        flush_interval 5s
+        retry_forever true
+        chunk_limit_size 5MB
+    </buffer>
+</match>
+
+########################################
 # ERROR LOGS
 ########################################
 <match nginx.error>
@@ -107,8 +139,8 @@
 ########################################
 # stdout only, no files (2026-10-14): the PVC behind /fluentd/log was an
 # RWO volume shared by two replicas on NFS and never received anything --
-# fluent-bit forwards only nginx.* (output.conf). No loop through
-# fluent-bit either: it tails only the ingress-nginx container logs.
+# fluent-bit forwards only nginx.*, envoy.access and app.marks (output.conf).
+# No loop through fluent-bit either: its app input skips the logging namespace.
 <match kubernetes.**>
     @type stdout
 </match>
