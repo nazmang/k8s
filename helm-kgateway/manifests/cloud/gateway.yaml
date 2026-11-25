@@ -33,6 +33,11 @@ kind: Gateway
 metadata:
   name: public
   namespace: kgateway-system
+  annotations:
+    # external-dns (gateway-httproute) publishes routes of this Gateway as a
+    # CNAME to the Cloudflare tunnel instead of the ClusterIP in status. The
+    # routes carry cloudflare-proxied themselves (kgw-09).
+    external-dns.alpha.kubernetes.io/target: b16e4df1-2f22-4512-a7bc-29b1ed11d754.cfargotunnel.com
 spec:
   gatewayClassName: kgateway
   infrastructure:
