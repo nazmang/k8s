@@ -14,7 +14,8 @@ persistence:
   size: 5Gi
 
 ingress:
-  enabled: true
+  # Off since kgw-09: ingress-nginx is removed, DNS comes from the HTTPRoute.
+  enabled: false
   className: nginx
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
